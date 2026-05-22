@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Readiness Assessment — QuizArrow</title>
+<meta name="description" content="Score your B2B lead funnel in 2 minutes. Find out exactly where you're leaking qualified prospects.">
+<style>
+
+/* ============================================================
+   BRAND VARIABLES — change per client
+   ============================================================ */
+:root {
+  --primary:      #6C3DF4;
+  --primary-dark: #5429D4;
+  --bg:           #F8F7FF;
+  --card:         #ffffff;
+  --text:         #1A1040;
+  --text-muted:   #6B7280;
+  --border:       #E5E7EB;
+  --shadow:       0 4px 20px rgba(108,61,244,0.08);
+
+  --band-low:      #16a34a;
+  --band-moderate: #f59e0b;
+  --band-elevated: #ea580c;
+  --band-critical: #dc2626;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header { text-align: center; margin-bottom: 32px; }
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text);
+}
+.brand-mark {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 700; font-size: 13px;
+}
+.tagline {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   CARD
+   ============================================================ */
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 32px 28px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+/* ============================================================
+   STEPS
+   ============================================================ */
+.step { display: none; }
+.step.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1 { font-size: 28px; line-height: 1.25; color: var(--text); margin-bottom: 16px; font-weight: 700; }
+h2 { font-size: 22px; line-height: 1.3;  color: var(--text); margin-bottom: 20px; font-weight: 700; }
+.lede { font-size: 17px; color: var(--text-muted); margin-bottom: 24px; }
+.hint { font-size: 13px; color: var(--text-muted); margin-top: -12px; margin-bottom: 16px; font-style: italic; }
+
+/* ============================================================
+   PROGRESS BAR
+   ============================================================ */
+.progress-strip {
+  height: 4px; background: var(--border);
+  border-radius: 2px; overflow: hidden; margin-bottom: 24px;
+}
+.progress-fill {
+  height: 100%; background: var(--primary);
+  transition: width 0.3s ease; border-radius: 2px;
+}
+.step-label {
+  font-size: 12px; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--text-muted);
+  font-weight: 600; margin-bottom: 8px;
+}
+
+/* ============================================================
+   OPTIONS
+   ============================================================ */
+.option-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.option {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; cursor: pointer;
+  transition: all 0.15s ease; font-size: 15px;
+}
+.option:hover { border-color: var(--primary); background: white; }
+.option input  { margin-top: 4px; cursor: pointer; accent-color: var(--primary); }
+.option.selected { border-color: var(--primary); background: rgba(108,61,244,0.06); }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn-row { display: flex; gap: 12px; margin-top: 24px; align-items: center; }
+.btn {
+  padding: 14px 24px; border: none; border-radius: 8px;
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  font-family: inherit; transition: all 0.15s ease;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-secondary {
+  background: transparent; color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { color: var(--text); border-color: var(--text); }
+
+/* ============================================================
+   INTRO META
+   ============================================================ */
+.intro-meta {
+  display: flex; gap: 24px;
+  margin-top: 24px; padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 14px; color: var(--text-muted);
+}
+.intro-meta-item { display: flex; align-items: center; gap: 6px; }
+.checkmark { color: var(--primary); font-weight: 700; }
+
+/* ============================================================
+   RESULTS — SCORE
+   ============================================================ */
+.score-display { text-align: center; padding: 24px 0; }
+.score-number {
+  font-size: 72px; font-weight: 800;
+  line-height: 1; margin-bottom: 8px;
+}
+.score-band-label {
+  display: inline-block; padding: 6px 16px;
+  border-radius: 999px; font-size: 13px;
+  font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; color: white; margin-bottom: 16px;
+}
+.score-band-LOW      { background: var(--band-low); }
+.score-band-MODERATE { background: var(--band-moderate); }
+.score-band-ELEVATED { background: var(--band-elevated); }
+.score-band-CRITICAL { background: var(--band-critical); }
+.score-number.LOW      { color: var(--band-low); }
+.score-number.MODERATE { color: var(--band-moderate); }
+.score-number.ELEVATED { color: var(--band-elevated); }
+.score-number.CRITICAL { color: var(--band-critical); }
+.score-out-of { color: var(--text-muted); font-size: 18px; font-weight: 500; }
+
+.summary-text {
+  font-size: 16px; margin: 24px 0; padding: 20px;
+  background: var(--bg); border-left: 3px solid var(--primary); border-radius: 4px;
+}
+.factors-title { font-weight: 700; font-size: 16px; margin: 28px 0 12px; color: var(--text); }
+.factor-list { list-style: none; }
+.factor-list li {
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+  font-size: 15px; display: flex;
+  justify-content: space-between; align-items: center; gap: 12px;
+}
+.factor-list li:last-child { border-bottom: none; }
+.factor-label { flex: 1; }
+.factor-points {
+  font-size: 13px; font-weight: 700;
+  padding: 3px 10px; border-radius: 4px; white-space: nowrap;
+}
+.factor-points.positive { background: rgba(220,38,38,0.1); color: var(--band-critical); }
+.factor-points.negative { background: rgba(22,163,74,0.1);  color: var(--band-low); }
+.factor-points.neutral  { background: rgba(90,100,120,0.1); color: var(--text-muted); }
+
+/* ============================================================
+   CTA BLOCK
+   ============================================================ */
+.cta-block {
+  margin-top: 32px; padding: 28px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white; border-radius: 12px;
+}
+.cta-block h3  { font-size: 20px; margin-bottom: 8px; color: white; }
+.cta-block p   { color: rgba(255,255,255,0.85); margin-bottom: 20px; font-size: 15px; }
+.cta-row       { display: flex; gap: 12px; flex-wrap: wrap; }
+.cta-btn {
+  display: inline-block; padding: 14px 22px; border-radius: 8px;
+  font-weight: 700; text-decoration: none; font-size: 14px;
+  text-align: center; transition: all 0.15s ease;
+}
+.cta-primary-link {
+  background: white; color: var(--primary);
+  flex: 1; min-width: 220px;
+}
+.cta-primary-link:hover { background: rgba(255,255,255,0.9); }
+.cta-secondary-link {
+  background: transparent; color: white;
+  border: 1px solid rgba(255,255,255,0.4);
+  flex: 1; min-width: 220px;
+}
+.cta-secondary-link:hover { border-color: white; background: rgba(255,255,255,0.08); }
+.insight-block {
+  margin-top: 24px; padding: 16px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 8px; font-size: 14px; color: rgba(255,255,255,0.9);
+}
+.insight-block strong { color: white; }
+
+/* ============================================================
+   EMAIL CAPTURE — optional, shown after results
+   ============================================================ */
+.email-capture {
+  margin-top: 32px;
+  padding: 24px 28px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+}
+.email-capture h3 {
+  font-size: 17px; font-weight: 700;
+  color: var(--text); margin-bottom: 6px;
+}
+.email-capture p {
+  font-size: 14px; color: var(--text-muted); margin-bottom: 20px;
+}
+.email-row {
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.email-row input[type="email"] {
+  flex: 1; min-width: 200px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px; font-size: 15px;
+  font-family: inherit; background: white; color: var(--text);
+}
+.email-row input[type="email"]:focus {
+  outline: none; border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(108,61,244,0.15);
+}
+.email-row .btn-primary { white-space: nowrap; }
+.email-sent {
+  font-size: 14px; color: var(--band-low);
+  font-weight: 600; margin-top: 12px; display: none;
+}
+.privacy-note {
+  font-size: 12px; color: var(--text-muted);
+  margin-top: 12px; line-height: 1.5;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer-disclaimer {
+  text-align: center; font-size: 12px;
+  color: var(--text-muted); margin-top: 24px;
+  max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+@media (max-width: 600px) {
+  .card { padding: 24px 20px; }
+  h1 { font-size: 24px; }
+  h2 { font-size: 19px; }
+  .score-number { font-size: 56px; }
+  .intro-meta { flex-direction: column; gap: 8px; }
+  .cta-row { flex-direction: column; }
+  .cta-primary-link, .cta-secondary-link { min-width: 0; }
+  .email-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER — CUSTOMIZE: initials + brand name -->
+<header>
+  <div class="brand">
+    <div class="brand-mark">QA</div>
+    <span>QuizArrow</span>
+  </div>
+  <div class="tagline">B2B Lead Funnel Assessment</div>
+</header>
+
+<div class="card">
+
+<!-- ============================================================
+     INTRO
+     ============================================================ -->
+<section id="step-intro" class="step active">
+  <h1>How strong is your B2B lead funnel, really?</h1>
+  <p class="lede">6 questions. 2 minutes. You'll get a scored breakdown of exactly where your funnel is strong and where it's losing you clients.</p>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="goToStep(1)">Start the assessment</button>
+  </div>
+  <div class="intro-meta">
+    <div class="intro-meta-item"><span class="checkmark">✓</span> Results shown immediately</div>
+    <div class="intro-meta-item"><span class="checkmark">✓</span> Scored, not generic</div>
+    <div class="intro-meta-item"><span class="checkmark">✓</span> Free</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Q1 — Lead capture method
+     ============================================================ -->
+<section id="step-1" class="step">
+  <div class="progress-strip"><div class="progress-fill" style="width:16%"></div></div>
+  <div class="step-label">Question 1 of 6</div>
+  <h2>What's your primary lead capture right now?</h2>
+  <p class="hint">Pick the one doing the most work on your site today.</p>
+  <div class="option-group" id="capture-options">
+    <label class="option"><input type="radio" name="capture" value="quiz"     onchange="onAnswer('capture','quiz')">     A scored quiz or assessment</label>
+    <label class="option"><input type="radio" name="capture" value="pdf"      onchange="onAnswer('capture','pdf')">      A PDF, ebook, or checklist download</label>
+    <label class="option"><input type="radio" name="capture" value="bookcall" onchange="onAnswer('capture','bookcall')"> A "Book a call" or contact form only</label>
+    <label class="option"><input type="radio" name="capture" value="paid"     onchange="onAnswer('capture','paid')">     Paid ads straight to a landing page</label>
+    <label class="option"><input type="radio" name="capture" value="none"     onchange="onAnswer('capture','none')">     No structured lead capture</label>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="goToStep(0)">Back</button>
+    <button class="btn btn-primary" id="btn-next-1" disabled onclick="goToStep(2)">Next</button>
+  </div>
+</section>
+
+<!-- ============================================================
+     Q2 — Conversion rate
+     ============================================================ -->
+<section id="step-2" class="step">
+  <div class="progress-strip"><div class="progress-fill" style="width:33%"></div></div>
+  <div class="step-label">Question 2 of 6</div>
+  <h2>What's your visitor-to-lead conversion rate?</h2>
+  <p class="hint">% of people who land on your lead magnet or form and actually submit. Don't know? Pick the last option.</p>
+  <div class="option-group" id="convrate-options">
+    <label class="option"><input type="radio" name="convrate" value="high"    onchange="onAnswer('convrate','high')">    Above 30%</label>
+    <label class="option"><input type="radio" name="convrate" value="mid"     onchange="onAnswer('convrate','mid')">     15–30%</label>
+    <label class="option"><input type="radio" name="convrate" value="low"     onchange="onAnswer('convrate','low')">     5–15%</label>
+    <label class="option"><input type="radio" name="convrate" value="poor"    onchange="onAnswer('convrate','poor')">    Under 5%</label>
+    <label class="option"><input type="radio" name="convrate" value="unknown" onchange="onAnswer('convrate','unknown')"> I don't track this</label>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="goToStep(1)">Back</button>
+    <button class="btn btn-primary" id="btn-next-2" disabled onclick="goToStep(3)">Next</button>
+  </div>
+</section>
+
+<!-- ============================================================
+     Q3 — Lead qualification
+     ============================================================ -->
+<section id="step-3" class="step">
+  <div class="progress-strip"><div class="progress-fill" style="width:50%"></div></div>
+  <div class="step-label">Question 3 of 6</div>
+  <h2>How do you qualify leads before they talk to you?</h2>
+  <p class="hint">Bad qualification means wasted calls on people who were never going to buy.</p>
+  <div class="option-group" id="qualify-options">
+    <label class="option"><input type="radio" name="qualify" value="scored"       onchange="onAnswer('qualify','scored')">       A quiz or multi-step form that scores and segments them automatically</label>
+    <label class="option"><input type="radio" name="qualify" value="shortform"    onchange="onAnswer('qualify','shortform')">    A short form — name, email, maybe company</label>
+    <label class="option"><input type="radio" name="qualify" value="discoveryall" onchange="onAnswer('qualify','discoveryall')"> Discovery call — everyone who asks gets one</label>
+    <label class="option"><input type="radio" name="qualify" value="directbook"   onchange="onAnswer('qualify','directbook')">   They book straight on my calendar, no filter</label>
+    <label class="option"><input type="radio" name="qualify" value="none"         onchange="onAnswer('qualify','none')">         No qualification step at all</label>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="goToStep(2)">Back</button>
+    <button class="btn btn-primary" id="btn-next-3" disabled onclick="goToStep(4)">Next</button>
+  </div>
+</section>
+
+<!-- ============================================================
+     Q4 — Traffic source
+     ============================================================ -->
+<section id="step-4" class="step">
+  <div class="progress-strip"><div class="progress-fill" style="width:66%"></div></div>
+  <div class="step-label">Question 4 of 6</div>
+  <h2>Where does most of your traffic come from?</h2>
+  <p class="hint">Pick your #1 source — the one sending the most visitors today.</p>
+  <div class="option-group" id="traffic-options">
+    <label class="option"><input type="radio" name="traffic" value="seo"      onchange="onAnswer('traffic','seo')">      SEO and content marketing</label>
+    <label class="option"><input type="radio" name="traffic" value="linkedin" onchange="onAnswer('traffic','linkedin')"> LinkedIn organic — posts, DMs, outreach</label>
+    <label class="option"><input type="radio" name="traffic" value="paid"     onchange="onAnswer('traffic','paid')">     Paid ads (Meta, Google, LinkedIn Ads)</label>
+    <label class="option"><input type="radio" name="traffic" value="referrals"onchange="onAnswer('traffic','referrals')">Referrals and word of mouth only</label>
+    <label class="option"><input type="radio" name="traffic" value="cold"     onchange="onAnswer('traffic','cold')">     Cold outreach — no real inbound</label>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="goToStep(3)">Back</button>
+    <button class="btn btn-primary" id="btn-next-4" disabled onclick="goToStep(5)">Next</button>
+  </div>
+</section>
+
+<!-- ============================================================
+     Q5 — Bad-fit calls (replaces sales cycle)
+     ============================================================ -->
+<section id="step-5" class="step">
+  <div class="progress-strip"><div class="progress-fill" style="width:83%"></div></div>
+  <div class="step-label">Question 5 of 6</div>
+  <h2>How many discovery calls per month turn out to be a bad fit?</h2>
+  <p class="hint">Bad fit = they weren't your ICP, couldn't afford you, or were never going to buy. Be honest.</p>
+  <div class="option-group" id="badfit-options">
+    <label class="option"><input type="radio" name="badfit" value="none"    onchange="onAnswer('badfit','none')">    None — almost every call is a real prospect</label>
+    <label class="option"><input type="radio" name="badfit" value="few"     onchange="onAnswer('badfit','few')">     1–2 per month</label>
+    <label class="option"><input type="radio" name="badfit" value="some"    onchange="onAnswer('badfit','some')">    3–5 per month</label>
+    <label class="option"><input type="radio" name="badfit" value="many"    onchange="onAnswer('badfit','many')">    More than 5 per month</label>
+    <label class="option"><input type="radio" name="badfit" value="unknown" onchange="onAnswer('badfit','unknown')"> I don't track this</label>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="goToStep(4)">Back</button>
+    <button class="btn btn-primary" id="btn-next-5" disabled onclick="goToStep(6)">Next</button>
+  </div>
+</section>
+
+<!-- ============================================================
+     Q6 — Monthly lead volume
+     ============================================================ -->
+<section id="step-6" class="step">
+  <div class="progress-strip"><div class="progress-fill" style="width:100%"></div></div>
+  <div class="step-label">Question 6 of 6</div>
+  <h2>How many qualified leads do you get per month?</h2>
+  <p class="hint">Qualified = people who fit your ICP, not just anyone who fills a form.</p>
+  <div class="option-group" id="volume-options">
+    <label class="option"><input type="radio" name="volume" value="high"    onchange="onAnswer('volume','high')">    50+ qualified leads</label>
+    <label class="option"><input type="radio" name="volume" value="mid"     onchange="onAnswer('volume','mid')">     20–50 qualified leads</label>
+    <label class="option"><input type="radio" name="volume" value="low"     onchange="onAnswer('volume','low')">     5–20 qualified leads</label>
+    <label class="option"><input type="radio" name="volume" value="poor"    onchange="onAnswer('volume','poor')">    Fewer than 5 qualified leads</label>
+    <label class="option"><input type="radio" name="volume" value="unknown" onchange="onAnswer('volume','unknown')"> I don't track this</label>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="goToStep(5)">Back</button>
+    <button class="btn btn-primary" id="btn-next-6" disabled onclick="showResults()">See my score</button>
+  </div>
+</section>
+
+<!-- ============================================================
+     RESULTS — shown immediately, no gate
+     ============================================================ -->
+<section id="step-results" class="step">
+
+  <!-- Score -->
+  <div class="score-display">
+    <div class="step-label">Your Lead Funnel Score</div>
+    <div class="score-number" id="scoreNumber">—<span class="score-out-of"> / 100</span></div>
+    <div class="score-band-label" id="scoreBandLabel">—</div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-text" id="summaryText"></div>
+
+  <!-- Factor breakdown -->
+  <div class="factors-title">What's driving your score</div>
+  <ul class="factor-list" id="factorList"></ul>
+
+  <!-- CTA offer -->
+  <div class="cta-block">
+    <h3 id="ctaHeadline"></h3>
+    <p id="ctaSubhead"></p>
+    <div class="cta-row" id="ctaRow"></div>
+    <div class="insight-block" id="insightBlock" style="display:none"></div>
+  </div>
+
+  <!-- Optional email capture — shown after results -->
+  <div class="email-capture">
+    <h3>Want this sent to you?</h3>
+    <p>Drop your email and we'll send you your score plus a one-page breakdown of what to fix first.</p>
+    <form onsubmit="submitEmail(event)">
+      <div class="email-row">
+        <input type="email" id="leadEmail" placeholder="you@company.com" required>
+        <button type="submit" class="btn btn-primary">Send me the report</button>
+      </div>
+      <p class="privacy-note">No spam. One email with your results. Unsubscribe anytime.</p>
+      <p class="email-sent" id="emailSent">✓ Sent — check your inbox.</p>
+    </form>
+  </div>
+
+  <!-- Retake -->
+  <div class="btn-row" style="justify-content:center; margin-top:24px;">
+    <button class="btn btn-secondary" onclick="restart()">Retake assessment</button>
+  </div>
+
+</section>
+
+</div><!-- /.card -->
+
+<p class="footer-disclaimer">
+  This assessment is a diagnostic tool from QuizArrow. Results are indicative, not a substitute for a full marketing audit.
+</p>
+
+</div><!-- /.container -->
+
+<script>
+/* ============================================================
+   SCORING — higher = bigger gap = more they need help
+   Max possible ≈ 145, capped at 100
+   ============================================================ */
+const SCORES = {
+  capture: {
+    quiz:     { points: 0,  label: "Lead capture: scored quiz",         reason: "You're already using the highest-converting format. Quizzes average 38–40% opt-in vs 3–10% for static PDFs." },
+    pdf:      { points: 15, label: "Lead capture: PDF / ebook",         reason: "PDFs average 3–10% conversion. A scored quiz on the same topic typically converts at 35–40% — 3–4× more leads from the same traffic." },
+    bookcall: { points: 25, label: 'Lead capture: "Book a call" only',  reason: "Asking cold visitors to book a call converts poorly and sends you unqualified prospects. A quiz warms and filters leads before they reach you." },
+    paid:     { points: 20, label: "Lead capture: paid ads to page",    reason: "Paid traffic without a high-converting capture is expensive. A quiz typically cuts CPL while improving lead quality at the same time." },
+    none:     { points: 30, label: "Lead capture: none",                reason: "Without a lead capture, you're invisible to everyone not ready to buy today. A quiz gives fence-sitters a frictionless first step." }
+  },
+  convrate: {
+    high:    { points: 0,  label: "Conversion rate: above 30%",   reason: "You're already in quiz-level territory. Strong." },
+    mid:     { points: 10, label: "Conversion rate: 15–30%",       reason: "Decent, but quiz funnels land above 35% on average — you're likely leaving 1 in 4 leads on the table." },
+    low:     { points: 20, label: "Conversion rate: 5–15%",        reason: "Typical for PDF lead magnets and contact forms. A scored assessment on the same topic typically 3–4× this number." },
+    poor:    { points: 30, label: "Conversion rate: under 5%",     reason: "95 in 100 visitors leave without raising their hand. That's a structural problem with the capture format, not the traffic." },
+    unknown: { points: 25, label: "Conversion rate: not tracked",  reason: "What you don't measure, you can't improve. No baseline means no way to know if anything is working." }
+  },
+  qualify: {
+    scored:       { points: 0,  label: "Qualification: scored quiz / form",       reason: "Automatic qualification means you only speak to people who are already pre-sold. Best-in-class." },
+    shortform:    { points: 10, label: "Qualification: short form",               reason: "Short forms don't collect enough signal. You end up spending discovery time figuring out if they're even a fit." },
+    discoveryall: { points: 15, label: "Qualification: everyone gets a call",     reason: "Giving every enquiry a discovery call is expensive. A quiz filters for fit before the call, so every call is already 80% sold." },
+    directbook:   { points: 25, label: "Qualification: direct booking, no filter",reason: "Letting unqualified prospects book calls is the single biggest time drain in B2B service businesses." },
+    none:         { points: 30, label: "Qualification: none",                     reason: "Without qualification you have no visibility into lead quality. You're flying blind from first contact to proposal." }
+  },
+  traffic: {
+    seo:      { points: 5,  label: "Traffic: SEO and content",     reason: "Strong long-term channel. A quiz significantly improves ROI by converting readers into leads." },
+    linkedin: { points: 5,  label: "Traffic: LinkedIn organic",    reason: "Right channel for B2B. A quiz is a natural next step for LinkedIn audiences — interactive, shareable, frictionless." },
+    paid:     { points: 10, label: "Traffic: paid ads",            reason: "Paid traffic is expensive without a high-converting capture. A quiz typically cuts CPL while improving quality." },
+    referrals:{ points: 15, label: "Traffic: referrals only",      reason: "Referral-only means no predictable pipeline. A quiz is one of the fastest ways to build inbound outside your existing network." },
+    cold:     { points: 20, label: "Traffic: cold outreach only",  reason: "Cold is the hardest, most expensive pipeline. A quiz gives you warm inbound so cold becomes a supplement, not your lifeline." }
+  },
+  badfit: {
+    none:    { points: 0,  label: "Bad-fit calls: almost none",       reason: "Your leads are well-qualified. You're spending time on the right people." },
+    few:     { points: 5,  label: "Bad-fit calls: 1–2 per month",     reason: "Minor — but a quiz can eliminate these entirely and give you that time back." },
+    some:    { points: 15, label: "Bad-fit calls: 3–5 per month",     reason: "3–5 wasted calls a month is a full day of your time. A scored quiz filters these out automatically before they ever book." },
+    many:    { points: 25, label: "Bad-fit calls: 5+ per month",      reason: "More than 5 wasted calls a month is a systemic qualification failure. This is exactly the problem a scored quiz solves." },
+    unknown: { points: 20, label: "Bad-fit calls: not tracked",       reason: "If you don't know, you probably have more bad-fit calls than you realise. Tracking this alone would change how you approach lead gen." }
+  },
+  volume: {
+    high:   { points: 0,  label: "Lead volume: 50+ / month",          reason: "Strong pipeline. Focus shifts to quality and reducing time-to-close." },
+    mid:    { points: 5,  label: "Lead volume: 20–50 / month",        reason: "Healthy. A quiz improves quality and frees up time spent on unqualified calls." },
+    low:    { points: 15, label: "Lead volume: 5–20 / month",         reason: "This puts real pressure on close rate. A quiz adds a scalable inbound channel that works 24/7." },
+    poor:   { points: 20, label: "Lead volume: under 5 / month",      reason: "Under 5 qualified leads is a pipeline emergency. A quiz is one of the fastest ways to build predictable inbound." },
+    unknown:{ points: 20, label: "Lead volume: not tracked",          reason: "Without a number, you have no way to know if things are improving or getting worse." }
+  }
+};
+
+/* ============================================================
+   RESULTS COPY — per band
+   CUSTOMIZE: update CTA URLs per client
+   ============================================================ */
+const COPY = {
+  LOW: {
+    summary: "Your lead gen is in solid shape — you're capturing and qualifying leads better than most. The gap between where you are and best-in-class is narrow. The next move is optimisation, not a rebuild.",
+    ctaHeadline: "Want to close the remaining gap?",
+    ctaSubhead:  "We build custom scored assessment quizzes for B2B businesses — the same format used by the top-performing lead funnels. First 3 builds are free in exchange for a case study.",
+    primaryLabel: "Claim a free quiz build →",
+    primaryUrl:   "https://airtable.com/appcPyLVwVPpMX5Dt/pagwkxqUvK9grIS1T/form",
+    secondaryLabel: "See how it works",
+    secondaryUrl:   "https://quizarrow.com",
+    insight: ""
+  },
+  MODERATE: {
+    summary: "You're generating leads, but your funnel has visible gaps. Based on your answers, you're likely converting at 3–4× below what's achievable with the right lead capture format. The good news: this is fixable without changing your traffic or your offer.",
+    ctaHeadline: "Here's what a scored quiz changes.",
+    ctaSubhead:  "We build custom scored assessments for B2B service businesses — branded, hosted, email capture wired in, delivered in 7 days. Free for the first 3 builds in exchange for a case study.",
+    primaryLabel: "Claim a free quiz build →",
+    primaryUrl:   "https://airtable.com/appcPyLVwVPpMX5Dt/pagwkxqUvK9grIS1T/form",
+    secondaryLabel: "See a live example",
+    secondaryUrl:   "https://quizarrow.com",
+    insight: "<strong>The maths:</strong> Quiz funnels average a 38–40% opt-in rate. If your site gets 500 visitors/month at 5% conversion, you're capturing 25 leads. At 40%, that's 200 — from the same traffic."
+  },
+  ELEVATED: {
+    summary: "Your funnel has significant structural gaps. You're likely spending time on unqualified prospects, losing warm leads who aren't ready to book a call, and flying blind without clear conversion data. All of this is solvable with the right top-of-funnel mechanic.",
+    ctaHeadline: "A scored quiz fixes the root problem.",
+    ctaSubhead:  "It qualifies leads automatically, converts at 35–40%, and gives you data on every prospect before you ever speak to them. We'll build one for your business — free for the first 3 builds.",
+    primaryLabel: "Claim a free quiz build →",
+    primaryUrl:   "https://airtable.com/appcPyLVwVPpMX5Dt/pagwkxqUvK9grIS1T/form",
+    secondaryLabel: "See a live example",
+    secondaryUrl:   "https://quizarrow.com",
+    insight: "<strong>The maths:</strong> The average B2B \"book a call\" CTA converts at 1–3%. A scored quiz on the same page converts at 35–40%. That's not an optimisation — it's a different category of tool."
+  },
+  CRITICAL: {
+    summary: "Your lead gen needs a rebuild. Based on your answers, you have no reliable inbound, no qualification mechanism, and no visibility into where your funnel is breaking. The result: unpredictable revenue, wasted sales time, and growth that depends entirely on who you know.",
+    ctaHeadline: "This is the fastest fix available.",
+    ctaSubhead:  "A scored assessment quiz gives you inbound leads, automatic qualification, and conversion data — without changing your traffic or your offer. We build it for you, branded and hosted, in 7 days. Free for the first 3 builds.",
+    primaryLabel: "Claim a free quiz build →",
+    primaryUrl:   "https://airtable.com/appcPyLVwVPpMX5Dt/pagwkxqUvK9grIS1T/form",
+    secondaryLabel: "See a live example",
+    secondaryUrl:   "https://quizarrow.com",
+    insight: "<strong>The maths:</strong> A single closed client from the quiz typically pays for the build many times over. At your current lead volume, adding 20–50 qualified leads/month is the difference between feast-or-famine and a predictable pipeline."
+  }
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const answers = { capture: null, convrate: null, qualify: null, traffic: null, badfit: null, volume: null };
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+function goToStep(n) {
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  const id = n === 0 ? 'step-intro' : 'step-' + n;
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+}
+
+/* ============================================================
+   ANSWER HANDLER
+   ============================================================ */
+const STEP_MAP = { capture: 1, convrate: 2, qualify: 3, traffic: 4, badfit: 5, volume: 6 };
+
+function onAnswer(key, value) {
+  answers[key] = value;
+  const step = STEP_MAP[key];
+  if (step) {
+    const btn = document.getElementById('btn-next-' + step);
+    if (btn) btn.disabled = false;
+    const section = document.getElementById('step-' + step);
+    if (section) {
+      section.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+      const input = section.querySelector('input[value="' + value + '"]');
+      if (input) input.closest('.option').classList.add('selected');
+    }
+  }
+}
+
+/* ============================================================
+   SCORING
+   ============================================================ */
+function calculateScore() {
+  const factors = [];
+  let total = 0;
+  ['capture','convrate','qualify','traffic','badfit','volume'].forEach(key => {
+    if (answers[key] && SCORES[key]?.[answers[key]]) {
+      const f = { ...SCORES[key][answers[key]], key };
+      total += f.points;
+      factors.push(f);
+    }
+  });
+  total = Math.max(0, Math.min(100, total));
+  let band;
+  if      (total >= 76) band = 'CRITICAL';
+  else if (total >= 51) band = 'ELEVATED';
+  else if (total >= 26) band = 'MODERATE';
+  else                  band = 'LOW';
+  return { total, band, factors };
+}
+
+/* ============================================================
+   SHOW RESULTS — called directly from Q6, no email gate
+   ============================================================ */
+function showResults() {
+  const { total, band, factors } = calculateScore();
+  const copy = COPY[band];
+
+  // Score number + band
+  const numEl = document.getElementById('scoreNumber');
+  numEl.innerHTML   = total + '<span class="score-out-of"> / 100</span>';
+  numEl.className   = 'score-number ' + band;
+
+  const bandLabels  = { LOW: 'Strong', MODERATE: 'Room to grow', ELEVATED: 'Significant gaps', CRITICAL: 'Needs a rebuild' };
+  const bandEl      = document.getElementById('scoreBandLabel');
+  bandEl.textContent = bandLabels[band];
+  bandEl.className   = 'score-band-label score-band-' + band;
+
+  // Summary
+  document.getElementById('summaryText').textContent = copy.summary;
+
+  // Factors
+  const list = document.getElementById('factorList');
+  list.innerHTML = '';
+  factors.forEach(f => {
+    const li  = document.createElement('li');
+    const cls = f.points > 0 ? 'positive' : (f.points < 0 ? 'negative' : 'neutral');
+    const lbl = f.points > 0 ? '+' + f.points : (f.points === 0 ? '✓' : f.points);
+    li.innerHTML =
+      '<div class="factor-label"><strong>' + f.label + '</strong>' +
+      '<br><span style="color:var(--text-muted);font-size:14px;">' + f.reason + '</span></div>' +
+      '<span class="factor-points ' + cls + '">' + lbl + '</span>';
+    list.appendChild(li);
+  });
+
+  // CTA
+  document.getElementById('ctaHeadline').textContent = copy.ctaHeadline;
+  document.getElementById('ctaSubhead').textContent  = copy.ctaSubhead;
+  document.getElementById('ctaRow').innerHTML =
+    '<a href="' + copy.primaryUrl + '" target="_blank" class="cta-btn cta-primary-link">' + copy.primaryLabel + '</a>';
+
+  const insightEl = document.getElementById('insightBlock');
+  if (copy.insight) { insightEl.innerHTML = copy.insight; insightEl.style.display = 'block'; }
+  else              { insightEl.style.display = 'none'; }
+
+  // Show results step
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-results').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============================================================
+   OPTIONAL EMAIL SUBMIT
+   CUSTOMIZE: replace YOUR_FORM_ID with real Formspree ID
+   ============================================================ */
+function submitEmail(e) {
+  e.preventDefault();
+  const email = document.getElementById('leadEmail').value;
+  const score = calculateScore();
+
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'; // REPLACE
+
+  fetch(FORMSPREE_ENDPOINT, {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      email,
+      score:    score.total,
+      band:     score.band,
+      capture:  answers.capture,
+      convrate: answers.convrate,
+      qualify:  answers.qualify,
+      traffic:  answers.traffic,
+      badfit:   answers.badfit,
+      volume:   answers.volume,
+      submittedAt: new Date().toISOString()
+    })
+  }).catch(() => {});
+
+  document.getElementById('emailSent').style.display = 'block';
+  e.target.querySelector('button').disabled = true;
+  e.target.querySelector('input').disabled  = true;
+}
+
+/* ============================================================
+   RESTART
+   ============================================================ */
+function restart() {
+  Object.keys(answers).forEach(k => answers[k] = null);
+  document.querySelectorAll('input[type=radio]').forEach(i => i.checked = false);
+  document.querySelectorAll('.option.selected').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('button[id^="btn-next-"]').forEach(b => b.disabled = true);
+  document.getElementById('leadEmail').value = '';
+  document.getElementById('emailSent').style.display = 'none';
+  goToStep(0);
+}
+</script>
+
+</body>
+</html>
