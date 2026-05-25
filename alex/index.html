@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title"></title>
+<meta name="description" id="page-desc" content="">
+<style>
+:root {
+  --brand-primary:       #0a2540;
+  --brand-primary-light: #1a3556;
+  --brand-accent:        #00b3a4;
+  --brand-accent-dark:   #008f82;
+  --brand-accent-rgb:    0, 179, 164;
+  --bg:                  #f7f9fc;
+  --card:                #ffffff;
+  --text:                #1a1a2e;
+  --text-muted:          #5a6478;
+  --border:              #e2e8f0;
+  --shadow:              0 4px 20px rgba(10, 37, 64, 0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 720px; margin: 0 auto; padding: 24px 16px 64px; }
+header { text-align: center; margin-bottom: 32px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--brand-primary); letter-spacing: 0.3px; }
+.brand-mark { width: 32px; height: 32px; border-radius: 50%; background: var(--brand-primary); border: 2px solid var(--brand-accent); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 13px; }
+.tagline { margin-top: 4px; font-size: 13px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
+.card { background: var(--card); border-radius: 12px; padding: 32px 28px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+.step { display: none; }
+.step.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+h1 { font-size: 28px; line-height: 1.25; color: var(--brand-primary); margin-bottom: 16px; font-weight: 700; }
+h2 { font-size: 22px; line-height: 1.3; color: var(--brand-primary); margin-bottom: 20px; font-weight: 700; }
+.lede { font-size: 17px; color: var(--text-muted); margin-bottom: 24px; }
+.progress-strip { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 24px; }
+.progress-fill { height: 100%; background: var(--brand-accent); transition: width 0.3s ease; border-radius: 2px; }
+.step-label { font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+label.q-label { display: block; font-weight: 600; margin: 16px 0 12px; color: var(--brand-primary); font-size: 15px; }
+.hint { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
+.option-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s ease; font-size: 15px; }
+.option:hover { border-color: var(--brand-accent); background: white; }
+.option input { margin-top: 4px; cursor: pointer; accent-color: var(--brand-accent); }
+.option.selected { border-color: var(--brand-accent); background: rgba(var(--brand-accent-rgb), 0.06); }
+select, input[type="text"], input[type="email"] { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; font-family: inherit; background: white; color: var(--text); }
+select:focus, input:focus { outline: none; border-color: var(--brand-accent); box-shadow: 0 0 0 3px rgba(var(--brand-accent-rgb), 0.15); }
+.btn-row { display: flex; gap: 12px; margin-top: 24px; align-items: center; }
+.btn { padding: 14px 24px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s ease; }
+.btn-primary { background: var(--brand-accent); color: white; }
+.btn-primary:hover { background: var(--brand-accent-dark); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-secondary { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+.btn-secondary:hover { color: var(--brand-primary); border-color: var(--brand-primary); }
+.intro-meta { display: flex; gap: 24px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
+.intro-meta-item { display: flex; align-items: center; gap: 6px; }
+.footer-disclaimer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 24px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+.score-display { text-align: center; padding: 24px 0; }
+.score-number { font-size: 72px; font-weight: 800; line-height: 1; margin-bottom: 8px; }
+.score-band-label { display: inline-block; padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: white; margin-bottom: 16px; }
+.score-out-of { color: var(--text-muted); font-size: 18px; font-weight: 500; }
+.summary-text { font-size: 16px; margin: 24px 0; padding: 20px; background: var(--bg); border-left: 3px solid var(--brand-accent); border-radius: 4px; }
+.factors-title { font-weight: 700; font-size: 16px; margin: 28px 0 12px; color: var(--brand-primary); }
+.factor-list { list-style: none; }
+.factor-list li { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 15px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.factor-list li:last-child { border-bottom: none; }
+.factor-label { flex: 1; }
+.factor-points { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 4px; white-space: nowrap; }
+.factor-points.positive { background: rgba(220,38,38,0.1); color: #dc2626; }
+.factor-points.negative { background: rgba(22,163,74,0.1); color: #16a34a; }
+.factor-points.neutral { background: rgba(90,100,120,0.1); color: var(--text-muted); }
+.cta-block { margin-top: 32px; padding: 28px; background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-light) 100%); color: white; border-radius: 12px; }
+.cta-block h3 { font-size: 20px; margin-bottom: 8px; color: white; }
+.cta-block p { color: rgba(255,255,255,0.85); margin-bottom: 20px; font-size: 15px; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.cta-btn { display: inline-block; padding: 14px 22px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 14px; text-align: center; transition: all 0.15s ease; }
+.cta-primary-link { background: var(--brand-accent); color: white; flex: 1; min-width: 220px; }
+.cta-primary-link:hover { background: var(--brand-accent-dark); }
+.cta-secondary-link { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); flex: 1; min-width: 220px; }
+.cta-secondary-link:hover { border-color: white; background: rgba(255,255,255,0.06); }
+.math-block { margin-top: 24px; padding: 16px; background: rgba(var(--brand-accent-rgb), 0.08); border-radius: 8px; font-size: 14px; color: #e0f7f5; }
+.math-block strong { color: #7eeee8; }
+.email-form .label-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; color: var(--text-muted); }
+.email-form input { margin-bottom: 14px; }
+.email-form .required-mark { color: #dc2626; }
+.privacy-note { font-size: 12px; color: var(--text-muted); margin-top: 12px; line-height: 1.5; }
+@media (max-width: 600px) {
+  .card { padding: 24px 20px; }
+  h1 { font-size: 24px; }
+  h2 { font-size: 19px; }
+  .score-number { font-size: 56px; }
+  .intro-meta { flex-direction: column; gap: 8px; }
+  .cta-row { flex-direction: column; }
+  .cta-primary-link, .cta-secondary-link { min-width: 0; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="brand" id="brand-header"></div>
+    <div class="tagline" id="brand-tagline"></div>
+  </header>
+  <div class="card" id="quiz-card"></div>
+  <p class="footer-disclaimer" id="footer-disclaimer"></p>
+</div>
+<script>
+const CONFIG = {
+  brand: {
+    name: "Impaxs", initials: "IM", logoUrl: "",
+    tagline: "In-House Content Marketing for B2B",
+    colors: { primary: "#182844", primaryLight: "#233d63", accent: "#1d6ef5", accentDark: "#1558cc", bg: "#f4f7fb", card: "#ffffff", text: "#1a1a2e", textMuted: "#5a6478", border: "#dde4ef" }
+  },
+  meta: { pageTitle: "B2B Content System Assessment — Impaxs", pageDesc: "Find out if your B2B content marketing is built to drive inbound demand. 5 questions, instant score.", scoreLabel: "Your Content Score", footerNote: "Built for Impaxs · impaxs.com" },
+  intro: { headline: "Is Your B2B Content System Built to Drive Inbound Demand?", lede: "Answer 5 questions. Find out which part of your content operation is costing you pipeline — and what a fix looks like.", ctaLabel: "Start the assessment", trustItems: ["✓ 5 questions — 2 minutes","✓ Instant personalized score","✓ No fluff — straight diagnosis"] },
+  questions: [
+    { id:"q1", type:"radio", headline:"How would you describe your current content strategy?", hint:"Be honest — most companies are further back than they think.", label:"Pick the option that best matches your situation", options:[
+      {value:"no_strategy",label:"We don't have one — we post when we have time or something comes up",points:25,reason:"No strategy means no system. You're spending energy without compounding results."},
+      {value:"loose_ideas",label:"We have rough ideas but nothing documented or tied to business goals",points:20,reason:"Undocumented strategy can't be delegated, measured, or improved."},
+      {value:"plan_no_revenue",label:"We have a content plan but it's not clearly connected to pipeline or revenue",points:15,reason:"Content that isn't tied to revenue outcomes is easy to deprioritize when things get busy."},
+      {value:"clear_strategy",label:"We have a documented strategy tied to specific revenue and pipeline goals",points:5,reason:"Solid foundation — the opportunity is in execution and compounding what's working."}
+    ]},
+    { id:"q2", type:"radio", headline:"How consistent is your content output right now?", hint:"Consistency is what separates a content system from a content experiment.", label:"Pick the closest match", options:[
+      {value:"barely_post",label:"We barely post — output is random and sporadic",points:25,reason:"Sporadic content doesn't build trust or momentum. Buyers need to see you consistently to believe you're real."},
+      {value:"no_system",label:"We post occasionally but there's no repeatable system behind it",points:20,reason:"Occasional posting without a system means you're always starting from zero."},
+      {value:"manual_effort",label:"We post regularly but it requires heavy manual effort every time",points:15,reason:"High effort without systems means content stops when life gets busy — which it always does."},
+      {value:"has_system",label:"We have a repeatable production workflow that runs with minimal friction",points:5,reason:"You have the hardest part figured out. The focus now is on quality, distribution, and conversion."}
+    ]},
+    { id:"q3", type:"radio", headline:"Who owns your content marketing today?", hint:"This is often where the gap lives — even at companies doing well.", label:"Select the option that best describes your situation", options:[
+      {value:"founder_only",label:"The CEO or founder does it when they have capacity",points:25,reason:"Founder-driven content is a ceiling. It never scales past one person's bandwidth."},
+      {value:"agency",label:"We outsource it to an agency or freelancers",points:20,reason:"Agencies can execute, but they don't own your brand voice or understand your buyers the way an internal team does."},
+      {value:"one_person",label:"One internal person handles it, but there's no real team structure",points:15,reason:"Single-person content teams are a bottleneck. One absence and everything stops."},
+      {value:"inhouse_team",label:"We have an in-house team with defined roles and clear ownership",points:5,reason:"You've built the right structure. The opportunity is in optimizing execution and compounding output."}
+    ]},
+    { id:"q4", type:"radio", headline:"How capable is your team at creating video and social content?", hint:"Video is now the highest-trust format in B2B. Where does your team stand?", label:"Pick the closest match", options:[
+      {value:"no_video",label:"We don't create video content — it's not part of our current approach",points:25,reason:"Buyers complete 60-80% of their journey before talking to sales — mostly through video. No video means you're invisible at the most important stage."},
+      {value:"tried_video",label:"We've tried video but quality, consistency, or confidence is low",points:20,reason:"Low-quality or inconsistent video can actually hurt trust. The gap is usually in skills and systems, not effort."},
+      {value:"video_not_performing",label:"We produce video but it's not driving engagement or inbound leads",points:15,reason:"Video that doesn't convert usually has a positioning or distribution problem — not a production problem."},
+      {value:"video_performing",label:"We produce strong video content that consistently drives engagement and leads",points:5,reason:"You've cracked the hardest part of B2B content. The next lever is scale and distribution reach."}
+    ]},
+    { id:"q5", type:"radio", headline:"What's your biggest content-related problem right now?", label:"Pick the one that feels most true", options:[
+      {value:"no_inbound",label:"We're generating almost no inbound leads from content",points:15,reason:"Zero inbound from content usually means the system doesn't exist yet — not that content doesn't work."},
+      {value:"content_no_pipeline",label:"We create content but it doesn't convert to pipeline or meetings",points:15,reason:"Content without conversion is a brand awareness budget. The fix is in positioning and CTA architecture."},
+      {value:"inconsistent",label:"We can't produce content consistently enough to build real momentum",points:10,reason:"Inconsistency is a systems and structure problem — solvable without hiring a big team."},
+      {value:"want_to_scale",label:"Our content is working — we need to scale it faster and more efficiently",points:5,reason:"You're in the best position. The constraint now is usually team capacity and distribution reach."}
+    ]}
+  ],
+  bands: [
+    {key:"CRITICAL",label:"Not Built Yet",min:76,max:100,color:"#dc2626"},
+    {key:"ELEVATED",label:"Significant Gaps",min:51,max:75,color:"#ea580c"},
+    {key:"MODERATE",label:"Underperforming",min:26,max:50,color:"#1d6ef5"},
+    {key:"LOW",label:"Strong Foundation",min:0,max:25,color:"#16a34a"}
+  ],
+  forceBand: [],
+  results: {
+    LOW: { summary:"Your content system is stronger than most B2B companies at your stage. You have strategy, structure, and consistent output — the foundation is real. The opportunity now is in compounding: tighter distribution, better conversion architecture, and scaling the team and output without losing the quality that's working.", ctaHeadline:"Find the highest-leverage place to scale what's already working.", ctaSubhead:"An Opportunity Scan will identify exactly where to invest next — without rebuilding what's already performing.", primaryLabel:"Request an Opportunity Scan", primaryUrl:"https://impaxs.com/contact.html", secondaryLabel:"See how Impaxs works", secondaryUrl:"https://impaxs.com/services-and-pricing.html", math:"" },
+    MODERATE: { summary:"Your content system is running but leaving pipeline on the table. You're producing content, but gaps in strategy, structure, or distribution mean results aren't compounding the way they should. These are fixable problems — but they don't fix themselves, and every quarter without a system is pipeline you can't recover.", ctaHeadline:"Your content gaps are fixable. Here's where to start.", ctaSubhead:"A free strategy conversation with Alex will identify your biggest content bottleneck and what a fix looks like in your situation.", primaryLabel:"Talk to Alex", primaryUrl:"https://impaxs.com/contact.html", secondaryLabel:"See how the Infinite Clients System works", secondaryUrl:"https://impaxs.com/services-and-pricing.html", math:"<strong>The benchmark:</strong> B2B companies with a functioning in-house content system generate 3–5X more inbound pipeline than those relying on agencies or founder-led posting. The gap is usually recoverable within 90 days with the right structure." },
+    ELEVATED: { summary:"Your content isn't generating the pipeline your business needs — and the answers show why. You're missing one or more of the core pillars: clear strategy, repeatable systems, the right team structure, or the skills to execute at a level that builds trust with buyers. This isn't a content quality problem. It's a system problem — and it's solvable.", ctaHeadline:"Your content system gap is costing you pipeline every month.", ctaSubhead:"A free strategy call with Alex will diagnose exactly which pillar is breaking down and what it takes to fix it — no pitch, no pressure.", primaryLabel:"Book a Free Strategy Call", primaryUrl:"https://impaxs.com/contact.html", secondaryLabel:"Learn about the Infinite Clients System", secondaryUrl:"https://impaxs.com/services-and-pricing.html", math:"<strong>The benchmark:</strong> B2B buyers complete 60–80% of their purchase decision before talking to sales — mostly through content. Companies without a functioning content system are invisible during the most important part of the buying journey." },
+    CRITICAL: { summary:"Your score reflects a company with real growth ambition and a content operation that doesn't yet exist as a system. No consistent output, no clear ownership, no strategy tied to revenue — and a market full of buyers making decisions based on content they're not seeing from you. Every month this stays unsolved is pipeline your competitors are capturing instead.", ctaHeadline:"You need a content system, not more one-off posts.", ctaSubhead:"Book a free call with Alex. He'll show you exactly what it takes to build an in-house content operation that drives real inbound demand — no agency required.", primaryLabel:"Book a Free Call with Alex", primaryUrl:"https://impaxs.com/contact.html", secondaryLabel:"See how the Infinite Clients System works", secondaryUrl:"https://impaxs.com/services-and-pricing.html", math:"<strong>The cost of inaction:</strong> B2B companies without a content system spend an average of 2+ years trying to patch the gap with agencies and one-off tactics — at 3–5X the cost of building it right the first time." }
+  },
+  emailCapture: {
+    headline:"Get your results sent to your inbox", lede:"We'll send a copy of your score plus a short breakdown of the highest-leverage next step based on your answers.",
+    fields:[{id:"email",type:"email",label:"Work email",required:true,placeholder:"you@company.com"},{id:"company",type:"text",label:"Company name",required:false,placeholder:"Your company"},{id:"revenue",type:"text",label:"Annual revenue",required:false,placeholder:"$2M–$20M…"}],
+    submitLabel:"Send me the results", thankYou:"You're all set — check your inbox.", privacyNote:"No spam. Your answers are shared only with Alex Sheridan at Impaxs.",
+    endpoint:"https://formsubmit.co/ajax/justin.solo.kohima@gmail.com"
+  }
+};
+const answers={};CONFIG.questions.forEach(q=>{answers[q.id]=q.type==="checkbox"?[]:null;});
+const STEPS=["intro",...CONFIG.questions.map((_,i)=>"q"+i),"results"];
+let currentStepIdx=0;
+function hexToRgb(hex){const c=hex.replace("#","");return`${parseInt(c.slice(0,2),16)}, ${parseInt(c.slice(2,4),16)}, ${parseInt(c.slice(4,6),16)}`;}
+function applyBrand(){const c=CONFIG.brand.colors,r=document.documentElement;r.style.setProperty("--brand-primary",c.primary);r.style.setProperty("--brand-primary-light",c.primaryLight);r.style.setProperty("--brand-accent",c.accent);r.style.setProperty("--brand-accent-dark",c.accentDark);r.style.setProperty("--brand-accent-rgb",hexToRgb(c.accent));r.style.setProperty("--bg",c.bg);r.style.setProperty("--card",c.card);r.style.setProperty("--text",c.text);r.style.setProperty("--text-muted",c.textMuted);r.style.setProperty("--border",c.border);document.getElementById("page-title").textContent=CONFIG.meta.pageTitle;document.getElementById("page-desc").setAttribute("content",CONFIG.meta.pageDesc);document.getElementById("footer-disclaimer").textContent=CONFIG.meta.footerNote;document.getElementById("brand-tagline").textContent=CONFIG.brand.tagline;const mark=CONFIG.brand.logoUrl?`<img src="${CONFIG.brand.logoUrl}" style="width:32px;height:32px;object-fit:contain;border-radius:4px;" alt="${CONFIG.brand.name} logo">`:`<div class="brand-mark">${CONFIG.brand.initials}</div>`;document.getElementById("brand-header").innerHTML=`${mark}<span>${CONFIG.brand.name}</span>`;}
+function buildQuiz(){const card=document.getElementById("quiz-card");card.innerHTML="";card.appendChild(buildIntroSection());CONFIG.questions.forEach((q,i)=>card.appendChild(buildQuestionSection(q,i)));card.appendChild(buildResultsSection());}
+function buildIntroSection(){const s=document.createElement("section");s.id="step-intro";s.className="step active";const t=CONFIG.intro.trustItems.map(x=>`<div class="intro-meta-item">${x}</div>`).join("");s.innerHTML=`<h1>${CONFIG.intro.headline}</h1><p class="lede">${CONFIG.intro.lede}</p><div class="btn-row"><button class="btn btn-primary" onclick="navigate(1)">${CONFIG.intro.ctaLabel}</button></div><div class="intro-meta">${t}</div>`;return s;}
+function buildQuestionSection(q,i){const si=i+1,tq=CONFIG.questions.length,pct=Math.round((si/(tq+1))*100),isLast=i===tq-1,nl=isLast?"See my score":"Next",nd=q.type!=="checkbox"?"disabled":"";let ih="";if(q.type==="radio"){const o=(q.options||[]).map(o=>`<label class="option"><input type="radio" name="radio-${q.id}" value="${o.value}" onchange="onRadioAnswer('${q.id}',${i},'${o.value}')">${o.label}</label>`).join("");ih=`<label class="q-label">${q.label||""}</label><div class="option-group" id="group-${q.id}">${o}</div>`;}else if(q.type==="checkbox"){const o=(q.options||[]).map(o=>`<label class="option"><input type="checkbox" value="${o.value}" ${o.exclusive?'data-exclusive="true"':""} onchange="onCheckboxAnswer('${q.id}',event)">${o.label}</label>`).join("");ih=`<label class="q-label">${q.label||""}</label><div class="option-group" id="group-${q.id}">${o}</div>`;}const hh=q.hint?`<p class="hint">${q.hint}</p>`:"";const s=document.createElement("section");s.id="step-q"+i;s.className="step";s.innerHTML=`<div class="progress-strip"><div class="progress-fill" style="width:${pct}%"></div></div><div class="step-label">Question ${si} of ${tq}</div><h2>${q.headline}</h2>${hh}${ih}<div class="btn-row"><button class="btn btn-secondary" onclick="navigate(${si-1})">Back</button><button class="btn btn-primary" id="btn-next-q${i}" ${nd} onclick="${isLast?"showResults()":"navigate("+(si+1)+")"}">${nl}</button></div>`;return s;}
+function buildResultsSection(){const ec=CONFIG.emailCapture;const fh=(ec.fields||[]).map(f=>`<div class="label-row"><span>${f.label}${f.required?' <span class="required-mark">*</span>':""}</span>${!f.required?"<span>optional</span>":""}</div><input type="${f.type}" id="lead-${f.id}" ${f.required?"required":""} placeholder="${f.placeholder||""}">`).join("");const s=document.createElement("section");s.id="step-results";s.className="step";s.innerHTML=`<div class="score-display"><div class="step-label">${CONFIG.meta.scoreLabel}</div><div class="score-number" id="scoreNumber">—<span class="score-out-of"> / 100</span></div><div class="score-band-label" id="scoreBandLabel">—</div></div><div class="summary-text" id="summaryText"></div><div class="factors-title">What's driving your score</div><ul class="factor-list" id="factorList"></ul><div class="cta-block"><h3 id="ctaHeadline"></h3><p id="ctaSubhead"></p><div class="cta-row" id="ctaRow"></div><div class="math-block" id="mathBlock" style="display:none;"></div></div><div id="emailCaptureWrap" style="margin-top:32px;padding:28px;background:var(--bg);border:1px solid var(--border);border-radius:12px;"><h3 style="font-size:18px;color:var(--brand-primary);margin-bottom:8px;">${ec.headline}</h3><p style="font-size:15px;color:var(--text-muted);margin-bottom:20px;">${ec.lede}</p><form id="leadForm" class="email-form" onsubmit="submitLead(event)">${fh}<div class="btn-row"><button type="submit" class="btn btn-primary">${ec.submitLabel}</button></div><p class="privacy-note">${ec.privacyNote}</p></form></div><div class="btn-row" style="justify-content:center;margin-top:24px;"><button class="btn btn-secondary" onclick="restart()">Retake assessment</button></div>`;return s;}
+function navigate(ti){document.querySelectorAll(".step").forEach(el=>el.classList.remove("active"));const sid=STEPS[ti];let el;if(sid==="intro")el=document.getElementById("step-intro");else if(sid==="results")el=document.getElementById("step-results");else{const qi=parseInt(sid.replace("q",""),10);el=document.getElementById("step-q"+qi);}if(el){el.classList.add("active");currentStepIdx=ti;window.scrollTo({top:0,behavior:"smooth"});}}
+function onRadioAnswer(qId,qIdx,value){answers[qId]=value;const btn=document.getElementById("btn-next-q"+qIdx);if(btn)btn.disabled=false;const g=document.getElementById("group-"+qId);if(g){g.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));const inp=g.querySelector(`input[value="${value}"]`);if(inp)inp.closest(".option").classList.add("selected");}}
+function onCheckboxAnswer(qId,ev){const g=document.getElementById("group-"+qId),t=ev.target;if(t.checked){if(t.dataset.exclusive){g.querySelectorAll("input[type=checkbox]").forEach(cb=>{if(cb!==t){cb.checked=false;cb.closest(".option").classList.remove("selected");}});}else{g.querySelectorAll("input[data-exclusive]").forEach(cb=>{cb.checked=false;cb.closest(".option").classList.remove("selected");});}}g.querySelectorAll(".option").forEach(o=>{const inp=o.querySelector("input");inp.checked?o.classList.add("selected"):o.classList.remove("selected");});answers[qId]=Array.from(g.querySelectorAll("input:checked")).map(i=>i.value);}
+function assignBand(score){for(const b of CONFIG.bands){if(score>=b.min&&score<=b.max)return b;}return CONFIG.bands[CONFIG.bands.length-1];}
+function calculateScore(){const factors=[];let total=0;CONFIG.questions.forEach(q=>{if(q.type==="checkbox"){(answers[q.id]||[]).forEach(val=>{const o=(q.options||[]).find(o=>o.value===val);if(o){total+=o.points;factors.push({label:o.label,points:o.points,reason:o.reason||""});}});}else{const val=answers[q.id];if(!val)return;const o=(q.options||[]).find(o=>o.value===val);if(o){total+=o.points;factors.push({label:o.label,points:o.points,reason:o.reason||"",});}}});total=Math.max(0,Math.min(100,total));return{total,band:assignBand(total),factors};}
+function showResults(){navigate(STEPS.indexOf("results"));renderResults();}
+function renderResults(){const{total,band,factors}=calculateScore();const copy=CONFIG.results[band.key];if(!copy)return;const ne=document.getElementById("scoreNumber");ne.innerHTML=total+'<span class="score-out-of"> / 100</span>';ne.style.color=band.color;const be=document.getElementById("scoreBandLabel");be.textContent=band.label;be.style.background=band.color;document.getElementById("summaryText").innerHTML=copy.summary;const list=document.getElementById("factorList");list.innerHTML="";factors.forEach(f=>{const li=document.createElement("li");const cls=f.points>0?"positive":f.points<0?"negative":"neutral";const pts=f.points>0?"+"+f.points:(f.points===0?"0":f.points);li.innerHTML=`<div class="factor-label"><strong>${f.label}</strong>${f.reason?`<br><span style="color:var(--text-muted);font-size:14px;">${f.reason}</span>`:""}</div><span class="factor-points ${cls}">${pts}</span>`;list.appendChild(li);});document.getElementById("ctaHeadline").textContent=copy.ctaHeadline;document.getElementById("ctaSubhead").textContent=copy.ctaSubhead;document.getElementById("ctaRow").innerHTML=`<a href="${copy.primaryUrl}" target="_blank" class="cta-btn cta-primary-link">${copy.primaryLabel} →</a><a href="${copy.secondaryUrl}" target="_blank" class="cta-btn cta-secondary-link">${copy.secondaryLabel}</a>`;const me=document.getElementById("mathBlock");me.innerHTML=copy.math||"";me.style.display=copy.math?"block":"none";}
+function submitLead(e){e.preventDefault();const payload={submittedAt:new Date().toISOString()};(CONFIG.emailCapture.fields||[]).forEach(f=>{const el=document.getElementById("lead-"+f.id);if(el)payload[f.id]=el.value;});const{total,band}=calculateScore();payload.score=total;payload.band=band.key;CONFIG.questions.forEach(q=>{payload["answer_"+q.id]=Array.isArray(answers[q.id])?answers[q.id].join(","):(answers[q.id]||"");});fetch(CONFIG.emailCapture.endpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload)}).catch(()=>{});const wrap=document.getElementById("emailCaptureWrap");if(wrap)wrap.innerHTML=`<p style="text-align:center;font-size:16px;color:var(--brand-primary);padding:12px 0;">✓ ${CONFIG.emailCapture.thankYou}</p>`;}
+function restart(){CONFIG.questions.forEach(q=>{answers[q.id]=q.type==="checkbox"?[]:null;});document.querySelectorAll("input[type=radio], input[type=checkbox]").forEach(i=>i.checked=false);document.querySelectorAll(".option.selected").forEach(o=>o.classList.remove("selected"));document.querySelectorAll("[id^='btn-next-q']").forEach(b=>{const qi=parseInt(b.id.replace("btn-next-q",""),10);const q=CONFIG.questions[qi];if(q)b.disabled=q.type!=="checkbox";});const card=document.getElementById("quiz-card");const old=document.getElementById("step-results");if(old)card.replaceChild(buildResultsSection(),old);navigate(0);}
+applyBrand();buildQuiz();
+</script>
+</body>
+</html>
