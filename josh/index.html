@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title"></title>
+<meta name="description" id="page-desc" content="">
+<style>
+:root {
+  --brand-primary:       #0a2540;
+  --brand-primary-light: #1a3556;
+  --brand-accent:        #00b3a4;
+  --brand-accent-dark:   #008f82;
+  --brand-accent-rgb:    0, 179, 164;
+  --bg:                  #f7f9fc;
+  --card:                #ffffff;
+  --text:                #1a1a2e;
+  --text-muted:          #5a6478;
+  --border:              #e2e8f0;
+  --shadow:              0 4px 20px rgba(10, 37, 64, 0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+.container { max-width: 720px; margin: 0 auto; padding: 24px 16px 64px; }
+header { text-align: center; margin-bottom: 32px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--brand-primary); letter-spacing: 0.3px; }
+.brand-mark { width: 32px; height: 32px; border-radius: 50%; background: var(--brand-primary); border: 2px solid var(--brand-accent); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 13px; }
+.tagline { margin-top: 4px; font-size: 13px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
+.card { background: var(--card); border-radius: 12px; padding: 32px 28px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+.step { display: none; }
+.step.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+h1 { font-size: 28px; line-height: 1.25; color: var(--brand-primary); margin-bottom: 16px; font-weight: 700; }
+h2 { font-size: 22px; line-height: 1.3; color: var(--brand-primary); margin-bottom: 20px; font-weight: 700; }
+.lede { font-size: 17px; color: var(--text-muted); margin-bottom: 24px; }
+.progress-strip { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 24px; }
+.progress-fill { height: 100%; background: var(--brand-accent); transition: width 0.3s ease; border-radius: 2px; }
+.step-label { font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+label.q-label { display: block; font-weight: 600; margin: 16px 0 12px; color: var(--brand-primary); font-size: 15px; }
+.hint { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
+.option-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s ease; font-size: 15px; }
+.option:hover { border-color: var(--brand-accent); background: white; }
+.option input { margin-top: 4px; cursor: pointer; accent-color: var(--brand-accent); }
+.option.selected { border-color: var(--brand-accent); background: rgba(var(--brand-accent-rgb), 0.06); }
+select, input[type="text"], input[type="email"] { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; font-family: inherit; background: white; color: var(--text); }
+select:focus, input:focus { outline: none; border-color: var(--brand-accent); box-shadow: 0 0 0 3px rgba(var(--brand-accent-rgb), 0.15); }
+.btn-row { display: flex; gap: 12px; margin-top: 24px; align-items: center; }
+.btn { padding: 14px 24px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s ease; }
+.btn-primary { background: var(--brand-accent); color: white; }
+.btn-primary:hover { background: var(--brand-accent-dark); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-secondary { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+.btn-secondary:hover { color: var(--brand-primary); border-color: var(--brand-primary); }
+.intro-meta { display: flex; gap: 24px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
+.intro-meta-item { display: flex; align-items: center; gap: 6px; }
+.footer-disclaimer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 24px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+.score-display { text-align: center; padding: 24px 0; }
+.score-number { font-size: 72px; font-weight: 800; line-height: 1; margin-bottom: 8px; }
+.score-band-label { display: inline-block; padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: white; margin-bottom: 16px; }
+.score-out-of { color: var(--text-muted); font-size: 18px; font-weight: 500; }
+.summary-text { font-size: 16px; margin: 24px 0; padding: 20px; background: var(--bg); border-left: 3px solid var(--brand-accent); border-radius: 4px; }
+.factors-title { font-weight: 700; font-size: 16px; margin: 28px 0 12px; color: var(--brand-primary); }
+.factor-list { list-style: none; }
+.factor-list li { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 15px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.factor-list li:last-child { border-bottom: none; }
+.factor-label { flex: 1; }
+.factor-points { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 4px; white-space: nowrap; }
+.factor-points.positive { background: rgba(220,38,38,0.1); color: #dc2626; }
+.factor-points.negative { background: rgba(22,163,74,0.1); color: #16a34a; }
+.factor-points.neutral { background: rgba(90,100,120,0.1); color: var(--text-muted); }
+.cta-block { margin-top: 32px; padding: 28px; background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-light) 100%); color: white; border-radius: 12px; }
+.cta-block h3 { font-size: 20px; margin-bottom: 8px; color: white; }
+.cta-block p { color: rgba(255,255,255,0.85); margin-bottom: 20px; font-size: 15px; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.cta-btn { display: inline-block; padding: 14px 22px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 14px; text-align: center; transition: all 0.15s ease; }
+.cta-primary-link { background: var(--brand-accent); color: white; flex: 1; min-width: 220px; }
+.cta-primary-link:hover { background: var(--brand-accent-dark); }
+.cta-secondary-link { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); flex: 1; min-width: 220px; }
+.cta-secondary-link:hover { border-color: white; background: rgba(255,255,255,0.06); }
+.math-block { margin-top: 24px; padding: 16px; background: rgba(var(--brand-accent-rgb), 0.08); border-radius: 8px; font-size: 14px; color: #e0f7f5; }
+.math-block strong { color: #7eeee8; }
+.email-form .label-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; color: var(--text-muted); }
+.email-form input { margin-bottom: 14px; }
+.email-form .required-mark { color: #dc2626; }
+.privacy-note { font-size: 12px; color: var(--text-muted); margin-top: 12px; line-height: 1.5; }
+@media (max-width: 600px) {
+  .card { padding: 24px 20px; }
+  h1 { font-size: 24px; }
+  h2 { font-size: 19px; }
+  .score-number { font-size: 56px; }
+  .intro-meta { flex-direction: column; gap: 8px; }
+  .cta-row { flex-direction: column; }
+  .cta-primary-link, .cta-secondary-link { min-width: 0; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="brand" id="brand-header"></div>
+    <div class="tagline" id="brand-tagline"></div>
+  </header>
+  <div class="card" id="quiz-card"></div>
+  <p class="footer-disclaimer" id="footer-disclaimer"></p>
+</div>
+<script>
+const CONFIG = {
+  brand: {
+    name: "FounderScale", initials: "FS", logoUrl: "",
+    tagline: "From Founder Revenue to Scalable Revenue",
+    colors: { primary: "#0d2137", primaryLight: "#183552", accent: "#0e7490", accentDark: "#0c6380", bg: "#f4f7fa", card: "#ffffff", text: "#1a1a2e", textMuted: "#5a6478", border: "#dde4ef" }
+  },
+  meta: {
+    pageTitle: "Revenue Readiness Assessment — FounderScale",
+    pageDesc: "Find out if your revenue engine is built to scale past founder-led growth. 5 questions, instant score.",
+    scoreLabel: "Your Revenue Score",
+    footerNote: "Built for FounderScale · founderscale.com",
+  },
+  intro: {
+    headline: "Is Your Revenue Engine Built to Scale?",
+    lede: "Answer 5 questions. Find out which part of your revenue operation is holding back predictable growth — and what a fix looks like.",
+    ctaLabel: "Start the assessment",
+    trustItems: ["✓ 5 questions — 2 minutes", "✓ Instant personalized score", "✓ No fluff — straight diagnosis"],
+  },
+  questions: [
+    {
+      id: "q1", type: "radio",
+      headline: "Where does most of your new business come from right now?",
+      hint: "Be honest — most founders are further back than they think.",
+      label: "Pick the option that best matches your situation",
+      options: [
+        { value: "founder_only",     label: "Founder relationships and referrals — when I'm not selling, pipeline stops",               points: 25, reason: "Founder-dependent revenue is a ceiling. It can't scale past one person's bandwidth and it makes the business unsellable." },
+        { value: "mostly_referrals", label: "Mostly referrals with occasional inbound — no real system behind it",                       points: 20, reason: "Referrals are the highest-quality leads, but they're not predictable or scalable on their own." },
+        { value: "outbound_mix",     label: "Mix of outbound and some inbound — but no unified strategy connecting them",                points: 15, reason: "Effort without a unified strategy means channels compete for budget instead of compounding." },
+        { value: "multi_channel",    label: "Multiple documented, predictable channels that work without me in every deal",              points: 5,  reason: "You've done the hard part. The opportunity is in optimizing and scaling what's already working." },
+      ]
+    },
+    {
+      id: "q2", type: "radio",
+      headline: "How aligned are your sales and marketing teams on pipeline goals?",
+      hint: "This is where most B2B revenue leaks happen.",
+      label: "Pick the closest match",
+      options: [
+        { value: "no_alignment",       label: "One person does both, or there's no real alignment — we're winging it",                  points: 25, reason: "Without alignment, you get duplicated effort, missed handoffs, and no clear picture of where revenue actually comes from." },
+        { value: "different_metrics",  label: "We talk occasionally but use different metrics — marketing counts leads, sales counts closes", points: 20, reason: "Misaligned metrics mean two teams optimizing for different things. Neither improves the other." },
+        { value: "syncs_no_data",      label: "Regular syncs, but data lives in separate systems and decisions are incomplete",          points: 15, reason: "Alignment without integrated data means you're making revenue decisions with half the picture." },
+        { value: "unified",            label: "Shared pipeline targets, unified data, weekly cadence — everyone sees the same numbers",  points: 5,  reason: "You have the infrastructure for predictable revenue. The focus is on execution and optimization." },
+      ]
+    },
+    {
+      id: "q3", type: "radio",
+      headline: "How do you measure whether your marketing is generating revenue?",
+      hint: "Activity metrics and revenue metrics are not the same thing.",
+      label: "Select the option that best describes your situation",
+      options: [
+        { value: "gut_feel",           label: "We don't really — it's mostly gut feel or activity metrics like posts and emails sent",   points: 25, reason: "Marketing measured by activity can look productive while generating zero pipeline. You can't optimize what you can't see." },
+        { value: "leads_no_pipeline",  label: "We track leads but can't connect them to pipeline or closed deals",                       points: 20, reason: "Lead volume without pipeline attribution means you're flying blind on which activities actually drive revenue." },
+        { value: "opps_not_closed",    label: "We track leads to opportunities but not all the way to closed revenue",                  points: 15, reason: "Closed-loop attribution between marketing and closed revenue is the difference between a cost center and a revenue driver." },
+        { value: "full_attribution",   label: "Marketing spend is directly attributed to pipeline and closed revenue",                  points: 5,  reason: "Full attribution is a competitive advantage. You can double down on what works and cut what doesn't." },
+      ]
+    },
+    {
+      id: "q4", type: "radio",
+      headline: "How would you describe your current CRM and sales tech stack?",
+      hint: "Technology gaps compound over time — they don't stay the same size.",
+      label: "Pick the closest match",
+      options: [
+        { value: "no_crm",             label: "No CRM or using spreadsheets — deals live in people's heads",                            points: 25, reason: "Without a CRM, you have no pipeline visibility, no forecasting, and no way to systematically improve your sales process." },
+        { value: "crm_not_used",       label: "CRM exists but the team doesn't use it consistently",                                    points: 20, reason: "A CRM that isn't adopted is worse than no CRM. It gives false confidence while hiding the real pipeline picture." },
+        { value: "crm_not_integrated", label: "CRM is used but not integrated with marketing or revenue reporting",                     points: 15, reason: "Disconnected systems mean decisions are made with fragmented data. You see part of the picture, never the whole thing." },
+        { value: "full_stack",         label: "CRM + marketing automation + integrated reporting — one view of the revenue engine",     points: 5,  reason: "You have the infrastructure most companies spend years trying to build. Now it's about optimizing for speed to revenue." },
+      ]
+    },
+    {
+      id: "q5", type: "radio",
+      headline: "What's your biggest revenue challenge right now?",
+      label: "Pick the one that feels most true",
+      options: [
+        { value: "founder_dependent",  label: "Revenue is too dependent on me — deals stall or die when I'm not personally involved",   points: 15, reason: "Founder-dependent revenue is the most common ceiling at your stage. The fix is systems and process, not more founder hours." },
+        { value: "unpredictable",      label: "We're growing but can't predict or accelerate it — no clear levers",                     points: 15, reason: "Unpredictable growth is a systems problem. The inputs are there — they're just not connected or measurable yet." },
+        { value: "slow_close",         label: "We have pipeline but deals take too long to close",                                      points: 10, reason: "Long sales cycles usually point to a qualification or positioning problem upstream, not a closing problem." },
+        { value: "scaling",            label: "Revenue is growing well — we need to scale the operation without it breaking",           points: 5,  reason: "Scaling what's working requires systems and infrastructure most growing companies haven't built yet." },
+      ]
+    },
+  ],
+  bands: [
+    { key: "CRITICAL", label: "Revenue System Not Built", min: 76, max: 100, color: "#dc2626" },
+    { key: "ELEVATED", label: "Significant Gaps",         min: 51, max: 75,  color: "#ea580c" },
+    { key: "MODERATE", label: "Developing",               min: 26, max: 50,  color: "#0e7490" },
+    { key: "LOW",      label: "Strong Foundation",        min: 0,  max: 25,  color: "#16a34a" },
+  ],
+  forceBand: [],
+  results: {
+    LOW: {
+      summary: "Your revenue operation is stronger than most companies at your stage. You have documented channels, aligned teams, measurable marketing, and integrated technology. The opportunity is in compounding — tighter attribution, better forecasting, and scaling what's already working without introducing new complexity.",
+      ctaHeadline: "Find the highest-leverage place to scale what's already working.",
+      ctaSubhead: "FounderScale can run a Revenue Opportunity Scan to identify where your next 20% of growth is coming from — without rebuilding what's already performing.",
+      primaryLabel: "Talk to FounderScale", primaryUrl: "https://founderscale.com/contact-us/",
+      secondaryLabel: "See how FounderScale works", secondaryUrl: "https://founderscale.com/revenue-strategy/",
+      math: "",
+    },
+    MODERATE: {
+      summary: "Your revenue engine is moving but leaving predictable growth on the table. You have some infrastructure in place, but gaps in strategy, alignment, or attribution mean effort isn't compounding the way it should. These are fixable problems — but they don't fix themselves. Every quarter without a clear system is pipeline you can't recover.",
+      ctaHeadline: "Your revenue gaps are fixable. Here's where to start.",
+      ctaSubhead: "A free conversation with Josh will identify the highest-leverage gap in your revenue engine and what a fix looks like for your specific situation.",
+      primaryLabel: "Talk to Josh", primaryUrl: "https://founderscale.com/contact-us/",
+      secondaryLabel: "See FounderScale's approach", secondaryUrl: "https://founderscale.com/revenue-strategy/",
+      math: "<strong>The benchmark:</strong> B2B companies with aligned sales, marketing, and RevOps generate 2–3X more pipeline from the same headcount. The gap is usually recoverable within one quarter with the right system in place.",
+    },
+    ELEVATED: {
+      summary: "Your answers point to a revenue operation with real structural gaps. You're likely generating revenue — but it's too dependent on a few relationships, too hard to predict, and too slow to accelerate. More activity won't fix it. The gap is in the system: how pipeline gets created, managed, and handed off.",
+      ctaHeadline: "Your revenue system has gaps that activity alone won't close.",
+      ctaSubhead: "Josh can show you exactly which part of your revenue engine is breaking down and what it takes to fix it — no pitch, no pressure.",
+      primaryLabel: "Book a Free Strategy Call", primaryUrl: "https://founderscale.com/contact-us/",
+      secondaryLabel: "Learn about Revenue Operations", secondaryUrl: "https://founderscale.com/revenue-operations-revops/",
+      math: "<strong>The benchmark:</strong> Companies stuck in founder-led revenue spend an average of 3+ years trying to scale past it without help — at a fraction of the revenue they could be generating with a system in place.",
+    },
+    CRITICAL: {
+      summary: "Your score reflects a company generating revenue without a revenue system. What you have is working today — but it's founder-dependent, unpredictable, and won't scale past current levels without a fundamental shift in how pipeline gets created, managed, and closed. This is exactly the problem FounderScale was built to solve.",
+      ctaHeadline: "You need a revenue system, not more founder hours.",
+      ctaSubhead: "Book a free call with Josh. He'll diagnose exactly what's blocking scalable revenue in your business and show you what it takes to fix it.",
+      primaryLabel: "Book a Free Call with Josh", primaryUrl: "https://founderscale.com/contact-us/",
+      secondaryLabel: "See how FounderScale builds revenue systems", secondaryUrl: "https://founderscale.com/revenue-strategy/",
+      math: "<strong>The cost of waiting:</strong> Every month of founder-dependent revenue is a month where a competitor with a real system is building pipeline you're not capturing.",
+    },
+  },
+  emailCapture: {
+    headline: "Get your results sent to your inbox",
+    lede: "We'll send a copy of your score plus a short breakdown of the highest-leverage next step based on your answers.",
+    fields: [
+      { id: "email",   type: "email", label: "Work email",     required: true,  placeholder: "you@company.com" },
+      { id: "company", type: "text",  label: "Company name",   required: false, placeholder: "Your company" },
+      { id: "revenue", type: "text",  label: "Annual revenue", required: false, placeholder: "$2M–$20M…" },
+    ],
+    submitLabel: "Send me the results",
+    thankYou: "You're all set — check your inbox.",
+    privacyNote: "No spam. Your answers are shared only with Josh Sweeney at FounderScale.",
+    endpoint: "https://formsubmit.co/ajax/justin.solo.kohima@gmail.com",
+  },
+};
+
+// ============================================================
+//  E N G I N E — do not edit below this line
+// ============================================================
+const answers = {};
+CONFIG.questions.forEach(q => { answers[q.id] = q.type === "checkbox" ? [] : null; });
+const STEPS = ["intro", ...CONFIG.questions.map((_, i) => "q" + i), "results"];
+let currentStepIdx = 0;
+function hexToRgb(hex) { const clean = hex.replace("#", ""); return `${parseInt(clean.slice(0,2),16)}, ${parseInt(clean.slice(2,4),16)}, ${parseInt(clean.slice(4,6),16)}`; }
+function applyBrand() {
+  const c = CONFIG.brand.colors, r = document.documentElement;
+  r.style.setProperty("--brand-primary", c.primary); r.style.setProperty("--brand-primary-light", c.primaryLight);
+  r.style.setProperty("--brand-accent", c.accent); r.style.setProperty("--brand-accent-dark", c.accentDark);
+  r.style.setProperty("--brand-accent-rgb", hexToRgb(c.accent)); r.style.setProperty("--bg", c.bg);
+  r.style.setProperty("--card", c.card); r.style.setProperty("--text", c.text);
+  r.style.setProperty("--text-muted", c.textMuted); r.style.setProperty("--border", c.border);
+  document.getElementById("page-title").textContent = CONFIG.meta.pageTitle;
+  document.getElementById("page-desc").setAttribute("content", CONFIG.meta.pageDesc);
+  document.getElementById("footer-disclaimer").textContent = CONFIG.meta.footerNote;
+  document.getElementById("brand-tagline").textContent = CONFIG.brand.tagline;
+  const mark = CONFIG.brand.logoUrl ? `<img src="${CONFIG.brand.logoUrl}" style="width:32px;height:32px;object-fit:contain;border-radius:4px;" alt="${CONFIG.brand.name} logo">` : `<div class="brand-mark">${CONFIG.brand.initials}</div>`;
+  document.getElementById("brand-header").innerHTML = `${mark}<span>${CONFIG.brand.name}</span>`;
+}
+function buildQuiz() { const card = document.getElementById("quiz-card"); card.innerHTML = ""; card.appendChild(buildIntroSection()); CONFIG.questions.forEach((q, i) => card.appendChild(buildQuestionSection(q, i))); card.appendChild(buildResultsSection()); }
+function buildIntroSection() { const s = document.createElement("section"); s.id = "step-intro"; s.className = "step active"; const trustHtml = CONFIG.intro.trustItems.map(t => `<div class="intro-meta-item">${t}</div>`).join(""); s.innerHTML = `<h1>${CONFIG.intro.headline}</h1><p class="lede">${CONFIG.intro.lede}</p><div class="btn-row"><button class="btn btn-primary" onclick="navigate(1)">${CONFIG.intro.ctaLabel}</button></div><div class="intro-meta">${trustHtml}</div>`; return s; }
+function buildQuestionSection(q, i) {
+  const stepIdx = i + 1, totalQ = CONFIG.questions.length, pct = Math.round((stepIdx / (totalQ + 1)) * 100), isLast = i === totalQ - 1, nextLabel = isLast ? "See my score" : "Next", nextDisabled = q.type !== "checkbox" ? "disabled" : "";
+  let inputHtml = "";
+  if (q.type === "radio") { const opts = (q.options || []).map(o => `<label class="option"><input type="radio" name="radio-${q.id}" value="${o.value}" onchange="onRadioAnswer('${q.id}', ${i}, '${o.value}')">${o.label}</label>`).join(""); inputHtml = `<label class="q-label">${q.label || ""}</label><div class="option-group" id="group-${q.id}">${opts}</div>`; }
+  else if (q.type === "checkbox") { const opts = (q.options || []).map(o => `<label class="option"><input type="checkbox" value="${o.value}" ${o.exclusive ? 'data-exclusive="true"' : ""} onchange="onCheckboxAnswer('${q.id}', event)">${o.label}</label>`).join(""); inputHtml = `<label class="q-label">${q.label || ""}</label><div class="option-group" id="group-${q.id}">${opts}</div>`; }
+  const hintHtml = q.hint ? `<p class="hint">${q.hint}</p>` : "";
+  const s = document.createElement("section"); s.id = "step-q" + i; s.className = "step";
+  s.innerHTML = `<div class="progress-strip"><div class="progress-fill" style="width:${pct}%"></div></div><div class="step-label">Question ${stepIdx} of ${totalQ}</div><h2>${q.headline}</h2>${hintHtml}${inputHtml}<div class="btn-row"><button class="btn btn-secondary" onclick="navigate(${stepIdx - 1})">Back</button><button class="btn btn-primary" id="btn-next-q${i}" ${nextDisabled} onclick="${isLast ? "showResults()" : "navigate(" + (stepIdx + 1) + ")"}">${nextLabel}</button></div>`;
+  return s;
+}
+function buildResultsSection() {
+  const ec = CONFIG.emailCapture;
+  const fieldsHtml = (ec.fields || []).map(f => `<div class="label-row"><span>${f.label}${f.required ? ' <span class="required-mark">*</span>' : ""}</span>${!f.required ? "<span>optional</span>" : ""}</div><input type="${f.type}" id="lead-${f.id}" ${f.required ? "required" : ""} placeholder="${f.placeholder || ""}">`).join("");
+  const s = document.createElement("section"); s.id = "step-results"; s.className = "step";
+  s.innerHTML = `<div class="score-display"><div class="step-label">${CONFIG.meta.scoreLabel}</div><div class="score-number" id="scoreNumber">—<span class="score-out-of"> / 100</span></div><div class="score-band-label" id="scoreBandLabel">—</div></div><div class="summary-text" id="summaryText"></div><div class="factors-title">What's driving your score</div><ul class="factor-list" id="factorList"></ul><div class="cta-block"><h3 id="ctaHeadline"></h3><p id="ctaSubhead"></p><div class="cta-row" id="ctaRow"></div><div class="math-block" id="mathBlock" style="display:none;"></div></div><div id="emailCaptureWrap" style="margin-top:32px;padding:28px;background:var(--bg);border:1px solid var(--border);border-radius:12px;"><h3 style="font-size:18px;color:var(--brand-primary);margin-bottom:8px;">${ec.headline}</h3><p style="font-size:15px;color:var(--text-muted);margin-bottom:20px;">${ec.lede}</p><form id="leadForm" class="email-form" onsubmit="submitLead(event)">${fieldsHtml}<div class="btn-row"><button type="submit" class="btn btn-primary">${ec.submitLabel}</button></div><p class="privacy-note">${ec.privacyNote}</p></form></div><div class="btn-row" style="justify-content:center;margin-top:24px;"><button class="btn btn-secondary" onclick="restart()">Retake assessment</button></div>`;
+  return s;
+}
+function navigate(targetIdx) { document.querySelectorAll(".step").forEach(el => el.classList.remove("active")); const stepId = STEPS[targetIdx]; let el; if (stepId === "intro") el = document.getElementById("step-intro"); else if (stepId === "results") el = document.getElementById("step-results"); else { const qIdx = parseInt(stepId.replace("q",""),10); el = document.getElementById("step-q"+qIdx); } if (el) { el.classList.add("active"); currentStepIdx = targetIdx; window.scrollTo({top:0,behavior:"smooth"}); } }
+function onRadioAnswer(qId, qIdx, value) { answers[qId] = value; const btn = document.getElementById("btn-next-q" + qIdx); if (btn) btn.disabled = false; const group = document.getElementById("group-" + qId); if (group) { group.querySelectorAll(".option").forEach(o => o.classList.remove("selected")); const inp = group.querySelector(`input[value="${value}"]`); if (inp) inp.closest(".option").classList.add("selected"); } }
+function onCheckboxAnswer(qId, ev) { const group = document.getElementById("group-" + qId), target = ev.target; if (target.checked) { if (target.dataset.exclusive) { group.querySelectorAll("input[type=checkbox]").forEach(cb => { if (cb !== target) { cb.checked = false; cb.closest(".option").classList.remove("selected"); } }); } else { group.querySelectorAll("input[data-exclusive]").forEach(cb => { cb.checked = false; cb.closest(".option").classList.remove("selected"); }); } } group.querySelectorAll(".option").forEach(o => { const inp = o.querySelector("input"); inp.checked ? o.classList.add("selected") : o.classList.remove("selected"); }); answers[qId] = Array.from(group.querySelectorAll("input:checked")).map(i => i.value); }
+function assignBand(score) { for (const band of CONFIG.bands) { if (score >= band.min && score <= band.max) return band; } return CONFIG.bands[CONFIG.bands.length - 1]; }
+function calculateScore() { const factors = []; let total = 0; CONFIG.questions.forEach(q => { if (q.type === "checkbox") { const vals = answers[q.id] || []; vals.forEach(val => { const opt = (q.options || []).find(o => o.value === val); if (opt) { total += opt.points; factors.push({ label: opt.label, points: opt.points, reason: opt.reason || "" }); } }); } else { const val = answers[q.id]; if (!val) return; const opt = (q.options || []).find(o => o.value === val); if (opt) { total += opt.points; factors.push({ label: opt.label, points: opt.points, reason: opt.reason || "" }); } } }); total = Math.max(0, Math.min(100, total)); const band = assignBand(total); return { total, band, factors }; }
+function showResults() { navigate(STEPS.indexOf("results")); renderResults(); }
+function renderResults() { const { total, band, factors } = calculateScore(); const copy = CONFIG.results[band.key]; if (!copy) return; const numEl = document.getElementById("scoreNumber"); numEl.innerHTML = total + '<span class="score-out-of"> / 100</span>'; numEl.style.color = band.color; const bandEl = document.getElementById("scoreBandLabel"); bandEl.textContent = band.label; bandEl.style.background = band.color; document.getElementById("summaryText").innerHTML = copy.summary; const list = document.getElementById("factorList"); list.innerHTML = ""; factors.forEach(f => { const li = document.createElement("li"); const cls = f.points > 0 ? "positive" : f.points < 0 ? "negative" : "neutral"; const pts = f.points > 0 ? "+" + f.points : (f.points === 0 ? "0" : f.points); li.innerHTML = `<div class="factor-label"><strong>${f.label}</strong>${f.reason ? `<br><span style="color:var(--text-muted);font-size:14px;">${f.reason}</span>` : ""}</div><span class="factor-points ${cls}">${pts}</span>`; list.appendChild(li); }); document.getElementById("ctaHeadline").textContent = copy.ctaHeadline; document.getElementById("ctaSubhead").textContent = copy.ctaSubhead; document.getElementById("ctaRow").innerHTML = `<a href="${copy.primaryUrl}" target="_blank" class="cta-btn cta-primary-link">${copy.primaryLabel} →</a><a href="${copy.secondaryUrl}" target="_blank" class="cta-btn cta-secondary-link">${copy.secondaryLabel}</a>`; const mathEl = document.getElementById("mathBlock"); mathEl.innerHTML = copy.math || ""; mathEl.style.display = copy.math ? "block" : "none"; }
+function submitLead(e) { e.preventDefault(); const payload = { submittedAt: new Date().toISOString() }; (CONFIG.emailCapture.fields || []).forEach(f => { const el = document.getElementById("lead-" + f.id); if (el) payload[f.id] = el.value; }); const { total, band } = calculateScore(); payload.score = total; payload.band = band.key; CONFIG.questions.forEach(q => { payload["answer_" + q.id] = Array.isArray(answers[q.id]) ? answers[q.id].join(",") : (answers[q.id] || ""); }); fetch(CONFIG.emailCapture.endpoint, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(payload) }).catch(() => {}); const wrap = document.getElementById("emailCaptureWrap"); if (wrap) wrap.innerHTML = `<p style="text-align:center;font-size:16px;color:var(--brand-primary);padding:12px 0;">✓ ${CONFIG.emailCapture.thankYou}</p>`; }
+function restart() { CONFIG.questions.forEach(q => { answers[q.id] = q.type === "checkbox" ? [] : null; }); document.querySelectorAll("input[type=radio], input[type=checkbox]").forEach(i => i.checked = false); document.querySelectorAll(".option.selected").forEach(o => o.classList.remove("selected")); document.querySelectorAll("[id^='btn-next-q']").forEach(b => { const qIdx = parseInt(b.id.replace("btn-next-q",""),10); const q = CONFIG.questions[qIdx]; if (q) b.disabled = q.type !== "checkbox"; }); const card = document.getElementById("quiz-card"); const oldResults = document.getElementById("step-results"); if (oldResults) card.replaceChild(buildResultsSection(), oldResults); navigate(0); }
+applyBrand();
+buildQuiz();
+</script>
+</body>
+</html>
