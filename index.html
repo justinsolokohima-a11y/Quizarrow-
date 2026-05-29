@@ -695,16 +695,32 @@ function showResults() {
   // Factors
   const list = document.getElementById('factorList');
   list.innerHTML = '';
-  factors.forEach(f => {
-    const li  = document.createElement('li');
-    const cls = f.points > 0 ? 'positive' : (f.points < 0 ? 'negative' : 'neutral');
-    const lbl = f.points > 0 ? '+' + f.points : (f.points === 0 ? '✓' : f.points);
-    li.innerHTML =
-      '<div class="factor-label"><strong>' + f.label + '</strong>' +
-      '<br><span style="color:var(--text-muted);font-size:14px;">' + f.reason + '</span></div>' +
-      '<span class="factor-points ' + cls + '">' + lbl + '</span>';
-    list.appendChild(li);
-  });
+  const working = factors.filter(f => f.points <= 8);
+  const gaps    = factors.filter(f => f.points > 8);
+  if (working.length > 0) {
+    const wtitle = document.createElement('div');
+    wtitle.style.cssText = 'font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:#16a34a;margin-bottom:8px;';
+    wtitle.textContent = "What's working";
+    list.appendChild(wtitle);
+    working.forEach(f => {
+      const li = document.createElement('li');
+      li.innerHTML = '<div class="factor-label"><strong>' + f.label + '</strong><br><span style="color:var(--text-muted);font-size:14px;">' + f.reason + '</span></div><span class="factor-points" style="background:rgba(22,163,74,0.1);color:#16a34a;">✓ good</span>';
+      list.appendChild(li);
+    });
+  }
+  if (gaps.length > 0) {
+    const gtitle = document.createElement('div');
+    gtitle.style.cssText = 'font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-top:' + (working.length > 0 ? '20px' : '0') + ';margin-bottom:8px;';
+    gtitle.textContent = 'Where to focus';
+    list.appendChild(gtitle);
+    gaps.forEach(f => {
+      const li = document.createElement('li');
+      const severity = f.points >= 20 ? '#dc2626' : '#ea580c';
+      const slabel   = f.points >= 20 ? 'high' : 'medium';
+      li.innerHTML = '<div class="factor-label"><strong>' + f.label + '</strong><br><span style="color:var(--text-muted);font-size:14px;">' + f.reason + '</span></div><span class="factor-points" style="background:rgba(220,38,38,0.1);color:' + severity + ';">' + slabel + '</span>';
+      list.appendChild(li);
+    });
+  }
 
   // CTA
   document.getElementById('ctaHeadline').textContent = copy.ctaHeadline;
