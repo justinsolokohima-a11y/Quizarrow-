@@ -562,19 +562,21 @@ function renderResults() {
     list.appendChild(wtitle);
     working.forEach(f => {
       const li = document.createElement("li");
-      li.innerHTML = `<div class="factor-label"><strong>${f.label}</strong>${f.reason ? `<br><span style="color:var(--text-muted);font-size:14px;">${f.reason}</span>` : ""}</div><span class="factor-points negative">✓</span>`;
+      li.innerHTML = `<div class="factor-label"><strong>${f.label}</strong>${f.reason ? `<br><span style="color:var(--text-muted);font-size:14px;">${f.reason}</span>` : ""}</div><span class="factor-points negative" style="background:rgba(22,163,74,0.1);color:#16a34a;">✓ good</span>`;
       list.appendChild(li);
     });
   }
   if (gaps.length > 0) {
     const gtitle = document.createElement("div");
     gtitle.className = "factors-title";
-    gtitle.style.marginTop = "20px";
+    gtitle.style.marginTop = working.length > 0 ? "20px" : "0";
     gtitle.textContent = "Where to focus";
     list.appendChild(gtitle);
     gaps.forEach(f => {
       const li = document.createElement("li");
-      li.innerHTML = `<div class="factor-label"><strong>${f.label}</strong>${f.reason ? `<br><span style="color:var(--text-muted);font-size:14px;">${f.reason}</span>` : ""}</div><span class="factor-points positive">gap</span>`;
+      const severity = f.points >= 20 ? "#dc2626" : "#ea580c";
+      const label = f.points >= 20 ? "high" : "medium";
+      li.innerHTML = `<div class="factor-label"><strong>${f.label}</strong>${f.reason ? `<br><span style="color:var(--text-muted);font-size:14px;">${f.reason}</span>` : ""}</div><span class="factor-points" style="background:rgba(220,38,38,0.1);color:${severity};">${label}</span>`;
       list.appendChild(li);
     });
   }
