@@ -153,6 +153,7 @@ select:focus, input:focus {
   .cta-primary-link, .cta-secondary-link { min-width: 0; }
 }
 </style>
+<script async src="https://tally.so/widgets/embed.js"></script>
 </head>
 <body>
 <div class="container">
@@ -457,14 +458,11 @@ function buildResultsSection() {
       <div class="cta-row" id="ctaRow"></div>
       <div class="math-block" id="mathBlock" style="display:none;"></div>
     </div>
-    <div id="emailCaptureWrap" style="margin-top:32px;padding:28px;background:var(--bg);border:1px solid var(--border);border-radius:12px;">
-      <h3 style="font-size:18px;color:var(--brand-primary);margin-bottom:8px;">${ec.headline}</h3>
-      <p style="font-size:15px;color:var(--text-muted);margin-bottom:20px;">${ec.lede}</p>
-      <form id="leadForm" class="email-form" onsubmit="submitLead(event)">
-        ${fieldsHtml}
-        <div class="btn-row"><button type="submit" class="btn btn-primary">${ec.submitLabel}</button></div>
-        <p class="privacy-note">${ec.privacyNote}</p>
-      </form>
+        <div id="emailCaptureWrap" style="margin-top:32px;padding:28px;background:var(--bg);border:1px solid var(--border);border-radius:12px;text-align:center;">
+      <h3 style="font-size:18px;color:var(--brand-primary);margin-bottom:8px;">Get your results sent to your inbox</h3>
+      <p style="font-size:15px;color:var(--text-muted);margin-bottom:20px;">Takes 30 seconds. We'll send a breakdown of your score and the highest-leverage next step.</p>
+      <button data-tally-open="Pdk9WV" data-tally-width="500" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" class="btn btn-primary" style="font-size:16px;padding:16px 32px;">Get my results →</button>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:12px;">No spam. Takes 30 seconds.</p>
     </div>
     <div class="btn-row" style="justify-content:center;margin-top:24px;">
       <button class="btn btn-secondary" onclick="restart()">Retake assessment</button>
