@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title"></title>
+<meta name="description" id="page-desc" content="">
+<style>
+:root {
+  --brand-primary:       #0a1f3d;
+  --brand-primary-light: #152e58;
+  --brand-accent:        #10b981;
+  --brand-accent-dark:   #059669;
+  --brand-accent-rgb:    16, 185, 129;
+  --bg:                  #f5f8f5;
+  --card:                #ffffff;
+  --text:                #0f172a;
+  --text-muted:          #5a6478;
+  --border:              #e2e8f0;
+  --shadow:              0 4px 20px rgba(10, 31, 61, 0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+.container { max-width: 720px; margin: 0 auto; padding: 24px 16px 64px; }
+header { text-align: center; margin-bottom: 32px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--brand-primary); letter-spacing: 0.3px; }
+.brand-mark { width: 32px; height: 32px; border-radius: 50%; background: var(--brand-primary); border: 2px solid var(--brand-accent); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 13px; }
+.tagline { margin-top: 4px; font-size: 13px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
+.card { background: var(--card); border-radius: 12px; padding: 32px 28px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+.step { display: none; }
+.step.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+h1 { font-size: 28px; line-height: 1.25; color: var(--brand-primary); margin-bottom: 16px; font-weight: 700; }
+h2 { font-size: 22px; line-height: 1.3; color: var(--brand-primary); margin-bottom: 20px; font-weight: 700; }
+.lede { font-size: 17px; color: var(--text-muted); margin-bottom: 24px; }
+.progress-strip { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 24px; }
+.progress-fill { height: 100%; background: var(--brand-accent); transition: width 0.3s ease; border-radius: 2px; }
+.step-label { font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+label.q-label { display: block; font-weight: 600; margin: 16px 0 12px; color: var(--brand-primary); font-size: 15px; }
+.hint { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
+.option-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s ease; font-size: 15px; }
+.option:hover { border-color: var(--brand-accent); background: white; }
+.option input { margin-top: 4px; cursor: pointer; accent-color: var(--brand-accent); }
+.option.selected { border-color: var(--brand-accent); background: rgba(var(--brand-accent-rgb), 0.06); }
+.btn-row { display: flex; gap: 12px; margin-top: 24px; align-items: center; }
+.btn { padding: 14px 24px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s ease; }
+.btn-primary { background: var(--brand-accent); color: white; }
+.btn-primary:hover { background: var(--brand-accent-dark); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-secondary { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+.btn-secondary:hover { color: var(--brand-primary); border-color: var(--brand-primary); }
+.intro-meta { display: flex; gap: 24px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
+.intro-meta-item { display: flex; align-items: center; gap: 6px; }
+.footer-disclaimer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 24px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+.score-display { text-align: center; padding: 24px 0; }
+.score-number { font-size: 72px; font-weight: 800; line-height: 1; margin-bottom: 8px; }
+.score-band-label { display: inline-block; padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: white; margin-bottom: 16px; }
+.score-out-of { color: var(--text-muted); font-size: 18px; font-weight: 500; }
+.summary-text { font-size: 16px; margin: 24px 0; padding: 20px; background: var(--bg); border-left: 3px solid var(--brand-accent); border-radius: 4px; }
+.factors-title { font-weight: 700; font-size: 16px; margin: 28px 0 12px; color: var(--brand-primary); }
+.factor-list { list-style: none; }
+.factor-list li { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 15px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.factor-list li:last-child { border-bottom: none; }
+.factor-label { flex: 1; }
+.factor-points { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 4px; white-space: nowrap; }
+.cta-block { margin-top: 32px; padding: 28px; background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-light) 100%); color: white; border-radius: 12px; }
+.cta-block h3 { font-size: 20px; margin-bottom: 8px; color: white; }
+.cta-block p { color: rgba(255,255,255,0.85); margin-bottom: 20px; font-size: 15px; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.cta-btn { display: inline-block; padding: 14px 22px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 14px; text-align: center; transition: all 0.15s ease; }
+.cta-primary-link { background: var(--brand-accent); color: white; flex: 1; min-width: 220px; }
+.cta-primary-link:hover { background: var(--brand-accent-dark); }
+.cta-secondary-link { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); flex: 1; min-width: 220px; }
+.cta-secondary-link:hover { border-color: white; background: rgba(255,255,255,0.06); }
+.math-block { margin-top: 24px; padding: 16px; background: rgba(var(--brand-accent-rgb), 0.12); border-radius: 8px; font-size: 14px; color: #d1fae5; }
+.math-block strong { color: #6ee7b7; }
+@media (max-width: 600px) {
+  .card { padding: 24px 20px; }
+  h1 { font-size: 24px; }
+  h2 { font-size: 19px; }
+  .score-number { font-size: 56px; }
+  .intro-meta { flex-direction: column; gap: 8px; }
+  .cta-row { flex-direction: column; }
+  .cta-primary-link, .cta-secondary-link { min-width: 0; }
+}
+</style>
+<script async src="https://tally.so/widgets/embed.js"></script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="brand" id="brand-header"></div>
+    <div class="tagline" id="brand-tagline"></div>
+  </header>
+  <div class="card" id="quiz-card"></div>
+  <p class="footer-disclaimer" id="footer-disclaimer"></p>
+</div>
+<script>
+const CONFIG = {
+  brand: {
+    name: "GrowthExpertz", initials: "GE", logoUrl: "",
+    tagline: "Fractional Growth Consultants For Startups",
+    colors: { primary: "#0a1f3d", primaryLight: "#152e58", accent: "#10b981", accentDark: "#059669", bg: "#f5f8f5", card: "#ffffff", text: "#0f172a", textMuted: "#5a6478", border: "#e2e8f0" }
+  },
+  meta: {
+    pageTitle: "Startup Growth Readiness Score — GrowthExpertz",
+    pageDesc: "5 questions. Find out exactly what's blocking your startup's growth — and what to fix first.",
+    scoreLabel: "Your Growth Score",
+    footerNote: "Built for GrowthExpertz · growthexpertz.com",
+  },
+  intro: {
+    headline: "What's Actually Blocking Your Startup's Growth?",
+    lede: "Answer 5 questions. Get a clear diagnosis of where your growth engine is broken — and what a fix looks like.",
+    ctaLabel: "Start the assessment",
+    trustItems: ["✓ 5 questions — 2 minutes", "✓ Instant score + breakdown", "✓ No fluff, straight diagnosis"],
+  },
+  questions: [
+    {
+      id: "q1", type: "radio",
+      headline: "Where does most of your new business come from right now?",
+      hint: "Be honest — most founders are further back than they think.",
+      label: "Pick the option that best matches your situation",
+      options: [
+        { value: "founder_only",     label: "Founder network and referrals only — when I'm not selling, pipeline stops",                   points: 25, reason: "Founder-dependent revenue has a ceiling. It can't scale past one person's bandwidth and makes the business hard to grow or sell." },
+        { value: "mostly_referrals", label: "Mostly referrals with occasional inbound — nothing consistent behind it",                      points: 20, reason: "Referrals are high quality but unpredictable. You can't build a growth plan on something you can't control." },
+        { value: "outbound_mix",     label: "Some outbound and some inbound — but no unified strategy connecting them",                     points: 15, reason: "Disconnected channels compete for attention instead of compounding. The effort is there; the system isn't." },
+        { value: "multi_channel",    label: "Multiple documented channels that generate pipeline without me in every deal",                 points: 5,  reason: "You've built the hardest part. The opportunity is in optimizing and scaling what's already working." },
+      ]
+    },
+    {
+      id: "q2", type: "radio",
+      headline: "How would you describe your current marketing leadership?",
+      hint: "This is where most startups underinvest until it's too late.",
+      label: "Pick the closest match",
+      options: [
+        { value: "none",             label: "No marketing leader — the founder is doing it all between everything else",                    points: 25, reason: "Marketing without a dedicated owner gets deprioritized. Strategy doesn't get built, channels don't get tested, growth stalls." },
+        { value: "junior",           label: "Junior hire or generalist agency managing it — no senior strategic direction",                 points: 20, reason: "Execution without strategy means spending time and money on the wrong things. You need someone who's seen the movie before." },
+        { value: "stretched",        label: "A VP or Director, but stretched thin — too many channels, not enough bandwidth",               points: 15, reason: "A good operator with too much on their plate still produces inconsistent output. Bandwidth is the bottleneck." },
+        { value: "senior",           label: "Senior marketing leader with clear strategy, execution oversight, and measurable KPIs",        points: 5,  reason: "You have the leadership layer most startups spend years trying to build. Now it's about execution and compounding." },
+      ]
+    },
+    {
+      id: "q3", type: "radio",
+      headline: "How predictable is your revenue growth right now?",
+      hint: "Predictability is the difference between a business and a lottery ticket.",
+      label: "Select the option that best describes your situation",
+      options: [
+        { value: "unpredictable",    label: "We can't predict next quarter — it depends on who we know and who happens to reach out",       points: 25, reason: "Unpredictable revenue makes it impossible to hire, invest, or plan. Every month is a fresh start from zero." },
+        { value: "growing_unclear",  label: "We're growing but can't explain why or replicate it consistently",                             points: 20, reason: "Accidental growth is dangerous. You can't double down on what you don't understand." },
+        { value: "some_channels",    label: "Some predictability from 1-2 channels but they're not compounding or scaling",                 points: 15, reason: "A single working channel is fragile. One algorithm change or market shift can wipe out your pipeline." },
+        { value: "repeatable",       label: "Clear, repeatable growth engine — we know which inputs drive pipeline and can dial them up",   points: 5,  reason: "Repeatable growth is a moat. You can now focus on scale and efficiency rather than survival." },
+      ]
+    },
+    {
+      id: "q4", type: "radio",
+      headline: "How is your startup showing up online?",
+      hint: "Your prospects are looking you up before they ever talk to you.",
+      label: "Pick the closest match",
+      options: [
+        { value: "minimal",          label: "Minimal presence — we have a site but no real search visibility, content, or authority",       points: 25, reason: "If prospects can't find you or don't see proof when they look, you're losing deals before the conversation starts." },
+        { value: "some_content",     label: "Some content or SEO but no real strategy — we publish when we have time",                     points: 20, reason: "Inconsistent content builds no authority. You need a repeatable system, not occasional posts." },
+        { value: "active_scattered", label: "Active on multiple channels but scattered — no unified message or clear ICP focus",           points: 15, reason: "Scattered presence diffuses your authority instead of building it. Narrowing focus compounds faster." },
+        { value: "strong",           label: "Strong — consistent content, search visibility, and a clear point of view that attracts the right people", points: 5, reason: "Online authority is a durable asset. Every piece of content you publish now compounds over time." },
+      ]
+    },
+    {
+      id: "q5", type: "radio",
+      headline: "What's your single biggest growth challenge right now?",
+      label: "Pick the one that feels most true",
+      options: [
+        { value: "not_enough_leads", label: "Not generating enough qualified leads — top of funnel is too thin",                           points: 15, reason: "Thin top of funnel is usually a channel or messaging problem — not an effort problem. More activity on the wrong thing won't fix it." },
+        { value: "wrong_leads",      label: "Getting leads but they're the wrong fit — wasting time on bad prospects",                     points: 15, reason: "Poor lead quality points to a positioning or targeting problem. You're visible to the wrong people." },
+        { value: "slow_close",       label: "Pipeline exists but deals take too long to close or die in the middle",                       points: 10, reason: "Long cycles usually mean the prospect isn't convinced of urgency or ROI — a messaging and nurture problem, not a sales problem." },
+        { value: "scaling",          label: "Growth is working — we need to scale without breaking what's already running",                points: 5,  reason: "Scaling what works requires systems, process, and sometimes different people. The risk is complexity creeping in." },
+      ]
+    },
+  ],
+  bands: [
+    { key: "CRITICAL", label: "Starting Point",    min: 76, max: 100, color: "#dc2626" },
+    { key: "ELEVATED", label: "Real Gaps",         min: 51, max: 75,  color: "#ea580c" },
+    { key: "MODERATE", label: "Getting There",     min: 26, max: 50,  color: "#0a1f3d" },
+    { key: "LOW",      label: "Strong Foundation", min: 0,  max: 25,  color: "#10b981" },
+  ],
+  forceBand: [],
+  results: {
+    LOW: {
+      summary: "Your growth engine is stronger than most startups at your stage. You have repeatable channels, marketing leadership, and a clear online presence. The opportunity now is compounding — tighter attribution, faster experimentation, and scaling your best channels without adding complexity.",
+      ctaHeadline: "Find the highest-leverage place to accelerate from here.",
+      ctaSubhead: "GrowthExpertz can run a Growth Opportunity Scan — identifying your next 20% of growth without rebuilding what's already working.",
+      primaryLabel: "Talk to GrowthExpertz", primaryUrl: "https://growthexpertz.com/contact/",
+      secondaryLabel: "See how we work", secondaryUrl: "https://growthexpertz.com/our-marketing-process/",
+      math: "",
+    },
+    MODERATE: {
+      summary: "Your startup is moving but leaving significant growth on the table. You have some infrastructure in place, but gaps in leadership, channel consistency, or online presence mean effort isn't compounding the way it should. These are fixable problems — but they don't fix themselves.",
+      ctaHeadline: "Your growth gaps are fixable. Here's where to start.",
+      ctaSubhead: "A free conversation with Andrew will pinpoint the highest-leverage gap in your growth engine and what a realistic fix looks like.",
+      primaryLabel: "Talk to Andrew", primaryUrl: "https://calendly.com/growthexpertz/letschat",
+      secondaryLabel: "See GrowthExpertz's approach", secondaryUrl: "https://growthexpertz.com/our-marketing-process/",
+      math: "<strong>The benchmark:</strong> Startups with senior marketing leadership generate 2–3x more pipeline from the same budget. The gap is usually recoverable within one quarter with the right system.",
+    },
+    ELEVATED: {
+      summary: "Your answers point to a startup with real structural growth gaps. You may be generating some revenue, but it's too dependent on the founder, too hard to predict, and too slow to accelerate. More activity won't fix it. The problem is in the system — how leads get generated, qualified, and converted.",
+      ctaHeadline: "Your growth system has gaps that effort alone won't close.",
+      ctaSubhead: "Andrew can show you exactly which part of your growth engine is breaking down and what it takes to fix it. No pitch, no pressure.",
+      primaryLabel: "Book a Free Strategy Call", primaryUrl: "https://calendly.com/growthexpertz/letschat",
+      secondaryLabel: "Why fractional works", secondaryUrl: "https://growthexpertz.com/why-fractional/",
+      math: "<strong>The benchmark:</strong> Startups stuck in founder-led growth spend an average of 2–3 years trying to scale past it without outside help — at a fraction of the revenue they could be generating with the right system.",
+    },
+    CRITICAL: {
+      summary: "Your score reflects a startup generating revenue without a growth system. What you have is working today — but it's founder-dependent, unpredictable, and won't scale past current levels without a fundamental change in how you acquire, convert, and retain customers. This is exactly the problem GrowthExpertz was built to solve.",
+      ctaHeadline: "You need a growth system, not more founder hustle.",
+      ctaSubhead: "Book a free call with Andrew. He'll diagnose exactly what's blocking scalable growth in your startup and show you what it takes to fix it.",
+      primaryLabel: "Book a Free Call with Andrew", primaryUrl: "https://calendly.com/growthexpertz/letschat",
+      secondaryLabel: "See how GrowthExpertz works", secondaryUrl: "https://growthexpertz.com/our-marketing-process/",
+      math: "<strong>The cost of waiting:</strong> Every month of founder-dependent revenue is a month where a competitor with a real growth system is building pipeline you're not capturing.",
+    },
+  },
+  emailCapture: {
+    headline: "Get your results sent to your inbox",
+    lede: "We'll send a copy of your score plus a short breakdown of the highest-leverage next step based on your answers.",
+    submitLabel: "Send me the results",
+    thankYou: "You're all set — check your inbox.",
+    privacyNote: "No spam. Your answers are shared only with Andrew at GrowthExpertz.",
+    endpoint: "https://formsubmit.co/ajax/justin.solo.kohima@gmail.com",
+  },
+};
+
+// ============================================================
+//  E N G I N E — do not edit below this line
+// ============================================================
+const answers = {};
+CONFIG.questions.forEach(q => { answers[q.id] = null; });
+const STEPS = ["intro", ...CONFIG.questions.map((_, i) => "q" + i), "results"];
+let currentStepIdx = 0;
+function hexToRgb(hex) { const clean = hex.replace("#", ""); return `${parseInt(clean.slice(0,2),16)}, ${parseInt(clean.slice(2,4),16)}, ${parseInt(clean.slice(4,6),16)}`; }
+function applyBrand() {
+  const c = CONFIG.brand.colors, r = document.documentElement;
+  r.style.setProperty("--brand-primary", c.primary); r.style.setProperty("--brand-primary-light", c.primaryLight);
+  r.style.setProperty("--brand-accent", c.accent); r.style.setProperty("--brand-accent-dark", c.accentDark);
+  r.style.setProperty("--brand-accent-rgb", hexToRgb(c.accent)); r.style.setProperty("--bg", c.bg);
+  r.style.setProperty("--card", c.card); r.style.setProperty("--text", c.text);
+  r.style.setProperty("--text-muted", c.textMuted); r.style.setProperty("--border", c.border);
+  document.getElementById("page-title").textContent = CONFIG.meta.pageTitle;
+  document.getElementById("page-desc").setAttribute("content", CONFIG.meta.pageDesc);
+  document.getElementById("footer-disclaimer").textContent = CONFIG.meta.footerNote;
+  document.getElementById("brand-tagline").textContent = CONFIG.brand.tagline;
+  const mark = CONFIG.brand.logoUrl ? `<img src="${CONFIG.brand.logoUrl}" style="width:32px;height:32px;object-fit:contain;border-radius:4px;" alt="${CONFIG.brand.name} logo">` : `<div class="brand-mark">${CONFIG.brand.initials}</div>`;
+  document.getElementById("brand-header").innerHTML = `${mark}<span>${CONFIG.brand.name}</span>`;
+}
+function buildQuiz() { const card = document.getElementById("quiz-card"); card.innerHTML = ""; card.appendChild(buildIntroSection()); CONFIG.questions.forEach((q, i) => card.appendChild(buildQuestionSection(q, i))); card.appendChild(buildResultsSection()); }
+function buildIntroSection() { const s = document.createElement("section"); s.id = "step-intro"; s.className = "step active"; const trustHtml = CONFIG.intro.trustItems.map(t => `<div class="intro-meta-item">${t}</div>`).join(""); s.innerHTML = `<h1>${CONFIG.intro.headline}</h1><p class="lede">${CONFIG.intro.lede}</p><div class="btn-row"><button class="btn btn-primary" onclick="navigate(1)">${CONFIG.intro.ctaLabel}</button></div><div class="intro-meta">${trustHtml}</div>`; return s; }
+function buildQuestionSection(q, i) {
+  const stepIdx = i + 1, totalQ = CONFIG.questions.length, pct = Math.round((stepIdx / (totalQ + 1)) * 100), isLast = i === totalQ - 1, nextLabel = isLast ? "See my score" : "Next";
+  const opts = (q.options || []).map(o => `<label class="option"><input type="radio" name="radio-${q.id}" value="${o.value}" onchange="onRadioAnswer('${q.id}', ${i}, '${o.value}')">${o.label}</label>`).join("");
+  const inputHtml = `<label class="q-label">${q.label || ""}</label><div class="option-group" id="group-${q.id}">${opts}</div>`;
+  const hintHtml = q.hint ? `<p class="hint">${q.hint}</p>` : "";
+  const s = document.createElement("section"); s.id = "step-q" + i; s.className = "step";
+  s.innerHTML = `<div class="progress-strip"><div class="progress-fill" style="width:${pct}%"></div></div><div class="step-label">Question ${stepIdx} of ${totalQ}</div><h2>${q.headline}</h2>${hintHtml}${inputHtml}<div class="btn-row"><button class="btn btn-secondary" onclick="navigate(${stepIdx - 1})">Back</button><button class="btn btn-primary" id="btn-next-q${i}" disabled onclick="${isLast ? "showResults()" : "navigate(" + (stepIdx + 1) + ")"}">${nextLabel}</button></div>`;
+  return s;
+}
+function buildResultsSection() {
+  const s = document.createElement("section"); s.id = "step-results"; s.className = "step";
+  s.innerHTML = `<div class="score-display"><div class="step-label">${CONFIG.meta.scoreLabel}</div><div class="score-number" id="scoreNumber">—<span class="score-out-of"> / 100</span></div><div class="score-band-label" id="scoreBandLabel">—</div></div><div class="summary-text" id="summaryText"></div>
+<ul class="factor-list" id="factorList"></ul><div class="cta-block"><h3 id="ctaHeadline"></h3><p id="ctaSubhead"></p><div class="cta-row" id="ctaRow"></div><div class="math-block" id="mathBlock" style="display:none;"></div></div>
+<div id="emailCaptureWrap" style="margin-top:32px;padding:28px;background:var(--bg);border:1px solid var(--border);border-radius:12px;text-align:center;">
+  <h3 style="font-size:18px;color:var(--brand-primary);margin-bottom:8px;">Get your results sent to your inbox</h3>
+  <p style="font-size:15px;color:var(--text-muted);margin-bottom:20px;">Takes 30 seconds. We'll send a breakdown of your score and the highest-leverage next step.</p>
+  <button data-tally-open="Pdk9WV" data-tally-width="500" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" class="btn btn-primary" style="font-size:16px;padding:16px 32px;">Get my results →</button>
+  <p style="font-size:12px;color:var(--text-muted);margin-top:12px;">No spam. Takes 30 seconds.</p>
+</div>
+<div class="btn-row" style="justify-content:center;margin-top:24px;"><button class="btn btn-secondary" onclick="restart()">Retake assessment</button></div>`;
+  return s;
+}
+function navigate(targetIdx) { document.querySelectorAll(".step").forEach(el => el.classList.remove("active")); const stepId = STEPS[targetIdx]; let el; if (stepId === "intro") el = document.getElementById("step-intro"); else if (stepId === "results") el = document.getElementById("step-results"); else { const qIdx = parseInt(stepId.replace("q",""),10); el = document.getElementById("step-q"+qIdx); } if (el) { el.classList.add("active"); currentStepIdx = targetIdx; window.scrollTo({top:0,behavior:"smooth"}); } }
+function onRadioAnswer(qId, qIdx, value) { answers[qId] = value; const btn = document.getElementById("btn-next-q" + qIdx); if (btn) btn.disabled = false; const group = document.getElementById("group-" + qId); if (group) { group.querySelectorAll(".option").forEach(o => o.classList.remove("selected")); const inp = group.querySelector(`input[value="${value}"]`); if (inp) inp.closest(".option").classList.add("selected"); } }
+function assignBand(score) { for (const band of CONFIG.bands) { if (score >= band.min && score <= band.max) return band; } return CONFIG.bands[CONFIG.bands.length - 1]; }
+function calculateScore() { const factors = []; let total = 0; CONFIG.questions.forEach(q => { const val = answers[q.id]; if (!val) return; const opt = (q.options || []).find(o => o.value === val); if (opt) { total += opt.points; factors.push({ label: opt.label, points: opt.points, reason: opt.reason || "" }); } }); total = Math.max(0, Math.min(100, total)); const band = assignBand(total); return { total, band, factors }; }
+function showResults() { navigate(STEPS.indexOf("results")); renderResults(); }
+function renderResults() {
+  const { total, band, factors } = calculateScore();
+  const copy = CONFIG.results[band.key];
+  if (!copy) return;
+  const numEl = document.getElementById("scoreNumber");
+  numEl.innerHTML = total + '<span class="score-out-of"> / 100</span>';
+  numEl.style.color = band.color;
+  const bandEl = document.getElementById("scoreBandLabel");
+  bandEl.textContent = band.label; bandEl.style.background = band.color;
+  document.getElementById("summaryText").innerHTML = copy.summary;
+  const list = document.getElementById("factorList");
+  list.innerHTML = "";
+  const working = factors.filter(f => f.points <= 8);
+  const gaps = factors.filter(f => f.points > 8);
+  if (working.length > 0) {
+    const wtitle = document.createElement("div");
+    wtitle.style.cssText = "font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:#10b981;margin-bottom:8px;";
+    wtitle.textContent = "What's working"; list.appendChild(wtitle);
+    working.forEach(f => { const li = document.createElement("li"); li.innerHTML = `<div class="factor-label"><strong>${f.label}</strong>${f.reason ? `<br><span style="color:var(--text-muted);font-size:14px;">${f.reason}</span>` : ""}</div><span class="factor-points" style="background:rgba(16,185,129,0.1);color:#10b981;">✓ good</span>`; list.appendChild(li); });
+  }
+  if (gaps.length > 0) {
+    const gtitle = document.createElement("div");
+    gtitle.style.cssText = "font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-top:" + (working.length > 0 ? "20px" : "0") + ";margin-bottom:8px;";
+    gtitle.textContent = "Where to focus"; list.appendChild(gtitle);
+    gaps.forEach(f => { const severity = f.points >= 20 ? "#dc2626" : "#ea580c"; const slabel = f.points >= 20 ? "high" : "medium"; const li = document.createElement("li"); li.innerHTML = `<div class="factor-label"><strong>${f.label}</strong>${f.reason ? `<br><span style="color:var(--text-muted);font-size:14px;">${f.reason}</span>` : ""}</div><span class="factor-points" style="background:rgba(220,38,38,0.1);color:${severity};">${slabel}</span>`; list.appendChild(li); });
+  }
+  document.getElementById("ctaHeadline").textContent = copy.ctaHeadline;
+  document.getElementById("ctaSubhead").textContent = copy.ctaSubhead;
+  document.getElementById("ctaRow").innerHTML = `<a href="${copy.primaryUrl}" target="_blank" class="cta-btn cta-primary-link">${copy.primaryLabel} →</a><a href="${copy.secondaryUrl}" target="_blank" class="cta-btn cta-secondary-link">${copy.secondaryLabel}</a>`;
+  const mathEl = document.getElementById("mathBlock");
+  mathEl.innerHTML = copy.math || ""; mathEl.style.display = copy.math ? "block" : "none";
+}
+function restart() { CONFIG.questions.forEach(q => { answers[q.id] = null; }); document.querySelectorAll("input[type=radio]").forEach(i => i.checked = false); document.querySelectorAll(".option.selected").forEach(o => o.classList.remove("selected")); document.querySelectorAll("[id^='btn-next-q']").forEach(b => { b.disabled = true; }); const card = document.getElementById("quiz-card"); const oldResults = document.getElementById("step-results"); if (oldResults) card.replaceChild(buildResultsSection(), oldResults); navigate(0); }
+applyBrand();
+buildQuiz();
+</script>
+</body>
+</html>
