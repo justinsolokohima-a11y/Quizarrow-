@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title"></title>
+<meta name="description" id="page-desc" content="">
+<style>
+:root {
+  --brand-primary:       #0a1f3d;
+  --brand-primary-light: #162f58;
+  --brand-accent:        #2563eb;
+  --brand-accent-dark:   #1d4ed8;
+  --brand-accent-rgb:    37, 99, 235;
+  --bg:                  #f4f7fb;
+  --card:                #ffffff;
+  --text:                #1a1a2e;
+  --text-muted:          #5a6478;
+  --border:              #dde4ef;
+  --shadow:              0 4px 20px rgba(10, 31, 61, 0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+.container { max-width: 720px; margin: 0 auto; padding: 24px 16px 64px; }
+header { text-align: center; margin-bottom: 32px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--brand-primary); letter-spacing: 0.3px; }
+.brand-mark { width: 32px; height: 32px; border-radius: 50%; background: var(--brand-primary); border: 2px solid var(--brand-accent); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 13px; }
+.tagline { margin-top: 4px; font-size: 13px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
+.card { background: var(--card); border-radius: 12px; padding: 32px 28px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+.step { display: none; }
+.step.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+h1 { font-size: 28px; line-height: 1.25; color: var(--brand-primary); margin-bottom: 16px; font-weight: 700; }
+h2 { font-size: 22px; line-height: 1.3; color: var(--brand-primary); margin-bottom: 20px; font-weight: 700; }
+.lede { font-size: 17px; color: var(--text-muted); margin-bottom: 24px; }
+.progress-strip { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 24px; }
+.progress-fill { height: 100%; background: var(--brand-accent); transition: width 0.3s ease; border-radius: 2px; }
+.step-label { font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+label.q-label { display: block; font-weight: 600; margin: 16px 0 12px; color: var(--brand-primary); font-size: 15px; }
+.hint { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
+.option-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s ease; font-size: 15px; }
+.option:hover { border-color: var(--brand-accent); background: white; }
+.option input { margin-top: 4px; cursor: pointer; accent-color: var(--brand-accent); }
+.option.selected { border-color: var(--brand-accent); background: rgba(var(--brand-accent-rgb), 0.06); }
+.btn-row { display: flex; gap: 12px; margin-top: 24px; align-items: center; }
+.btn { padding: 14px 24px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s ease; }
+.btn-primary { background: var(--brand-accent); color: white; }
+.btn-primary:hover { background: var(--brand-accent-dark); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-secondary { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+.btn-secondary:hover { color: var(--brand-primary); border-color: var(--brand-primary); }
+.intro-meta { display: flex; gap: 24px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
+.intro-meta-item { display: flex; align-items: center; gap: 6px; }
+.footer-disclaimer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 24px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+.score-display { text-align: center; padding: 24px 0; }
+.score-number { font-size: 72px; font-weight: 800; line-height: 1; margin-bottom: 8px; }
+.score-band-label { display: inline-block; padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: white; margin-bottom: 16px; }
+.score-out-of { color: var(--text-muted); font-size: 18px; font-weight: 500; }
+.summary-text { font-size: 16px; margin: 24px 0; padding: 20px; background: var(--bg); border-left: 3px solid var(--brand-accent); border-radius: 4px; }
+.factors-title { font-weight: 700; font-size: 16px; margin: 28px 0 12px; color: var(--brand-primary); }
+.factor-list { list-style: none; }
+.factor-list li { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 15px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.factor-list li:last-child { border-bottom: none; }
+.factor-label { flex: 1; }
+.factor-points { font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; min-width: 36px; text-align: center; }
+.factor-points.positive { background: rgba(220,38,38,0.1); color: #dc2626; border: 1px solid rgba(220,38,38,0.2); }
+.factor-points.neutral  { background: rgba(234,88,12,0.1);  color: #ea580c; border: 1px solid rgba(234,88,12,0.2); }
+.factor-points.negative { background: rgba(22,163,74,0.1);  color: #16a34a; border: 1px solid rgba(22,163,74,0.2); }
+.cta-block { margin-top: 32px; padding: 28px; background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-light) 100%); color: white; border-radius: 12px; }
+.cta-block h3 { font-size: 20px; margin-bottom: 8px; color: white; }
+.cta-block p { color: rgba(255,255,255,0.85); margin-bottom: 20px; font-size: 15px; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.cta-btn { display: inline-block; padding: 14px 22px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 14px; text-align: center; transition: all 0.15s ease; }
+.cta-primary-link { background: var(--brand-accent); color: white; flex: 1; min-width: 220px; }
+.cta-primary-link:hover { background: var(--brand-accent-dark); }
+.cta-secondary-link { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); flex: 1; min-width: 220px; }
+.cta-secondary-link:hover { border-color: white; background: rgba(255,255,255,0.06); }
+.math-block { margin-top: 24px; padding: 16px; background: rgba(var(--brand-accent-rgb), 0.12); border-radius: 8px; font-size: 14px; color: #e0eaff; }
+.math-block strong { color: #93c5fd; }
+.solution-block { margin-top: 20px; padding: 20px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; font-size: 15px; color: #166534; }
+.solution-block strong { color: #14532d; display: block; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+@media (max-width: 600px) { .card { padding: 24px 20px; } h1 { font-size: 24px; } h2 { font-size: 19px; } .score-number { font-size: 56px; } .intro-meta { flex-direction: column; gap: 8px; } .cta-row { flex-direction: column; } .cta-primary-link, .cta-secondary-link { min-width: 0; } }
+</style>
+<script async src="https://tally.so/widgets/embed.js"></script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="brand" id="brand-header"></div>
+    <div class="tagline" id="brand-tagline"></div>
+  </header>
+  <div class="card" id="quiz-card"></div>
+  <p class="footer-disclaimer" id="footer-disclaimer"></p>
+</div>
+
+<script>
+const CONFIG = {
+
+  brand: {
+    name:     "Kendec",
+    initials: "GS",
+    logoUrl:  "",
+    tagline:  "B2B Marketing Strategy",
+    colors: {
+      primary:      "#0a1f3d",
+      primaryLight: "#162f58",
+      accent:       "#2563eb",
+      accentDark:   "#1d4ed8",
+      bg:           "#f4f7fb",
+      card:         "#ffffff",
+      text:         "#1a1a2e",
+      textMuted:    "#5a6478",
+      border:       "#dde4ef",
+    }
+  },
+
+  meta: {
+    pageTitle:  "B2B Marketing Stage Assessment — Kendec",
+    pageDesc:   "Find out where your B2B company stands on thought leadership maturity — and what it takes to own your category. 5 questions, instant score.",
+    scoreLabel: "Your Category Leadership Score",
+    footerNote: "Built for Kendec · cmoandgrow.com",
+  },
+
+  intro: {
+    headline:   "What's Your B2B Marketing Stage?",
+    lede:       "5 questions. Find out if your marketing is aligned with where your company actually is — and what the next move should be.",
+    ctaLabel:   "Start the assessment",
+    trustItems: [
+      "✓ 5 questions — 2 minutes",
+      "✓ Instant category leadership score",
+      "✓ Specific next steps for your stage",
+    ],
+  },
+
+  questions: [
+    {
+      id:       "q1",
+      type:     "radio",
+      headline: "Where is your B2B company in its growth journey?",
+      hint:     "Pick the stage that best describes where you are today.",
+      label:    "Select the closest match",
+      options: [
+        { value: "early",  label: "Early — pre-revenue or under $1M, finding product-market fit",         points: 25, reason: "Early-stage companies need positioning and GTM clarity before scaling anything." },
+        { value: "growth", label: "Growth — $1M–$10M, gaining traction but growth is inconsistent",       points: 20, reason: "Growth-stage companies often outpace their marketing systems — pipeline becomes unpredictable." },
+        { value: "scale",  label: "Scale — $10M+, focused on operational efficiency and new markets",     points: 15, reason: "At scale, marketing must mature into a performance function aligned with sales and RevOps." },
+        { value: "exit",   label: "Exit — preparing for M&A, PE recap, or IPO in the next 1–3 years",    points: 10, reason: "Exit-stage companies need marketing metrics and narrative that hold up to investor scrutiny." },
+      ]
+    },
+    {
+      id:       "q2",
+      type:     "radio",
+      headline: "What's your biggest marketing challenge right now?",
+      hint:     "Pick the one that's costing you the most pipeline.",
+      label:    "Select the option that best fits",
+      options: [
+        { value: "no_icp",       label: "We don't have a clear ICP or value proposition that resonates",     points: 25, reason: "Without a sharp ICP and positioning, every downstream tactic underperforms." },
+        { value: "no_pipeline",  label: "We can't generate consistent, qualified pipeline",                  points: 22, reason: "Inconsistent pipeline is the clearest signal of a missing demand generation system." },
+        { value: "misaligned",   label: "Marketing and sales aren't aligned — leads don't convert",          points: 18, reason: "Sales-marketing misalignment inflates CAC and kills pipeline velocity." },
+        { value: "no_data",      label: "We lack the data to make confident marketing decisions",            points: 12, reason: "Decisions without attribution data tend to compound wasted spend quarter over quarter." },
+      ]
+    },
+    {
+      id:       "q3",
+      type:     "radio",
+      headline: "Who's leading your marketing today?",
+      hint:     "Be honest — this is often where the strategic gap lives.",
+      label:    "Pick the closest match",
+      options: [
+        { value: "no_one",   label: "Nobody dedicated — the founder or CEO handles it when there's bandwidth", points: 25, reason: "Marketing without dedicated senior leadership rarely produces a scalable, repeatable system." },
+        { value: "junior",   label: "A junior marketer or coordinator — mostly tactical execution",             points: 20, reason: "Junior marketers execute well but can't own the strategic layer or direct agencies effectively." },
+        { value: "agency",   label: "An outside agency — results have been mixed or hard to measure",          points: 15, reason: "Agencies perform best when directed by a senior marketing leader who owns the strategy." },
+        { value: "director", label: "A Marketing Director or VP — but pipeline still isn't where it needs to be", points: 8, reason: "Leadership is in place — the gap is likely systemic or strategic, not execution." },
+      ]
+    },
+    {
+      id:       "q4",
+      type:     "radio",
+      headline: "How would you describe your current lead generation?",
+      hint:     "Think about where your last 10 leads actually came from.",
+      label:    "Pick the closest match",
+      options: [
+        { value: "referrals",     label: "Almost entirely referrals and word of mouth — hard to scale",          points: 25, reason: "Referral-only pipelines hit a ceiling at the founder's network — they don't compound." },
+        { value: "unpredictable", label: "Inconsistent — good months and bad months with no clear reason why",   points: 20, reason: "Unpredictable pipeline means the demand system isn't built yet." },
+        { value: "some_inbound",  label: "Some inbound from content or ads, but volume is too low",              points: 12, reason: "Foundation exists — the gap is in diagnosing what's limiting volume and conversion." },
+        { value: "working",       label: "We have a working inbound system, just want to optimise it",           points: 5,  reason: "Strong foundation — the opportunity is compounding what's already producing." },
+      ]
+    },
+    {
+      id:       "q5",
+      type:     "radio",
+      headline: "How do you currently measure marketing performance?",
+      hint:     "Not what you plan to do — what you actually do today.",
+      label:    "Pick the closest match",
+      options: [
+        { value: "nothing",   label: "We don't track it formally — gut feel and revenue are the main signals",   points: 20, reason: "Without measurement, it's impossible to know what's working or where to invest next." },
+        { value: "vanity",    label: "We track traffic and social metrics but can't tie them to revenue",        points: 15, reason: "Vanity metrics create false confidence — they rarely correlate with pipeline or revenue." },
+        { value: "partial",   label: "We track some pipeline metrics but attribution is manual and incomplete",  points: 10, reason: "Partial measurement leads to partial decisions — gaps in attribution compound over time." },
+        { value: "full",      label: "Full funnel analytics — we know exactly what's driving revenue",           points: 3,  reason: "Strong measurement foundation — most of the work is in optimising what you can already see." },
+      ]
+    },
+  ],
+
+  bands: [
+    { key: "CRITICAL", label: "Needs Strategic Alignment", min: 81, max: 100, color: "#dc2626" },
+    { key: "ELEVATED", label: "Clear Gaps to Address",     min: 61, max: 80,  color: "#ea580c" },
+    { key: "MODERATE", label: "Growth Opportunity",        min: 31, max: 60,  color: "#2563eb" },
+    { key: "LOW",      label: "Strong Foundation",         min: 0,  max: 30,  color: "#16a34a" },
+  ],
+
+  forceBand: [],
+
+  results: {
+    LOW: {
+      summary:        "Your thought leadership foundation is strong. You have visibility, inbound, and a content system that's producing. The opportunity is to find the specific places where sharper positioning, better distribution, or a stronger conversion layer could compound what's already working.",
+      solution:       "A strategic PR and content audit can identify your 2-3 highest-leverage gaps — usually compounding an already-working thought leadership system adds significantly more inbound without increasing spend.",
+      ctaHeadline:    "Find where your marketing is leaving pipeline on the table.",
+      ctaSubhead:     "A short strategy conversation with Chris will identify your highest-leverage opportunities — no pitch, no commitment.",
+      primaryLabel:   "Talk to Chris",
+      primaryUrl:     "mailto:chris@galestrategies.com?subject=Category%20leadership%20assessment",
+      secondaryLabel: "Learn more about Gale Strategies",
+      secondaryUrl:   "https://www.galestrategies.com",
+      math:           "",
+    },
+    MODERATE: {
+      summary:        "Your company has some visibility and content presence, but there are meaningful gaps — inconsistent inbound, a weak conversion step, or thought leadership that isn't compounding into category authority yet. These are fixable, but they require the right strategic approach.",
+      solution:       "The fix is a systematic thought leadership strategy tied to a real conversion layer. More content alone won't close the gap — you need a clear POV, consistent distribution, and a way for prospects to self-qualify when they land on your site.",
+      ctaHeadline:    "Your pipeline gaps are fixable. Here's where to start.",
+      ctaSubhead:     "Gale Strategies works with B2B tech and private capital firms at exactly this stage. A 30-minute conversation will show you what the fix looks like.",
+      primaryLabel:   "Talk to Chris",
+      primaryUrl:     "mailto:chris@galestrategies.com?subject=Strategy%20conversation",
+      secondaryLabel: "See what Gale Strategies does",
+      secondaryUrl:   "https://www.galestrategies.com",
+      math:           "<strong>The benchmark:</strong> B2B companies with a dedicated marketing system generate 3–5x more qualified pipeline than those relying on referrals and ad-hoc tactics. That gap compounds every quarter it goes unaddressed.",
+    },
+    ELEVATED: {
+      summary:        "Your answers reflect a company with strong expertise but a visibility gap — prospects who should know you don't, and when they land on your site there's no step to pull them in. The content and credibility are there. The system to turn them into pipeline isn't.",
+      solution:       "The three things companies at this stage need: a clear thought leadership POV, a consistent publishing cadence, and a conversion layer on the website. Gale Strategies builds all three — and measures the impact directly against your pipeline.",
+      ctaHeadline:    "Your pipeline gap is costing more than it looks like on the surface.",
+      ctaSubhead:     "Chris has worked with enterprise tech companies and private capital firms at exactly this stage. One conversation will diagnose the root cause and outline the fastest path to consistent pipeline.",
+      primaryLabel:   "Talk to Chris",
+      primaryUrl:     "mailto:chris@galestrategies.com?subject=Category%20leadership%20gap",
+      secondaryLabel: "Learn more about Gale Strategies",
+      secondaryUrl:   "https://www.galestrategies.com",
+      math:           "<strong>The benchmark:</strong> B2B companies that close the marketing-sales alignment gap reduce CAC by 30–60% within two quarters. The fix is usually faster than most expect once the right strategic layer is in place.",
+    },
+    CRITICAL: {
+      summary:        "Your score reflects a company with real expertise and no system to show it. No consistent content presence, no inbound, and when prospects do find you — a contact form. The fix is more straightforward than it looks, but every month without it is pipeline you're leaving behind.",
+      solution:       "The fastest path: a focused PR and thought leadership program that builds category authority over 90 days — media coverage, original POVs, and a conversion layer so inbound actually turns into pipeline. Gale Strategies has done this for enterprise tech and private capital firms.",
+      ctaHeadline:    "You need a marketing system, not more tactics.",
+      ctaSubhead:     "Gale Strategies works with B2B tech and private capital firms at this stage. He'll tell you exactly where your pipeline is breaking and what it takes to fix it — no deck, no pressure.",
+      primaryLabel:   "Talk to Chris",
+      primaryUrl:     "mailto:chris@galestrategies.com?subject=Thought%20leadership%20strategy",
+      secondaryLabel: "See how Gale Strategies works",
+      secondaryUrl:   "https://www.galestrategies.com",
+      math:           "<strong>The cost of waiting:</strong> B2B companies without a scalable marketing system at your stage typically spend 12–18 months recovering the pipeline gap — time that shows up directly in lost revenue and inflated CAC. The fix is faster than the delay.",
+    },
+  },
+
+  emailCapture: {
+    headline:    "Get your results sent to your inbox",
+    lede:        "We'll send you a breakdown of your score and the highest-leverage next step for your stage.",
+    fields: [
+      { id: "email",   type: "email", label: "Work email",   required: true,  placeholder: "you@company.com" },
+      { id: "company", type: "text",  label: "Company name", required: false, placeholder: "Your company" },
+    ],
+    submitLabel:  "Send me the results",
+    thankYou:     "You're all set — check your inbox.",
+    privacyNote:  "No spam. Your answers are shared only with Chris Gale at Gale Strategies.",
+    endpoint:     "https://formspree.io/f/YOUR_FORM_ID",
+  },
+
+};
+
+// ENGINE — do not edit below this line
+const answers = {};
+CONFIG.questions.forEach(q => { answers[q.id] = q.type === "checkbox" ? [] : null; });
+const STEPS = ["intro", ...CONFIG.questions.map((_, i) => "q" + i), "results"];
+let currentStepIdx = 0;
+
+function hexToRgb(hex) {
+  const clean = hex.replace("#", "");
+  return `${parseInt(clean.slice(0,2),16)}, ${parseInt(clean.slice(2,4),16)}, ${parseInt(clean.slice(4,6),16)}`;
+}
+
+function applyBrand() {
+  const c = CONFIG.brand.colors;
+  const r = document.documentElement;
+  r.style.setProperty("--brand-primary", c.primary);
+  r.style.setProperty("--brand-primary-light", c.primaryLight);
+  r.style.setProperty("--brand-accent", c.accent);
+  r.style.setProperty("--brand-accent-dark", c.accentDark);
+  r.style.setProperty("--brand-accent-rgb", hexToRgb(c.accent));
+  r.style.setProperty("--bg", c.bg);
+  r.style.setProperty("--card", c.card);
+  r.style.setProperty("--text", c.text);
+  r.style.setProperty("--text-muted", c.textMuted);
+  r.style.setProperty("--border", c.border);
+  document.getElementById("page-title").textContent = CONFIG.meta.pageTitle;
+  document.getElementById("page-desc").setAttribute("content", CONFIG.meta.pageDesc);
+  document.getElementById("footer-disclaimer").textContent = CONFIG.meta.footerNote;
+  document.getElementById("brand-tagline").textContent = CONFIG.brand.tagline;
+  const mark = CONFIG.brand.logoUrl
+    ? `<img src="${CONFIG.brand.logoUrl}" style="width:32px;height:32px;object-fit:contain;border-radius:4px;" alt="${CONFIG.brand.name} logo">`
+    : `<div class="brand-mark">${CONFIG.brand.initials}</div>`;
+  document.getElementById("brand-header").innerHTML = `${mark}<span>${CONFIG.brand.name}</span>`;
+}
+
+function buildQuiz() {
+  const card = document.getElementById("quiz-card");
+  card.innerHTML = "";
+  card.appendChild(buildIntroSection());
+  CONFIG.questions.forEach((q, i) => card.appendChild(buildQuestionSection(q, i)));
+  card.appendChild(buildResultsSection());
+}
+
+function buildIntroSection() {
+  const s = document.createElement("section");
+  s.id = "step-intro"; s.className = "step active";
+  const trustHtml = CONFIG.intro.trustItems.map(t => `<div class="intro-meta-item">${t}</div>`).join("");
+  s.innerHTML = `
+    <h1>${CONFIG.intro.headline}</h1>
+    <p class="lede">${CONFIG.intro.lede}</p>
+    <div class="btn-row"><button class="btn btn-primary" onclick="navigate(1)">${CONFIG.intro.ctaLabel}</button></div>
+    <div class="intro-meta">${trustHtml}</div>`;
+  return s;
+}
+
+function buildQuestionSection(q, i) {
+  const stepIdx = i + 1, totalQ = CONFIG.questions.length;
+  const pct = Math.round((stepIdx / (totalQ + 1)) * 100);
+  const isLast = i === totalQ - 1;
+  const nextLabel = isLast ? "See my score" : "Next";
+  const nextDisabled = q.type !== "checkbox" ? "disabled" : "";
+  let inputHtml = "";
+  if (q.type === "radio") {
+    const opts = (q.options || []).map(o => `
+      <label class="option">
+        <input type="radio" name="radio-${q.id}" value="${o.value}" onchange="onRadioAnswer('${q.id}', ${i}, '${o.value}')">
+        ${o.label}
+      </label>`).join("");
+    inputHtml = `<label class="q-label">${q.label || ""}</label><div class="option-group" id="group-${q.id}">${opts}</div>`;
+  } else if (q.type === "checkbox") {
+    const opts = (q.options || []).map(o => `
+      <label class="option">
+        <input type="checkbox" value="${o.value}" ${o.exclusive ? 'data-exclusive="true"' : ""} onchange="onCheckboxAnswer('${q.id}', event)">
+        ${o.label}
+      </label>`).join("");
+    inputHtml = `<label class="q-label">${q.label || ""}</label><div class="option-group" id="group-${q.id}">${opts}</div>`;
+  }
+  const hintHtml = q.hint ? `<p class="hint">${q.hint}</p>` : "";
+  const s = document.createElement("section");
+  s.id = "step-q" + i; s.className = "step";
+  s.innerHTML = `
+    <div class="progress-strip"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="step-label">Question ${stepIdx} of ${totalQ}</div>
+    <h2>${q.headline}</h2>
+    ${hintHtml}${inputHtml}
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="navigate(${stepIdx - 1})">Back</button>
+      <button class="btn btn-primary" id="btn-next-q${i}" ${nextDisabled}
+        onclick="${isLast ? "showResults()" : "navigate(" + (stepIdx + 1) + ")"}">${nextLabel}</button>
+    </div>`;
+  return s;
+}
+
+function buildResultsSection() {
+  const s = document.createElement("section");
+  s.id = "step-results"; s.className = "step";
+  s.innerHTML = `
+    <div class="score-display">
+      <div class="step-label">${CONFIG.meta.scoreLabel}</div>
+      <div class="score-number" id="scoreNumber">—<span class="score-out-of"> / 100</span></div>
+      <div class="score-band-label" id="scoreBandLabel">—</div>
+    </div>
+    <div class="summary-text" id="summaryText"></div>
+    <div class="factors-title">What's driving your score</div>
+    <ul class="factor-list" id="factorList"></ul>
+    <div class="cta-block">
+      <h3 id="ctaHeadline"></h3>
+      <p id="ctaSubhead"></p>
+      <div class="cta-row" id="ctaRow"></div>
+      <div class="math-block" id="mathBlock" style="display:none;"></div>
+    <div class="solution-block" id="solutionBlock" style="display:none;"></div>
+    </div>
+    <div id="emailCaptureWrap" style="margin-top:32px;padding:28px;background:var(--bg);border:1px solid var(--border);border-radius:12px;text-align:center;">
+      <h3 style="font-size:18px;color:var(--brand-primary);margin-bottom:8px;">Get your results sent to your inbox</h3>
+      <p style="font-size:15px;color:var(--text-muted);margin-bottom:20px;">Takes 30 seconds. We'll send a breakdown of your score and the next step for your stage.</p>
+      <button data-tally-open="zx1qyZ" data-tally-width="500" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" class="btn btn-primary" style="font-size:16px;padding:16px 32px;">Get my results →</button>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:12px;">No spam. Takes 30 seconds.</p>
+    </div>
+    <div class="btn-row" style="justify-content:center;margin-top:24px;">
+      <button class="btn btn-secondary" onclick="restart()">Retake assessment</button>
+    </div>`;
+  return s;
+}
+
+function navigate(targetIdx) {
+  document.querySelectorAll(".step").forEach(el => el.classList.remove("active"));
+  const stepId = STEPS[targetIdx];
+  let el;
+  if (stepId === "intro") el = document.getElementById("step-intro");
+  else if (stepId === "results") el = document.getElementById("step-results");
+  else { const qIdx = parseInt(stepId.replace("q",""),10); el = document.getElementById("step-q"+qIdx); }
+  if (el) { el.classList.add("active"); currentStepIdx = targetIdx; window.scrollTo({top:0,behavior:"smooth"}); }
+}
+
+function onRadioAnswer(qId, qIdx, value) {
+  answers[qId] = value;
+  const btn = document.getElementById("btn-next-q" + qIdx);
+  if (btn) btn.disabled = false;
+  const group = document.getElementById("group-" + qId);
+  if (group) {
+    group.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+    const inp = group.querySelector(`input[value="${value}"]`);
+    if (inp) inp.closest(".option").classList.add("selected");
+  }
+}
+
+function onCheckboxAnswer(qId, ev) {
+  const group = document.getElementById("group-" + qId);
+  const target = ev.target;
+  if (target.dataset.exclusive && target.checked) {
+    group.querySelectorAll("input[type=checkbox]").forEach(cb => { if (cb !== target) { cb.checked = false; cb.closest(".option").classList.remove("selected"); } });
+    answers[qId] = [target.value];
+  } else {
+    if (target.checked) {
+      const excl = group.querySelector("input[data-exclusive=true]");
+      if (excl) { excl.checked = false; excl.closest(".option").classList.remove("selected"); }
+    }
+    answers[qId] = Array.from(group.querySelectorAll("input:checked")).map(cb => cb.value);
+  }
+  target.closest(".option").classList.toggle("selected", target.checked);
+}
+
+function computeScore() {
+  let total = 0;
+  const factors = [];
+  CONFIG.questions.forEach(q => {
+    const ans = answers[q.id];
+    if (!ans || (Array.isArray(ans) && ans.length === 0)) return;
+    const vals = Array.isArray(ans) ? ans : [ans];
+    vals.forEach(v => {
+      const opt = (q.options || []).find(o => o.value === v);
+      if (opt) {
+        total += opt.points;
+        factors.push({ label: opt.label, points: opt.points, reason: opt.reason || "" });
+      }
+    });
+  });
+  return { raw: total, factors };
+}
+
+function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+function getBand(score) {
+  for (const b of CONFIG.bands) { if (score >= b.min && score <= b.max) return b; }
+  return CONFIG.bands[CONFIG.bands.length - 1];
+}
+
+function showResults() {
+  const { raw, factors } = computeScore();
+  const maxPossible = CONFIG.questions.reduce((acc, q) => {
+    const pts = (q.options || []).map(o => o.points);
+    return acc + Math.max(...pts);
+  }, 0);
+  const scaled = clamp(Math.round((raw / maxPossible) * 100), 0, 100);
+
+  let band = getBand(scaled);
+  for (const rule of (CONFIG.forceBand || [])) {
+    if (answers[rule.questionId] === rule.value) {
+      band = CONFIG.bands.find(b => b.key === rule.band) || band;
+      break;
+    }
+  }
+
+  document.getElementById("scoreNumber").innerHTML = `${scaled}<span class="score-out-of"> / 100</span>`;
+  const bandEl = document.getElementById("scoreBandLabel");
+  bandEl.textContent = band.label;
+  bandEl.style.background = band.color;
+
+  const res = CONFIG.results[band.key];
+  document.getElementById("summaryText").textContent = res.summary;
+
+  const fl = document.getElementById("factorList");
+  fl.innerHTML = "";
+  factors.forEach(f => {
+    const li = document.createElement("li");
+    let cls;
+    if (f.points >= 15)     { cls = "positive"; }
+    else if (f.points >= 8) { cls = "neutral"; }
+    else                    { cls = "negative"; }
+    const sign = f.points > 0 ? "+" : "";
+    li.innerHTML = `<span class="factor-label">${f.label}${f.reason ? `<br><small style="color:var(--text-muted);font-weight:400;">${f.reason}</small>` : ""}</span><span class="factor-points ${cls}">${sign}${f.points}</span>`;
+    fl.appendChild(li);
+  });
+
+  document.getElementById("ctaHeadline").textContent = res.ctaHeadline;
+  document.getElementById("ctaSubhead").textContent = res.ctaSubhead;
+  document.getElementById("ctaRow").innerHTML = `
+    <a href="${res.primaryUrl}" class="cta-btn cta-primary-link">${res.primaryLabel}</a>
+    <a href="${res.secondaryUrl}" class="cta-btn cta-secondary-link">${res.secondaryLabel}</a>`;
+  const mb = document.getElementById("mathBlock");
+  if (res.math) { mb.innerHTML = res.math; mb.style.display = "block"; } else { mb.style.display = "none"; }
+  const sb = document.getElementById("solutionBlock");
+  if (res.solution) { sb.innerHTML = `<strong>What to do next</strong>${res.solution}`; sb.style.display = "block"; } else { sb.style.display = "none"; }
+
+  navigate(STEPS.indexOf("results"));
+}
+
+function restart() {
+  CONFIG.questions.forEach(q => { answers[q.id] = q.type === "checkbox" ? [] : null; });
+  document.querySelectorAll("input[type=radio], input[type=checkbox]").forEach(i => { i.checked = false; });
+  document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+  document.querySelectorAll(".btn-primary[id^=btn-next-q]").forEach(b => { b.disabled = true; });
+  navigate(0);
+}
+
+applyBrand();
+buildQuiz();
+</script>
+</body>
+</html>
