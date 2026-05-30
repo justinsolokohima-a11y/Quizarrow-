@@ -63,10 +63,10 @@ label.q-label { display: block; font-weight: 600; margin: 16px 0 12px; color: va
 .factor-list li { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 15px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .factor-list li:last-child { border-bottom: none; }
 .factor-label { flex: 1; }
-.factor-points { font-size: 18px; font-weight: 700; white-space: nowrap; flex-shrink: 0; width: 28px; text-align: center; }
-.factor-points.positive { color: #dc2626; }
-.factor-points.negative { color: #16a34a; }
-.factor-points.neutral  { color: #ea580c; }
+.factor-points { font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; min-width: 36px; text-align: center; }
+.factor-points.positive { background: rgba(220,38,38,0.1); color: #dc2626; border: 1px solid rgba(220,38,38,0.2); }
+.factor-points.neutral  { background: rgba(234,88,12,0.1);  color: #ea580c; border: 1px solid rgba(234,88,12,0.2); }
+.factor-points.negative { background: rgba(22,163,74,0.1);  color: #16a34a; border: 1px solid rgba(22,163,74,0.2); }
 .cta-block { margin-top: 32px; padding: 28px; background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-light) 100%); color: white; border-radius: 12px; }
 .cta-block h3 { font-size: 20px; margin-bottom: 8px; color: white; }
 .cta-block p { color: rgba(255,255,255,0.85); margin-bottom: 20px; font-size: 15px; }
@@ -486,11 +486,12 @@ function showResults() {
   fl.innerHTML = "";
   factors.forEach(f => {
     const li = document.createElement("li");
-    let cls, icon;
-    if (f.points >= 15) { cls = "positive"; icon = "✗"; }
-    else if (f.points >= 8) { cls = "neutral"; icon = "~"; }
-    else { cls = "negative"; icon = "✓"; }
-    li.innerHTML = `<span class="factor-label">${f.label}${f.reason ? `<br><small style="color:var(--text-muted);font-weight:400;">${f.reason}</small>` : ""}</span><span class="factor-points ${cls}">${icon}</span>`;
+    let cls;
+    if (f.points >= 15)     { cls = "positive"; }
+    else if (f.points >= 8) { cls = "neutral"; }
+    else                    { cls = "negative"; }
+    const sign = f.points > 0 ? "+" : "";
+    li.innerHTML = `<span class="factor-label">${f.label}${f.reason ? `<br><small style="color:var(--text-muted);font-weight:400;">${f.reason}</small>` : ""}</span><span class="factor-points ${cls}">${sign}${f.points}</span>`;
     fl.appendChild(li);
   });
 
