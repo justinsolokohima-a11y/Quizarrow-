@@ -7,11 +7,11 @@
 <meta name="description" id="page-desc" content="">
 <style>
 :root {
-  --brand-primary:       #0a1f3d;
-  --brand-primary-light: #162f58;
-  --brand-accent:        #2563eb;
-  --brand-accent-dark:   #1d4ed8;
-  --brand-accent-rgb:    37, 99, 235;
+  --brand-primary:       #0d2d6e;
+  --brand-primary-light: #1a3d8f;
+  --brand-accent:        #1d4ed8;
+  --brand-accent-dark:   #1e40af;
+  --brand-accent-rgb:    29, 78, 216;
   --bg:                  #f4f7fb;
   --card:                #ffffff;
   --text:                #1a1a2e;
@@ -98,15 +98,15 @@ label.q-label { display: block; font-weight: 600; margin: 16px 0 12px; color: va
 const CONFIG = {
 
   brand: {
-    name:     "Kendec",
+    name:     "Gale Strategies",
     initials: "GS",
     logoUrl:  "",
-    tagline:  "B2B Marketing Strategy",
+    tagline:  "Category Leadership Assessment",
     colors: {
-      primary:      "#0a1f3d",
-      primaryLight: "#162f58",
-      accent:       "#2563eb",
-      accentDark:   "#1d4ed8",
+      primary:      "#0d2d6e",
+      primaryLight: "#1a3d8f",
+      accent:       "#1d4ed8",
+      accentDark:   "#1e40af",
       bg:           "#f4f7fb",
       card:         "#ffffff",
       text:         "#1a1a2e",
@@ -116,15 +116,15 @@ const CONFIG = {
   },
 
   meta: {
-    pageTitle:  "B2B Marketing Stage Assessment — Kendec",
-    pageDesc:   "Find out where your B2B company stands on thought leadership maturity — and what it takes to own your category. 5 questions, instant score.",
+    pageTitle:  "Category Leadership Assessment — Gale Strategies",
+    pageDesc:   "Find out where your B2B company stands on thought leadership and category authority — and what it takes to own your space. 5 questions, instant score.",
     scoreLabel: "Your Category Leadership Score",
-    footerNote: "Built for Kendec · cmoandgrow.com",
+    footerNote: "Built for Gale Strategies · galestrategies.com",
   },
 
   intro: {
-    headline:   "What's Your B2B Marketing Stage?",
-    lede:       "5 questions. Find out if your marketing is aligned with where your company actually is — and what the next move should be.",
+    headline:   "Are You a Category Creator?",
+    lede:       "5 questions. Find out where your B2B company stands on thought leadership maturity — and what it takes to own your category.",
     ctaLabel:   "Start the assessment",
     trustItems: [
       "✓ 5 questions — 2 minutes",
@@ -137,85 +137,85 @@ const CONFIG = {
     {
       id:       "q1",
       type:     "radio",
-      headline: "Where is your B2B company in its growth journey?",
-      hint:     "Pick the stage that best describes where you are today.",
+      headline: "How would you describe your company's visibility in your market right now?",
+      hint:     "Pick the one that fits best.",
       label:    "Select the closest match",
       options: [
-        { value: "early",  label: "Early — pre-revenue or under $1M, finding product-market fit",         points: 25, reason: "Early-stage companies need positioning and GTM clarity before scaling anything." },
-        { value: "growth", label: "Growth — $1M–$10M, gaining traction but growth is inconsistent",       points: 20, reason: "Growth-stage companies often outpace their marketing systems — pipeline becomes unpredictable." },
-        { value: "scale",  label: "Scale — $10M+, focused on operational efficiency and new markets",     points: 15, reason: "At scale, marketing must mature into a performance function aligned with sales and RevOps." },
-        { value: "exit",   label: "Exit — preparing for M&A, PE recap, or IPO in the next 1–3 years",    points: 10, reason: "Exit-stage companies need marketing metrics and narrative that hold up to investor scrutiny." },
+        { value: "invisible", label: "We're largely unknown outside existing clients and our network",              points: 25, reason: "Limited visibility means prospects aren't finding you — growth depends entirely on outbound." },
+        { value: "awareness", label: "Some awareness, but we're not seen as the go-to authority in our space",     points: 20, reason: "Awareness without authority means competitors with sharper positioning win deals you should." },
+        { value: "known",     label: "Well-known in our niche but struggling to expand beyond it",                 points: 12, reason: "Niche authority is a strong foundation — the gap is scaling that positioning to adjacent markets." },
+        { value: "leader",    label: "We're consistently cited as a thought leader in our category",               points: 4,  reason: "Category leadership compounds over time — the opportunity is to protect and extend the position." },
       ]
     },
     {
       id:       "q2",
       type:     "radio",
-      headline: "What's your biggest marketing challenge right now?",
-      hint:     "Pick the one that's costing you the most pipeline.",
+      headline: "How do prospects typically find you today?",
+      hint:     "Be honest about where your last 10 conversations actually came from.",
       label:    "Select the option that best fits",
       options: [
-        { value: "no_icp",       label: "We don't have a clear ICP or value proposition that resonates",     points: 25, reason: "Without a sharp ICP and positioning, every downstream tactic underperforms." },
-        { value: "no_pipeline",  label: "We can't generate consistent, qualified pipeline",                  points: 22, reason: "Inconsistent pipeline is the clearest signal of a missing demand generation system." },
-        { value: "misaligned",   label: "Marketing and sales aren't aligned — leads don't convert",          points: 18, reason: "Sales-marketing misalignment inflates CAC and kills pipeline velocity." },
-        { value: "no_data",      label: "We lack the data to make confident marketing decisions",            points: 12, reason: "Decisions without attribution data tend to compound wasted spend quarter over quarter." },
+        { value: "referrals",    label: "Almost entirely referrals and word of mouth — no real inbound system",   points: 25, reason: "Referral-only pipelines don't scale and can dry up without warning." },
+        { value: "outbound",     label: "Mostly outbound — we reach out, they rarely come to us",                 points: 20, reason: "Outbound without inbound authority means every deal starts from zero trust." },
+        { value: "some_inbound", label: "Some inbound from content or media, but volume is inconsistent",         points: 12, reason: "Inconsistent inbound usually means content without a clear distribution or conversion strategy." },
+        { value: "strong",       label: "Strong inbound — prospects come to us because of our reputation",        points: 4,  reason: "Strong inbound authority is the goal — the work is maintaining and compounding it." },
       ]
     },
     {
       id:       "q3",
       type:     "radio",
-      headline: "Who's leading your marketing today?",
-      hint:     "Be honest — this is often where the strategic gap lives.",
+      headline: "When a prospect lands on your website, what's the first thing they can do?",
+      hint:     "What's your actual primary CTA — not what you plan to add.",
       label:    "Pick the closest match",
       options: [
-        { value: "no_one",   label: "Nobody dedicated — the founder or CEO handles it when there's bandwidth", points: 25, reason: "Marketing without dedicated senior leadership rarely produces a scalable, repeatable system." },
-        { value: "junior",   label: "A junior marketer or coordinator — mostly tactical execution",             points: 20, reason: "Junior marketers execute well but can't own the strategic layer or direct agencies effectively." },
-        { value: "agency",   label: "An outside agency — results have been mixed or hard to measure",          points: 15, reason: "Agencies perform best when directed by a senior marketing leader who owns the strategy." },
-        { value: "director", label: "A Marketing Director or VP — but pipeline still isn't where it needs to be", points: 8, reason: "Leadership is in place — the gap is likely systemic or strategic, not execution." },
+        { value: "nothing",   label: "Not much — contact form or email address",                                  points: 25, reason: "A contact form is the lowest-converting CTA. Most cold visitors leave without engaging." },
+        { value: "book_call", label: "Book a call — that's the only option",                                      points: 18, reason: "A single 'book a call' CTA asks too much from cold visitors — most won't." },
+        { value: "content",   label: "Read content or subscribe to a newsletter",                                 points: 10, reason: "Content subscriptions build audience but rarely convert to pipeline at meaningful rates." },
+        { value: "qualify",   label: "Take an assessment or go through a qualification step",                     points: 3,  reason: "Self-qualification steps convert cold visitors to warm leads at 5–10x the rate of contact forms." },
       ]
     },
     {
       id:       "q4",
       type:     "radio",
-      headline: "How would you describe your current lead generation?",
-      hint:     "Think about where your last 10 leads actually came from.",
+      headline: "How consistent is your thought leadership output?",
+      hint:     "Not what you'd like it to be — what it actually looks like today.",
       label:    "Pick the closest match",
       options: [
-        { value: "referrals",     label: "Almost entirely referrals and word of mouth — hard to scale",          points: 25, reason: "Referral-only pipelines hit a ceiling at the founder's network — they don't compound." },
-        { value: "unpredictable", label: "Inconsistent — good months and bad months with no clear reason why",   points: 20, reason: "Unpredictable pipeline means the demand system isn't built yet." },
-        { value: "some_inbound",  label: "Some inbound from content or ads, but volume is too low",              points: 12, reason: "Foundation exists — the gap is in diagnosing what's limiting volume and conversion." },
-        { value: "working",       label: "We have a working inbound system, just want to optimise it",           points: 5,  reason: "Strong foundation — the opportunity is compounding what's already producing." },
+        { value: "none",       label: "We don't publish much — occasional press releases at best",                points: 22, reason: "Without a consistent content presence, there's nothing for prospects to find between referrals." },
+        { value: "sporadic",   label: "Sporadic — we publish when we have time, no real cadence",                 points: 18, reason: "Sporadic publishing builds no compounding authority — audiences and algorithms both lose interest." },
+        { value: "reactive",   label: "Regular but reactive — we cover industry news, not original ideas",        points: 12, reason: "Reactive content builds presence but rarely creates the category authority that drives inbound." },
+        { value: "systematic", label: "Systematic — original POVs published on a consistent schedule",            points: 4,  reason: "Systematic thought leadership is the engine of category creation — the work is in distribution." },
       ]
     },
     {
       id:       "q5",
       type:     "radio",
-      headline: "How do you currently measure marketing performance?",
-      hint:     "Not what you plan to do — what you actually do today.",
+      headline: "How do you measure the impact of your PR and content today?",
+      hint:     "What your reporting actually looks like, not what it should look like.",
       label:    "Pick the closest match",
       options: [
-        { value: "nothing",   label: "We don't track it formally — gut feel and revenue are the main signals",   points: 20, reason: "Without measurement, it's impossible to know what's working or where to invest next." },
-        { value: "vanity",    label: "We track traffic and social metrics but can't tie them to revenue",        points: 15, reason: "Vanity metrics create false confidence — they rarely correlate with pipeline or revenue." },
-        { value: "partial",   label: "We track some pipeline metrics but attribution is manual and incomplete",  points: 10, reason: "Partial measurement leads to partial decisions — gaps in attribution compound over time." },
-        { value: "full",      label: "Full funnel analytics — we know exactly what's driving revenue",           points: 3,  reason: "Strong measurement foundation — most of the work is in optimising what you can already see." },
+        { value: "nothing",  label: "We don't measure it in any structured way",                                  points: 20, reason: "Without measurement, it's impossible to know what's working or justify continued investment." },
+        { value: "vanity",   label: "Impressions, reach, and social engagement — hard to tie to revenue",         points: 15, reason: "Vanity metrics feel good but don't connect PR activity to pipeline or revenue impact." },
+        { value: "partial",  label: "We track some pipeline attribution but it's incomplete",                     points: 10, reason: "Partial measurement leads to partial decisions — the gaps compound over time." },
+        { value: "full",     label: "Clear line from PR and content activity to CRM to revenue",                  points: 3,  reason: "Full attribution is the gold standard — the opportunity is optimising what you can already see." },
       ]
     },
   ],
 
   bands: [
-    { key: "CRITICAL", label: "Needs Strategic Alignment", min: 81, max: 100, color: "#dc2626" },
-    { key: "ELEVATED", label: "Clear Gaps to Address",     min: 61, max: 80,  color: "#ea580c" },
-    { key: "MODERATE", label: "Growth Opportunity",        min: 31, max: 60,  color: "#2563eb" },
-    { key: "LOW",      label: "Strong Foundation",         min: 0,  max: 30,  color: "#16a34a" },
+    { key: "CRITICAL", label: "Visibility Gap",       min: 81, max: 100, color: "#dc2626" },
+    { key: "ELEVATED", label: "Clear Gaps to Close",  min: 61, max: 80,  color: "#ea580c" },
+    { key: "MODERATE", label: "Building Authority",   min: 31, max: 60,  color: "#1d4ed8" },
+    { key: "LOW",      label: "Category Leader",      min: 0,  max: 30,  color: "#16a34a" },
   ],
 
   forceBand: [],
 
   results: {
     LOW: {
-      summary:        "Your thought leadership foundation is strong. You have visibility, inbound, and a content system that's producing. The opportunity is to find the specific places where sharper positioning, better distribution, or a stronger conversion layer could compound what's already working.",
-      solution:       "A strategic PR and content audit can identify your 2-3 highest-leverage gaps — usually compounding an already-working thought leadership system adds significantly more inbound without increasing spend.",
-      ctaHeadline:    "Find where your marketing is leaving pipeline on the table.",
-      ctaSubhead:     "A short strategy conversation with Chris will identify your highest-leverage opportunities — no pitch, no commitment.",
+      summary:        "Your thought leadership foundation is strong. You have consistent visibility, inbound coming in, and content that's producing authority. The opportunity is finding the specific places where sharper distribution, better conversion, or tighter positioning could compound what's already working.",
+      solution:       "A PR and content audit can pinpoint your 2-3 highest-leverage opportunities — compounding a working thought leadership system typically adds 20-40% more inbound without increasing spend.",
+      ctaHeadline:    "Find where your thought leadership is leaving pipeline on the table.",
+      ctaSubhead:     "A short conversation with Chris will identify your highest-leverage opportunities — no pitch, no commitment.",
       primaryLabel:   "Talk to Chris",
       primaryUrl:     "mailto:chris@galestrategies.com?subject=Category%20leadership%20assessment",
       secondaryLabel: "Learn more about Gale Strategies",
@@ -223,56 +223,47 @@ const CONFIG = {
       math:           "",
     },
     MODERATE: {
-      summary:        "Your company has some visibility and content presence, but there are meaningful gaps — inconsistent inbound, a weak conversion step, or thought leadership that isn't compounding into category authority yet. These are fixable, but they require the right strategic approach.",
+      summary:        "Your company has expertise and some visibility, but there are meaningful gaps — inconsistent inbound, a weak conversion step on your site, or thought leadership that isn't compounding into category authority yet. These are fixable, but they need the right strategic approach.",
       solution:       "The fix is a systematic thought leadership strategy tied to a real conversion layer. More content alone won't close the gap — you need a clear POV, consistent distribution, and a way for prospects to self-qualify when they land on your site.",
-      ctaHeadline:    "Your pipeline gaps are fixable. Here's where to start.",
-      ctaSubhead:     "Gale Strategies works with B2B tech and private capital firms at exactly this stage. A 30-minute conversation will show you what the fix looks like.",
+      ctaHeadline:    "Your authority gaps are fixable. Here's where to start.",
+      ctaSubhead:     "Gale Strategies works with B2B tech and private capital firms at exactly this inflection point. One conversation will show you what the fix looks like.",
       primaryLabel:   "Talk to Chris",
-      primaryUrl:     "mailto:chris@galestrategies.com?subject=Strategy%20conversation",
+      primaryUrl:     "mailto:chris@galestrategies.com?subject=Building%20category%20authority",
       secondaryLabel: "See what Gale Strategies does",
       secondaryUrl:   "https://www.galestrategies.com",
-      math:           "<strong>The benchmark:</strong> B2B companies with a dedicated marketing system generate 3–5x more qualified pipeline than those relying on referrals and ad-hoc tactics. That gap compounds every quarter it goes unaddressed.",
+      math:           "<strong>The benchmark:</strong> B2B companies with a systematic thought leadership program generate 3–5x more inbound pipeline than those relying on referrals and ad-hoc content. That gap compounds every quarter it goes unaddressed.",
     },
     ELEVATED: {
-      summary:        "Your answers reflect a company with strong expertise but a visibility gap — prospects who should know you don't, and when they land on your site there's no step to pull them in. The content and credibility are there. The system to turn them into pipeline isn't.",
-      solution:       "The three things companies at this stage need: a clear thought leadership POV, a consistent publishing cadence, and a conversion layer on the website. Gale Strategies builds all three — and measures the impact directly against your pipeline.",
-      ctaHeadline:    "Your pipeline gap is costing more than it looks like on the surface.",
-      ctaSubhead:     "Chris has worked with enterprise tech companies and private capital firms at exactly this stage. One conversation will diagnose the root cause and outline the fastest path to consistent pipeline.",
+      summary:        "Your company has real expertise and a market that needs what you do — but the visibility system isn't keeping pace. Inconsistent content, a contact form as the primary CTA, and inbound that's mostly referrals. These are fixable, but they need a strategic layer, not more tactical output.",
+      solution:       "Three things companies at this stage need: a clear thought leadership POV, a consistent publishing cadence, and a conversion layer on the website. Gale Strategies builds all three and measures the impact directly against your pipeline.",
+      ctaHeadline:    "Your visibility gap is costing more pipeline than it looks like.",
+      ctaSubhead:     "Chris has worked with enterprise tech and private capital firms at exactly this stage. One conversation will diagnose the root cause and outline the fastest path to category authority.",
       primaryLabel:   "Talk to Chris",
-      primaryUrl:     "mailto:chris@galestrategies.com?subject=Category%20leadership%20gap",
+      primaryUrl:     "mailto:chris@galestrategies.com?subject=Closing%20the%20visibility%20gap",
       secondaryLabel: "Learn more about Gale Strategies",
       secondaryUrl:   "https://www.galestrategies.com",
-      math:           "<strong>The benchmark:</strong> B2B companies that close the marketing-sales alignment gap reduce CAC by 30–60% within two quarters. The fix is usually faster than most expect once the right strategic layer is in place.",
+      math:           "<strong>The benchmark:</strong> B2B companies that close the thought leadership gap see inbound pipeline increase 30–60% within two quarters. The fix is usually faster than most expect once the right strategic layer is in place.",
     },
     CRITICAL: {
-      summary:        "Your score reflects a company with real expertise and no system to show it. No consistent content presence, no inbound, and when prospects do find you — a contact form. The fix is more straightforward than it looks, but every month without it is pipeline you're leaving behind.",
-      solution:       "The fastest path: a focused PR and thought leadership program that builds category authority over 90 days — media coverage, original POVs, and a conversion layer so inbound actually turns into pipeline. Gale Strategies has done this for enterprise tech and private capital firms.",
-      ctaHeadline:    "You need a marketing system, not more tactics.",
-      ctaSubhead:     "Gale Strategies works with B2B tech and private capital firms at this stage. He'll tell you exactly where your pipeline is breaking and what it takes to fix it — no deck, no pressure.",
+      summary:        "Your score reflects a company with strong expertise and almost no system to show it to the market. Limited visibility, no consistent content presence, and a contact form as the only CTA. Every month without a working thought leadership system is inbound pipeline you can't recover.",
+      solution:       "The fastest path: a focused PR and thought leadership program that builds category authority in 90 days — media coverage, original POVs, and a conversion layer so inbound actually turns into pipeline. Gale Strategies has done this for enterprise tech and private capital firms.",
+      ctaHeadline:    "You need a visibility system, not more one-off tactics.",
+      ctaSubhead:     "Chris will tell you exactly where your thought leadership is breaking down and what it takes to fix it — no deck, no pressure.",
       primaryLabel:   "Talk to Chris",
-      primaryUrl:     "mailto:chris@galestrategies.com?subject=Thought%20leadership%20strategy",
+      primaryUrl:     "mailto:chris@galestrategies.com?subject=Building%20a%20visibility%20system",
       secondaryLabel: "See how Gale Strategies works",
       secondaryUrl:   "https://www.galestrategies.com",
-      math:           "<strong>The cost of waiting:</strong> B2B companies without a scalable marketing system at your stage typically spend 12–18 months recovering the pipeline gap — time that shows up directly in lost revenue and inflated CAC. The fix is faster than the delay.",
+      math:           "<strong>The cost of waiting:</strong> B2B companies without a thought leadership system typically spend 12–18 months recovering the inbound gap — time that shows up directly in slower growth and over-reliance on referrals.",
     },
   },
 
   emailCapture: {
-    headline:    "Get your results sent to your inbox",
-    lede:        "We'll send you a breakdown of your score and the highest-leverage next step for your stage.",
-    fields: [
-      { id: "email",   type: "email", label: "Work email",   required: true,  placeholder: "you@company.com" },
-      { id: "company", type: "text",  label: "Company name", required: false, placeholder: "Your company" },
-    ],
-    submitLabel:  "Send me the results",
-    thankYou:     "You're all set — check your inbox.",
-    privacyNote:  "No spam. Your answers are shared only with Chris Gale at Gale Strategies.",
-    endpoint:     "https://formspree.io/f/YOUR_FORM_ID",
+    privacyNote: "No spam. Your answers are shared only with Chris Gale at Gale Strategies.",
   },
 
 };
 
-// ENGINE — do not edit below this line
+// ENGINE
 const answers = {};
 CONFIG.questions.forEach(q => { answers[q.id] = q.type === "checkbox" ? [] : null; });
 const STEPS = ["intro", ...CONFIG.questions.map((_, i) => "q" + i), "results"];
@@ -331,23 +322,13 @@ function buildQuestionSection(q, i) {
   const pct = Math.round((stepIdx / (totalQ + 1)) * 100);
   const isLast = i === totalQ - 1;
   const nextLabel = isLast ? "See my score" : "Next";
-  const nextDisabled = q.type !== "checkbox" ? "disabled" : "";
-  let inputHtml = "";
-  if (q.type === "radio") {
-    const opts = (q.options || []).map(o => `
-      <label class="option">
-        <input type="radio" name="radio-${q.id}" value="${o.value}" onchange="onRadioAnswer('${q.id}', ${i}, '${o.value}')">
-        ${o.label}
-      </label>`).join("");
-    inputHtml = `<label class="q-label">${q.label || ""}</label><div class="option-group" id="group-${q.id}">${opts}</div>`;
-  } else if (q.type === "checkbox") {
-    const opts = (q.options || []).map(o => `
-      <label class="option">
-        <input type="checkbox" value="${o.value}" ${o.exclusive ? 'data-exclusive="true"' : ""} onchange="onCheckboxAnswer('${q.id}', event)">
-        ${o.label}
-      </label>`).join("");
-    inputHtml = `<label class="q-label">${q.label || ""}</label><div class="option-group" id="group-${q.id}">${opts}</div>`;
-  }
+  const nextDisabled = "disabled";
+  const opts = (q.options || []).map(o => `
+    <label class="option">
+      <input type="radio" name="radio-${q.id}" value="${o.value}" onchange="onRadioAnswer('${q.id}', ${i}, '${o.value}')">
+      ${o.label}
+    </label>`).join("");
+  const inputHtml = `<label class="q-label">${q.label || ""}</label><div class="option-group" id="group-${q.id}">${opts}</div>`;
   const hintHtml = q.hint ? `<p class="hint">${q.hint}</p>` : "";
   const s = document.createElement("section");
   s.id = "step-q" + i; s.className = "step";
@@ -381,7 +362,7 @@ function buildResultsSection() {
       <p id="ctaSubhead"></p>
       <div class="cta-row" id="ctaRow"></div>
       <div class="math-block" id="mathBlock" style="display:none;"></div>
-    <div class="solution-block" id="solutionBlock" style="display:none;"></div>
+      <div class="solution-block" id="solutionBlock" style="display:none;"></div>
     </div>
     <div id="emailCaptureWrap" style="margin-top:32px;padding:28px;background:var(--bg);border:1px solid var(--border);border-radius:12px;text-align:center;">
       <h3 style="font-size:18px;color:var(--brand-primary);margin-bottom:8px;">Get your results sent to your inbox</h3>
@@ -417,36 +398,17 @@ function onRadioAnswer(qId, qIdx, value) {
   }
 }
 
-function onCheckboxAnswer(qId, ev) {
-  const group = document.getElementById("group-" + qId);
-  const target = ev.target;
-  if (target.dataset.exclusive && target.checked) {
-    group.querySelectorAll("input[type=checkbox]").forEach(cb => { if (cb !== target) { cb.checked = false; cb.closest(".option").classList.remove("selected"); } });
-    answers[qId] = [target.value];
-  } else {
-    if (target.checked) {
-      const excl = group.querySelector("input[data-exclusive=true]");
-      if (excl) { excl.checked = false; excl.closest(".option").classList.remove("selected"); }
-    }
-    answers[qId] = Array.from(group.querySelectorAll("input:checked")).map(cb => cb.value);
-  }
-  target.closest(".option").classList.toggle("selected", target.checked);
-}
-
 function computeScore() {
   let total = 0;
   const factors = [];
   CONFIG.questions.forEach(q => {
     const ans = answers[q.id];
-    if (!ans || (Array.isArray(ans) && ans.length === 0)) return;
-    const vals = Array.isArray(ans) ? ans : [ans];
-    vals.forEach(v => {
-      const opt = (q.options || []).find(o => o.value === v);
-      if (opt) {
-        total += opt.points;
-        factors.push({ label: opt.label, points: opt.points, reason: opt.reason || "" });
-      }
-    });
+    if (!ans) return;
+    const opt = (q.options || []).find(o => o.value === ans);
+    if (opt) {
+      total += opt.points;
+      factors.push({ label: opt.label, points: opt.points, reason: opt.reason || "" });
+    }
   });
   return { raw: total, factors };
 }
@@ -465,14 +427,7 @@ function showResults() {
     return acc + Math.max(...pts);
   }, 0);
   const scaled = clamp(Math.round((raw / maxPossible) * 100), 0, 100);
-
-  let band = getBand(scaled);
-  for (const rule of (CONFIG.forceBand || [])) {
-    if (answers[rule.questionId] === rule.value) {
-      band = CONFIG.bands.find(b => b.key === rule.band) || band;
-      break;
-    }
-  }
+  const band = getBand(scaled);
 
   document.getElementById("scoreNumber").innerHTML = `${scaled}<span class="score-out-of"> / 100</span>`;
   const bandEl = document.getElementById("scoreBandLabel");
@@ -509,8 +464,8 @@ function showResults() {
 }
 
 function restart() {
-  CONFIG.questions.forEach(q => { answers[q.id] = q.type === "checkbox" ? [] : null; });
-  document.querySelectorAll("input[type=radio], input[type=checkbox]").forEach(i => { i.checked = false; });
+  CONFIG.questions.forEach(q => { answers[q.id] = null; });
+  document.querySelectorAll("input[type=radio]").forEach(i => { i.checked = false; });
   document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
   document.querySelectorAll(".btn-primary[id^=btn-next-q]").forEach(b => { b.disabled = true; });
   navigate(0);
