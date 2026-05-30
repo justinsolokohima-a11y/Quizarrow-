@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title"></title>
+<meta name="description" id="page-desc" content="">
+<style>
+:root {
+  --brand-primary:       #1a1a1a;
+  --brand-primary-light: #333333;
+  --brand-accent:        #fb7d33;
+  --brand-accent-dark:   #e06920;
+  --brand-accent-rgb:    251, 125, 51;
+  --bg:                  #f9f9f9;
+  --card:                #ffffff;
+  --text:                #363636;
+  --text-muted:          #777777;
+  --border:              #e5e5e5;
+  --shadow:              0 4px 20px rgba(0,0,0,0.07);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+.container { max-width: 720px; margin: 0 auto; padding: 24px 16px 64px; }
+header { text-align: center; margin-bottom: 32px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: var(--brand-primary); letter-spacing: 0.3px; }
+.brand-mark { width: 32px; height: 32px; border-radius: 50%; background: var(--brand-accent); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 13px; }
+.tagline { margin-top: 4px; font-size: 13px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
+.card { background: var(--card); border-radius: 12px; padding: 32px 28px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+.step { display: none; }
+.step.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+h1 { font-size: 28px; line-height: 1.25; color: var(--brand-primary); margin-bottom: 16px; font-weight: 700; }
+h2 { font-size: 22px; line-height: 1.3; color: var(--brand-primary); margin-bottom: 20px; font-weight: 600; }
+.lede { font-size: 17px; color: var(--text-muted); margin-bottom: 24px; }
+.progress-strip { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 24px; }
+.progress-fill { height: 100%; background: var(--brand-accent); transition: width 0.3s ease; border-radius: 2px; }
+.step-label { font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+label.q-label { display: block; font-weight: 600; margin: 16px 0 12px; color: var(--brand-primary); font-size: 15px; }
+.hint { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
+.option-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s ease; font-size: 15px; }
+.option:hover { border-color: var(--brand-accent); background: white; }
+.option input { margin-top: 4px; cursor: pointer; accent-color: var(--brand-accent); }
+.option.selected { border-color: var(--brand-accent); background: rgba(251,125,51,0.06); }
+.btn-row { display: flex; gap: 12px; margin-top: 24px; align-items: center; }
+.btn { padding: 14px 24px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s ease; }
+.btn-primary { background: var(--brand-accent); color: white; }
+.btn-primary:hover { background: var(--brand-accent-dark); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-secondary { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+.btn-secondary:hover { color: var(--brand-primary); border-color: var(--brand-primary); }
+.intro-meta { display: flex; gap: 24px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
+.intro-meta-item { display: flex; align-items: center; gap: 6px; }
+.footer-disclaimer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 24px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+.score-display { text-align: center; padding: 24px 0; }
+.score-number { font-size: 72px; font-weight: 800; line-height: 1; margin-bottom: 8px; color: var(--brand-primary); }
+.score-band-label { display: inline-block; padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: white; margin-bottom: 16px; }
+.score-out-of { color: var(--text-muted); font-size: 18px; font-weight: 400; }
+.summary-text { font-size: 16px; margin: 24px 0; padding: 20px; background: var(--bg); border-left: 3px solid var(--brand-accent); border-radius: 4px; }
+.factors-title { font-weight: 700; font-size: 16px; margin: 28px 0 12px; color: var(--brand-primary); }
+.factor-list { list-style: none; }
+.factor-list li { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 15px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.factor-list li:last-child { border-bottom: none; }
+.factor-label { flex: 1; }
+.factor-points { font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; min-width: 36px; text-align: center; }
+.factor-points.positive { background: rgba(220,38,38,0.1); color: #dc2626; border: 1px solid rgba(220,38,38,0.2); }
+.factor-points.neutral  { background: rgba(234,88,12,0.1);  color: #ea580c; border: 1px solid rgba(234,88,12,0.2); }
+.factor-points.negative { background: rgba(22,163,74,0.1);  color: #16a34a; border: 1px solid rgba(22,163,74,0.2); }
+.cta-block { margin-top: 32px; padding: 28px; background: var(--brand-primary); color: white; border-radius: 12px; }
+.cta-block h3 { font-size: 20px; margin-bottom: 8px; color: white; }
+.cta-block p { color: rgba(255,255,255,0.8); margin-bottom: 20px; font-size: 15px; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.cta-btn { display: inline-block; padding: 14px 22px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 14px; text-align: center; transition: all 0.15s ease; }
+.cta-primary-link { background: var(--brand-accent); color: white; flex: 1; min-width: 220px; }
+.cta-primary-link:hover { background: var(--brand-accent-dark); }
+.cta-secondary-link { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); flex: 1; min-width: 220px; }
+.cta-secondary-link:hover { border-color: white; background: rgba(255,255,255,0.06); }
+.math-block { margin-top: 24px; padding: 16px; background: rgba(251,125,51,0.15); border-radius: 8px; font-size: 14px; color: #ffe0cc; }
+.math-block strong { color: #ffb380; }
+.solution-block { margin-top: 20px; padding: 20px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; font-size: 15px; color: #166534; }
+.solution-block strong { color: #14532d; display: block; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+@media (max-width: 600px) { .card { padding: 24px 20px; } h1 { font-size: 24px; } h2 { font-size: 19px; } .score-number { font-size: 56px; } .intro-meta { flex-direction: column; gap: 8px; } .cta-row { flex-direction: column; } .cta-primary-link, .cta-secondary-link { min-width: 0; } }
+</style>
+<script async src="https://tally.so/widgets/embed.js"></script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="brand" id="brand-header"></div>
+    <div class="tagline" id="brand-tagline"></div>
+  </header>
+  <div class="card" id="quiz-card"></div>
+  <p class="footer-disclaimer" id="footer-disclaimer"></p>
+</div>
+
+<script>
+const CONFIG = {
+
+  brand: {
+    name:     "Chief Marketing Consultant",
+    initials: "MC",
+    logoUrl:  "",
+    tagline:  "Marketing Readiness Assessment",
+    colors: {
+      primary:      "#1a1a1a",
+      primaryLight: "#333333",
+      accent:       "#fb7d33",
+      accentDark:   "#e06920",
+      bg:           "#f9f9f9",
+      card:         "#ffffff",
+      text:         "#363636",
+      textMuted:    "#777777",
+      border:       "#e5e5e5",
+    }
+  },
+
+  meta: {
+    pageTitle:  "Marketing Readiness Assessment — Chief Marketing Consultant",
+    pageDesc:   "Find out how ready your business is to scale its marketing — and what's holding you back. 5 questions, instant score.",
+    scoreLabel: "Your Marketing Readiness Score",
+    footerNote: "Built for Chief Marketing Consultant · chiefmarketingconsultant.com",
+  },
+
+  intro: {
+    headline:   "Is Your Marketing Ready to Scale?",
+    lede:       "5 questions. Find out where your marketing stands today — and what needs to change before you can grow consistently.",
+    ctaLabel:   "Start the assessment",
+    trustItems: [
+      "✓ 5 questions — 2 minutes",
+      "✓ Instant readiness score",
+      "✓ Specific next steps for your stage",
+    ],
+  },
+
+  questions: [
+    {
+      id:       "q1",
+      type:     "radio",
+      headline: "How would you describe your current marketing strategy?",
+      hint:     "Pick the one that fits best.",
+      label:    "Select the closest match",
+      options: [
+        { value: "none",       label: "We don't really have one — we try things as they come up",                    points: 25, reason: "Without a documented strategy, marketing spend and effort rarely compound into consistent growth." },
+        { value: "informal",   label: "Something informal — we know what we want but haven't written it down",       points: 20, reason: "Undocumented strategy is hard to execute consistently or hand off to anyone else." },
+        { value: "partial",    label: "A partial plan — some channels are working, others are guesswork",            points: 12, reason: "Partial strategies often leave the highest-leverage opportunities untouched." },
+        { value: "documented", label: "A documented strategy we follow and update regularly",                        points: 4,  reason: "A documented, living strategy is the foundation of scalable marketing." },
+      ]
+    },
+    {
+      id:       "q2",
+      type:     "radio",
+      headline: "How do most of your new clients find you?",
+      hint:     "Think about where your last 5 clients actually came from.",
+      label:    "Select the option that best fits",
+      options: [
+        { value: "referrals",    label: "Word of mouth and referrals — almost nothing else",                         points: 25, reason: "Referral-only pipelines hit a ceiling fast and can dry up without warning." },
+        { value: "outbound",     label: "Mostly outbound — cold email, LinkedIn, direct outreach",                  points: 18, reason: "Outbound without inbound support means every new client starts from zero trust." },
+        { value: "some_inbound", label: "Some inbound from content or social, but it's inconsistent",               points: 12, reason: "Inconsistent inbound usually means content without a clear conversion strategy." },
+        { value: "strong",       label: "Strong inbound — clients find us consistently from our online presence",   points: 4,  reason: "Strong inbound is the goal — the work is in maintaining and compounding it." },
+      ]
+    },
+    {
+      id:       "q3",
+      type:     "radio",
+      headline: "What happens when a potential client visits your website?",
+      hint:     "What's the main action they can take right now?",
+      label:    "Pick the closest match",
+      options: [
+        { value: "nothing",   label: "Not much — there's a contact form or email address",                          points: 25, reason: "A contact form is the lowest-converting CTA available. Most visitors leave without engaging." },
+        { value: "book_call", label: "They can book a call or consultation",                                        points: 15, reason: "A 'book a call' CTA asks a lot from cold visitors who don't know you yet." },
+        { value: "content",   label: "Read content, view case studies, or subscribe to a newsletter",               points: 10, reason: "Content builds trust but rarely converts cold visitors to leads without a next step." },
+        { value: "qualify",   label: "Take an assessment or quiz that helps them self-qualify",                     points: 3,  reason: "Self-qualification steps convert cold visitors at 5–10x the rate of a contact form." },
+      ]
+    },
+    {
+      id:       "q4",
+      type:     "radio",
+      headline: "How consistent is your marketing output right now?",
+      hint:     "Not what you plan to do — what actually goes out.",
+      label:    "Pick the closest match",
+      options: [
+        { value: "nothing",   label: "Minimal — we post or send something when we find the time",                   points: 22, reason: "Inconsistent output builds no compounding presence — audiences and algorithms both lose interest." },
+        { value: "sporadic",  label: "Sporadic — some months active, some months quiet",                            points: 18, reason: "Sporadic marketing creates inconsistent results that are hard to learn from or improve." },
+        { value: "regular",   label: "Regular content but no clear lead gen strategy behind it",                    points: 10, reason: "Content without a conversion layer builds awareness but not pipeline." },
+        { value: "system",    label: "A consistent system — regular output with a clear goal behind each piece",    points: 4,  reason: "Systematic marketing with clear goals is how content turns into clients." },
+      ]
+    },
+    {
+      id:       "q5",
+      type:     "radio",
+      headline: "How do you measure whether your marketing is working?",
+      hint:     "What does your tracking actually look like today?",
+      label:    "Pick the closest match",
+      options: [
+        { value: "nothing",  label: "We don't track it in any structured way",                                      points: 20, reason: "Without measurement, it's impossible to know what's working or where to improve." },
+        { value: "vanity",   label: "Likes, followers, and website traffic — hard to tie to actual clients",        points: 15, reason: "Vanity metrics feel good but don't connect marketing activity to revenue." },
+        { value: "partial",  label: "We track some things but can't see the full picture",                          points: 10, reason: "Partial measurement leads to partial decisions — the gaps compound over time." },
+        { value: "full",     label: "We know what's driving new clients and can attribute it clearly",              points: 3,  reason: "Clear attribution is the gold standard — the opportunity is optimising what you can already see." },
+      ]
+    },
+  ],
+
+  bands: [
+    { key: "CRITICAL", label: "Not Ready to Scale",    min: 81, max: 100, color: "#dc2626" },
+    { key: "ELEVATED", label: "Clear Gaps to Fix",     min: 61, max: 80,  color: "#ea580c" },
+    { key: "MODERATE", label: "Getting There",         min: 31, max: 60,  color: "#fb7d33" },
+    { key: "LOW",      label: "Ready to Scale",        min: 0,  max: 30,  color: "#16a34a" },
+  ],
+
+  forceBand: [],
+
+  results: {
+    LOW: {
+      summary:        "Your marketing foundation is solid. You have a strategy, consistent output, and a way to track what's working. The opportunity is finding where to push harder — whether that's a stronger conversion layer, better lead gen, or a sharper ICP.",
+      solution:       "A strategic marketing audit can pinpoint your 2-3 highest-leverage opportunities — compounding a working system typically adds 20-40% more pipeline without increasing spend.",
+      ctaHeadline:    "Find where your marketing is leaving growth on the table.",
+      ctaSubhead:     "A short conversation with Megan will identify your highest-leverage opportunities — no pitch, no commitment.",
+      primaryLabel:   "Talk to Megan",
+      primaryUrl:     "mailto:megan@chiefmarketingconsultant.com?subject=Marketing%20readiness%20assessment",
+      secondaryLabel: "Learn more",
+      secondaryUrl:   "https://www.chiefmarketingconsultant.com",
+      math:           "",
+    },
+    MODERATE: {
+      summary:        "Your marketing is producing some results but there are real gaps — inconsistent pipeline, a website that isn't converting, or a strategy that hasn't been fully built out. These are fixable at your stage, but they need the right approach.",
+      solution:       "The fix is a documented marketing strategy tied to a real conversion layer. A fractional CMO builds the plan, fills the gaps, and makes sure your marketing is working toward consistent new clients — not just activity.",
+      ctaHeadline:    "Your marketing gaps are fixable. Here's where to start.",
+      ctaSubhead:     "Megan works with growing businesses at exactly this stage. A short conversation will show you what the fix looks like.",
+      primaryLabel:   "Talk to Megan",
+      primaryUrl:     "mailto:megan@chiefmarketingconsultant.com?subject=Marketing%20strategy%20conversation",
+      secondaryLabel: "Learn more",
+      secondaryUrl:   "https://www.chiefmarketingconsultant.com",
+      math:           "<strong>The benchmark:</strong> Businesses with a documented marketing strategy are 3x more likely to report consistent growth than those without one.",
+    },
+    ELEVATED: {
+      summary:        "Your answers reflect a business that's growing on referrals and effort — but without a system underneath it. No consistent inbound, a website that isn't converting, and marketing that's hard to measure. These are all fixable, but they need a strategic layer.",
+      solution:       "Three things businesses at this stage need: a clear strategy, a consistent content and lead gen system, and a website that converts cold visitors. A fractional CMO handles all three without the cost of a full-time hire.",
+      ctaHeadline:    "Your marketing isn't working as hard as it could be.",
+      ctaSubhead:     "Megan has helped businesses at exactly this stage build marketing systems that produce consistent results. One conversation will show you what's possible.",
+      primaryLabel:   "Talk to Megan",
+      primaryUrl:     "mailto:megan@chiefmarketingconsultant.com?subject=Building%20a%20marketing%20system",
+      secondaryLabel: "Learn more",
+      secondaryUrl:   "https://www.chiefmarketingconsultant.com",
+      math:           "<strong>The benchmark:</strong> Businesses that move from referral-only to a documented inbound system typically double their qualified lead volume within two quarters.",
+    },
+    CRITICAL: {
+      summary:        "Your score reflects a business running almost entirely on referrals and founder effort, with no real marketing system underneath. No consistent lead gen, no conversion layer on your website, and no way to measure what's working. The good news: these are all solvable problems.",
+      solution:       "The fastest path forward: bring in a fractional CMO to build the strategy, set up the systems, and get marketing producing consistent results. Most businesses see meaningful improvement within the first 90 days.",
+      ctaHeadline:    "Your business deserves a marketing system that actually works.",
+      ctaSubhead:     "Megan specialises in helping businesses build marketing from the ground up. No jargon, no fluff — just a clear plan and real results.",
+      primaryLabel:   "Talk to Megan",
+      primaryUrl:     "mailto:megan@chiefmarketingconsultant.com?subject=Building%20marketing%20from%20scratch",
+      secondaryLabel: "Learn more",
+      secondaryUrl:   "https://www.chiefmarketingconsultant.com",
+      math:           "<strong>The cost of waiting:</strong> Every month without a marketing system is another month relying entirely on referrals — pipeline you can't predict, can't scale, and can't recover if it slows down.",
+    },
+  },
+
+};
+
+// ENGINE
+const answers = {};
+CONFIG.questions.forEach(q => { answers[q.id] = null; });
+const STEPS = ["intro", ...CONFIG.questions.map((_, i) => "q" + i), "results"];
+let currentStepIdx = 0;
+
+function hexToRgb(hex) {
+  const clean = hex.replace("#", "");
+  return `${parseInt(clean.slice(0,2),16)}, ${parseInt(clean.slice(2,4),16)}, ${parseInt(clean.slice(4,6),16)}`;
+}
+
+function applyBrand() {
+  const c = CONFIG.brand.colors;
+  const r = document.documentElement;
+  r.style.setProperty("--brand-primary", c.primary);
+  r.style.setProperty("--brand-primary-light", c.primaryLight);
+  r.style.setProperty("--brand-accent", c.accent);
+  r.style.setProperty("--brand-accent-dark", c.accentDark);
+  r.style.setProperty("--brand-accent-rgb", hexToRgb(c.accent));
+  r.style.setProperty("--bg", c.bg);
+  r.style.setProperty("--card", c.card);
+  r.style.setProperty("--text", c.text);
+  r.style.setProperty("--text-muted", c.textMuted);
+  r.style.setProperty("--border", c.border);
+  document.getElementById("page-title").textContent = CONFIG.meta.pageTitle;
+  document.getElementById("page-desc").setAttribute("content", CONFIG.meta.pageDesc);
+  document.getElementById("footer-disclaimer").textContent = CONFIG.meta.footerNote;
+  document.getElementById("brand-tagline").textContent = CONFIG.brand.tagline;
+  const mark = `<div class="brand-mark">${CONFIG.brand.initials}</div>`;
+  document.getElementById("brand-header").innerHTML = `${mark}<span>${CONFIG.brand.name}</span>`;
+}
+
+function buildQuiz() {
+  const card = document.getElementById("quiz-card");
+  card.innerHTML = "";
+  card.appendChild(buildIntroSection());
+  CONFIG.questions.forEach((q, i) => card.appendChild(buildQuestionSection(q, i)));
+  card.appendChild(buildResultsSection());
+}
+
+function buildIntroSection() {
+  const s = document.createElement("section");
+  s.id = "step-intro"; s.className = "step active";
+  const trustHtml = CONFIG.intro.trustItems.map(t => `<div class="intro-meta-item">${t}</div>`).join("");
+  s.innerHTML = `
+    <h1>${CONFIG.intro.headline}</h1>
+    <p class="lede">${CONFIG.intro.lede}</p>
+    <div class="btn-row"><button class="btn btn-primary" onclick="navigate(1)">${CONFIG.intro.ctaLabel}</button></div>
+    <div class="intro-meta">${trustHtml}</div>`;
+  return s;
+}
+
+function buildQuestionSection(q, i) {
+  const stepIdx = i + 1, totalQ = CONFIG.questions.length;
+  const pct = Math.round((stepIdx / (totalQ + 1)) * 100);
+  const isLast = i === totalQ - 1;
+  const opts = (q.options || []).map(o => `
+    <label class="option">
+      <input type="radio" name="radio-${q.id}" value="${o.value}" onchange="onRadioAnswer('${q.id}', ${i}, '${o.value}')">
+      ${o.label}
+    </label>`).join("");
+  const s = document.createElement("section");
+  s.id = "step-q" + i; s.className = "step";
+  s.innerHTML = `
+    <div class="progress-strip"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="step-label">Question ${stepIdx} of ${totalQ}</div>
+    <h2>${q.headline}</h2>
+    ${q.hint ? `<p class="hint">${q.hint}</p>` : ""}
+    <label class="q-label">${q.label}</label>
+    <div class="option-group" id="group-${q.id}">${opts}</div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="navigate(${stepIdx - 1})">Back</button>
+      <button class="btn btn-primary" id="btn-next-q${i}" disabled
+        onclick="${isLast ? "showResults()" : "navigate(" + (stepIdx + 1) + ")"}">${isLast ? "See my score" : "Next"}</button>
+    </div>`;
+  return s;
+}
+
+function buildResultsSection() {
+  const s = document.createElement("section");
+  s.id = "step-results"; s.className = "step";
+  s.innerHTML = `
+    <div class="score-display">
+      <div class="step-label">${CONFIG.meta.scoreLabel}</div>
+      <div class="score-number" id="scoreNumber">—<span class="score-out-of"> / 100</span></div>
+      <div class="score-band-label" id="scoreBandLabel">—</div>
+    </div>
+    <div class="summary-text" id="summaryText"></div>
+    <div class="factors-title">What's driving your score</div>
+    <ul class="factor-list" id="factorList"></ul>
+    <div class="cta-block">
+      <h3 id="ctaHeadline"></h3>
+      <p id="ctaSubhead"></p>
+      <div class="cta-row" id="ctaRow"></div>
+      <div class="math-block" id="mathBlock" style="display:none;"></div>
+      <div class="solution-block" id="solutionBlock" style="display:none;"></div>
+    </div>
+    <div style="margin-top:32px;padding:28px;background:var(--bg);border:1px solid var(--border);border-radius:12px;text-align:center;">
+      <h3 style="font-size:18px;color:var(--brand-primary);margin-bottom:8px;">Get your results sent to your inbox</h3>
+      <p style="font-size:15px;color:var(--text-muted);margin-bottom:20px;">Takes 30 seconds.</p>
+      <button data-tally-open="zx1qyZ" data-tally-width="500" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" class="btn btn-primary" style="font-size:16px;padding:16px 32px;">Get my results →</button>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:12px;">No spam.</p>
+    </div>
+    <div class="btn-row" style="justify-content:center;margin-top:24px;">
+      <button class="btn btn-secondary" onclick="restart()">Retake assessment</button>
+    </div>`;
+  return s;
+}
+
+function navigate(targetIdx) {
+  document.querySelectorAll(".step").forEach(el => el.classList.remove("active"));
+  const stepId = STEPS[targetIdx];
+  let el;
+  if (stepId === "intro") el = document.getElementById("step-intro");
+  else if (stepId === "results") el = document.getElementById("step-results");
+  else el = document.getElementById("step-q" + parseInt(stepId.replace("q",""),10));
+  if (el) { el.classList.add("active"); currentStepIdx = targetIdx; window.scrollTo({top:0,behavior:"smooth"}); }
+}
+
+function onRadioAnswer(qId, qIdx, value) {
+  answers[qId] = value;
+  const btn = document.getElementById("btn-next-q" + qIdx);
+  if (btn) btn.disabled = false;
+  const group = document.getElementById("group-" + qId);
+  if (group) {
+    group.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+    const inp = group.querySelector(`input[value="${value}"]`);
+    if (inp) inp.closest(".option").classList.add("selected");
+  }
+}
+
+function computeScore() {
+  let total = 0;
+  const factors = [];
+  CONFIG.questions.forEach(q => {
+    const ans = answers[q.id];
+    if (!ans) return;
+    const opt = (q.options || []).find(o => o.value === ans);
+    if (opt) { total += opt.points; factors.push({ label: opt.label, points: opt.points, reason: opt.reason || "" }); }
+  });
+  return { raw: total, factors };
+}
+
+function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+function getBand(score) {
+  for (const b of CONFIG.bands) { if (score >= b.min && score <= b.max) return b; }
+  return CONFIG.bands[CONFIG.bands.length - 1];
+}
+
+function showResults() {
+  const { raw, factors } = computeScore();
+  const maxPossible = CONFIG.questions.reduce((acc, q) => acc + Math.max(...q.options.map(o => o.points)), 0);
+  const scaled = clamp(Math.round((raw / maxPossible) * 100), 0, 100);
+  const band = getBand(scaled);
+
+  document.getElementById("scoreNumber").innerHTML = `${scaled}<span class="score-out-of"> / 100</span>`;
+  const bandEl = document.getElementById("scoreBandLabel");
+  bandEl.textContent = band.label; bandEl.style.background = band.color;
+
+  const res = CONFIG.results[band.key];
+  document.getElementById("summaryText").textContent = res.summary;
+
+  const fl = document.getElementById("factorList");
+  fl.innerHTML = "";
+  factors.forEach(f => {
+    const li = document.createElement("li");
+    const cls = f.points >= 15 ? "positive" : f.points >= 8 ? "neutral" : "negative";
+    const sign = f.points > 0 ? "+" : "";
+    li.innerHTML = `<span class="factor-label">${f.label}${f.reason ? `<br><small style="color:var(--text-muted);font-weight:400;">${f.reason}</small>` : ""}</span><span class="factor-points ${cls}">${sign}${f.points}</span>`;
+    fl.appendChild(li);
+  });
+
+  document.getElementById("ctaHeadline").textContent = res.ctaHeadline;
+  document.getElementById("ctaSubhead").textContent = res.ctaSubhead;
+  document.getElementById("ctaRow").innerHTML = `
+    <a href="${res.primaryUrl}" class="cta-btn cta-primary-link">${res.primaryLabel}</a>
+    <a href="${res.secondaryUrl}" class="cta-btn cta-secondary-link">${res.secondaryLabel}</a>`;
+  const mb = document.getElementById("mathBlock");
+  if (res.math) { mb.innerHTML = res.math; mb.style.display = "block"; } else { mb.style.display = "none"; }
+  const sb = document.getElementById("solutionBlock");
+  if (res.solution) { sb.innerHTML = `<strong>What to do next</strong>${res.solution}`; sb.style.display = "block"; } else { sb.style.display = "none"; }
+
+  navigate(STEPS.indexOf("results"));
+}
+
+function restart() {
+  CONFIG.questions.forEach(q => { answers[q.id] = null; });
+  document.querySelectorAll("input[type=radio]").forEach(i => { i.checked = false; });
+  document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+  document.querySelectorAll(".btn-primary[id^=btn-next-q]").forEach(b => { b.disabled = true; });
+  navigate(0);
+}
+
+applyBrand();
+buildQuiz();
+</script>
+</body>
+</html>
