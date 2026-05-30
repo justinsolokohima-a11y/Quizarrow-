@@ -63,10 +63,10 @@ label.q-label { display: block; font-weight: 600; margin: 16px 0 12px; color: va
 .factor-list li { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 15px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .factor-list li:last-child { border-bottom: none; }
 .factor-label { flex: 1; }
-.factor-points { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 4px; white-space: nowrap; }
-.factor-points.positive { background: rgba(220,38,38,0.1); color: #dc2626; }
-.factor-points.negative { background: rgba(22,163,74,0.1); color: #16a34a; }
-.factor-points.neutral  { background: rgba(90,100,120,0.1); color: var(--text-muted); }
+.factor-points { font-size: 18px; font-weight: 700; white-space: nowrap; flex-shrink: 0; width: 28px; text-align: center; }
+.factor-points.positive { color: #dc2626; }
+.factor-points.negative { color: #16a34a; }
+.factor-points.neutral  { color: #ea580c; }
 .cta-block { margin-top: 32px; padding: 28px; background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-light) 100%); color: white; border-radius: 12px; }
 .cta-block h3 { font-size: 20px; margin-bottom: 8px; color: white; }
 .cta-block p { color: rgba(255,255,255,0.85); margin-bottom: 20px; font-size: 15px; }
@@ -78,6 +78,8 @@ label.q-label { display: block; font-weight: 600; margin: 16px 0 12px; color: va
 .cta-secondary-link:hover { border-color: white; background: rgba(255,255,255,0.06); }
 .math-block { margin-top: 24px; padding: 16px; background: rgba(var(--brand-accent-rgb), 0.12); border-radius: 8px; font-size: 14px; color: #e0eaff; }
 .math-block strong { color: #93c5fd; }
+.solution-block { margin-top: 20px; padding: 20px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; font-size: 15px; color: #166534; }
+.solution-block strong { color: #14532d; display: block; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
 @media (max-width: 600px) { .card { padding: 24px 20px; } h1 { font-size: 24px; } h2 { font-size: 19px; } .score-number { font-size: 56px; } .intro-meta { flex-direction: column; gap: 8px; } .cta-row { flex-direction: column; } .cta-primary-link, .cta-secondary-link { min-width: 0; } }
 </style>
 <script async src="https://tally.so/widgets/embed.js"></script>
@@ -200,10 +202,10 @@ const CONFIG = {
   ],
 
   bands: [
-    { key: "CRITICAL", label: "Needs Strategic Alignment", min: 76, max: 100, color: "#dc2626" },
-    { key: "ELEVATED", label: "Clear Gaps to Address",     min: 51, max: 75,  color: "#ea580c" },
-    { key: "MODERATE", label: "Growth Opportunity",        min: 26, max: 50,  color: "#2563eb" },
-    { key: "LOW",      label: "Strong Foundation",         min: 0,  max: 25,  color: "#16a34a" },
+    { key: "CRITICAL", label: "Needs Strategic Alignment", min: 81, max: 100, color: "#dc2626" },
+    { key: "ELEVATED", label: "Clear Gaps to Address",     min: 61, max: 80,  color: "#ea580c" },
+    { key: "MODERATE", label: "Growth Opportunity",        min: 31, max: 60,  color: "#2563eb" },
+    { key: "LOW",      label: "Strong Foundation",         min: 0,  max: 30,  color: "#16a34a" },
   ],
 
   forceBand: [],
@@ -211,6 +213,7 @@ const CONFIG = {
   results: {
     LOW: {
       summary:        "Your marketing foundation is stronger than most B2B companies at your stage. You have senior leadership, a working system, and the data to make decisions. The opportunity isn't to rebuild — it's to find the specific places where better positioning, tighter ICP targeting, or channel optimization could compound what's already producing.",
+      solution:       "A fractional CMO audit can identify your 2-3 highest-leverage optimisations — usually compounding an already-working system adds 20-40% more pipeline without changing spend.",
       ctaHeadline:    "Find where your marketing is leaving pipeline on the table.",
       ctaSubhead:     "A short strategy conversation with Ken will identify your highest-leverage opportunities — no pitch, no commitment.",
       primaryLabel:   "Talk to Ken",
@@ -220,7 +223,8 @@ const CONFIG = {
       math:           "",
     },
     MODERATE: {
-      summary:        "Your marketing is producing some results, but there are meaningful gaps — inconsistent pipeline, measurement blind spots, or a demand system that hasn't compounded yet. These are fixable problems at your stage, but they require the right strategic layer. The longer they sit, the more pipeline you leave behind.",
+      summary:        "Your marketing is producing some results, but there are meaningful gaps — inconsistent pipeline, measurement blind spots, or a demand system that hasn't compounded yet. These are fixable problems at your stage, but they require the right strategic layer.",
+      solution:       "The fix at this stage is a dedicated demand generation system — not more content or ads. A fractional CMO builds the strategy, owns execution, and installs the measurement layer so you stop guessing what's working.",
       ctaHeadline:    "Your pipeline gaps are fixable. Here's where to start.",
       ctaSubhead:     "Ken works exclusively with B2B software and science companies at this exact inflection point. A 30-minute conversation will show you what the fix looks like.",
       primaryLabel:   "Book a Free Strategy Call",
@@ -230,7 +234,8 @@ const CONFIG = {
       math:           "<strong>The benchmark:</strong> B2B companies with a dedicated marketing system generate 3–5x more qualified pipeline than those relying on referrals and ad-hoc tactics. That gap compounds every quarter it goes unaddressed.",
     },
     ELEVATED: {
-      summary:        "Your answers reflect what we see often in B2B companies at a real growth inflection — ambition that's outpacing the marketing system beneath it. Inconsistent pipeline, missing strategic leadership, or a lead gen approach that hasn't scaled. These aren't permanent problems, but they need the right fix, not more tactics.",
+      summary:        "Your answers reflect a B2B company at a real growth inflection — ambition outpacing the marketing system beneath it. Inconsistent pipeline, missing strategic leadership, or lead gen that hasn't scaled. These are fixable, but they need the right strategic layer — not more tactics.",
+      solution:       "Companies at this stage typically need three things: a documented demand gen strategy, a senior marketing owner, and a 90-day plan to close the pipeline gap. A fractional CMO delivers all three without the $200K+ full-time hire.",
       ctaHeadline:    "Your pipeline gap is costing more than it looks like on the surface.",
       ctaSubhead:     "Ken's worked with B2B software and science companies at exactly this stage. One conversation will diagnose the root cause and outline the fastest path to consistent pipeline.",
       primaryLabel:   "Book a Free Strategy Call",
@@ -240,7 +245,8 @@ const CONFIG = {
       math:           "<strong>The benchmark:</strong> B2B companies that close the marketing-sales alignment gap reduce CAC by 30–60% within two quarters. The fix is usually faster than most expect once the right strategic layer is in place.",
     },
     CRITICAL: {
-      summary:        "Your score reflects a company with real growth ambition and a marketing system that isn't keeping pace. No consistent inbound, limited measurement, and senior marketing leadership that's either absent or stretched thin. Every month without a working system is pipeline you can't recover — but the fix is more straightforward than it looks from inside.",
+      summary:        "Your score reflects real growth ambition with a marketing system that isn't keeping pace. Inconsistent inbound, limited measurement, senior marketing leadership absent or stretched. The fix is more straightforward than it looks from inside — but the cost of waiting compounds every month.",
+      solution:       "The fastest path forward: bring in a fractional CMO for 90 days. Build the demand gen system, install measurement, own the strategy. Most companies see consistent pipeline within the first quarter — at a fraction of the cost of a full-time hire.",
       ctaHeadline:    "You need a marketing system, not more tactics.",
       ctaSubhead:     "Ken works exclusively with B2B software and science companies at this stage. He'll tell you exactly where your pipeline is breaking and what it takes to fix it — no deck, no pressure.",
       primaryLabel:   "Book Your Free Strategy Call",
@@ -375,6 +381,7 @@ function buildResultsSection() {
       <p id="ctaSubhead"></p>
       <div class="cta-row" id="ctaRow"></div>
       <div class="math-block" id="mathBlock" style="display:none;"></div>
+    <div class="solution-block" id="solutionBlock" style="display:none;"></div>
     </div>
     <div id="emailCaptureWrap" style="margin-top:32px;padding:28px;background:var(--bg);border:1px solid var(--border);border-radius:12px;text-align:center;">
       <h3 style="font-size:18px;color:var(--brand-primary);margin-bottom:8px;">Get your results sent to your inbox</h3>
@@ -479,8 +486,11 @@ function showResults() {
   fl.innerHTML = "";
   factors.forEach(f => {
     const li = document.createElement("li");
-    const cls = f.points > 0 ? "positive" : f.points < 0 ? "negative" : "neutral";
-    li.innerHTML = `<span class="factor-label">${f.label}${f.reason ? `<br><small style="color:var(--text-muted);font-weight:400;">${f.reason}</small>` : ""}</span><span class="factor-points ${cls}">${f.points > 0 ? "+" : ""}${f.points}</span>`;
+    let cls, icon;
+    if (f.points >= 15) { cls = "positive"; icon = "✗"; }
+    else if (f.points >= 8) { cls = "neutral"; icon = "~"; }
+    else { cls = "negative"; icon = "✓"; }
+    li.innerHTML = `<span class="factor-label">${f.label}${f.reason ? `<br><small style="color:var(--text-muted);font-weight:400;">${f.reason}</small>` : ""}</span><span class="factor-points ${cls}">${icon}</span>`;
     fl.appendChild(li);
   });
 
@@ -491,6 +501,8 @@ function showResults() {
     <a href="${res.secondaryUrl}" class="cta-btn cta-secondary-link">${res.secondaryLabel}</a>`;
   const mb = document.getElementById("mathBlock");
   if (res.math) { mb.innerHTML = res.math; mb.style.display = "block"; } else { mb.style.display = "none"; }
+  const sb = document.getElementById("solutionBlock");
+  if (res.solution) { sb.innerHTML = `<strong>What to do next</strong>${res.solution}`; sb.style.display = "block"; } else { sb.style.display = "none"; }
 
   navigate(STEPS.indexOf("results"));
 }
